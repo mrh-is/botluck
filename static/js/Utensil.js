@@ -1,5 +1,7 @@
-function Utensil(id, name, amount) {
-	this.id = id;
+var utensilID = 0;
+
+function Utensil(name, amount) {
+	this.id = utensilID++;
 	this.name = name;
 	this.amount = amount;
 }

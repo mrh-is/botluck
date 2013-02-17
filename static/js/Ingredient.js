@@ -1,5 +1,7 @@
-function Ingredient(id, name, amount, price) {
-	this.id = id;
+var ingredientID = 0;
+
+function Ingredient(name, amount, price) {
+	this.id = ingredientID++;
 	this.name = name;
 	this.amount = amount;
 	this.price = price;

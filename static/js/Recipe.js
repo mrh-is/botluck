@@ -1,7 +1,10 @@
-$.getScript("/js/Ingredient.js",function(){});
-$.getScript("/js/Utensil.js",function(){});
-function Recipe(id, name, ingredients, instructions, prepTime) {
-	this.id = id;
+$.getScript("/static/js/Ingredient.js",function(){});
+$.getScript("/static/js/Utensil.js",function(){});
+
+var recipeID = 0;
+
+function Recipe(name, ingredients, instructions, prepTime) {
+	this.id = recipeID++;
 	this.name = name;
 	this.ingredients = ingredients;
 	this.instructions = instructions;
