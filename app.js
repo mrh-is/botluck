@@ -71,7 +71,18 @@ app.get("/user/:id", function(request, response) {
     };
 });
 
-// This is for serving meal data
+app.post("/user/:id", function(request, response) {
+	var filename = userDir + "user-" + request.params.id + ".txt";
+	fs.writeFile(filename, request.body.data, function(err, data) {
+    if (err) {
+     	response.send({"success": false});
+     } else {
+     	response.send({"success": true});
+     }
+    };
+});
+
+// This is for serving meal data and storing meal data
 var mealDir = "data/meals/";
 app.get("/meal/:id", function(request, response) {
 	var filename = mealDir + "meal-" + request.params.id + ".txt";
@@ -82,6 +93,17 @@ app.get("/meal/:id", function(request, response) {
      	var mealData = JSON.parse(data);
      	mealData.success = true;
      	response.send(mealData);
+     }
+    };
+});
+
+app.post("/user/:id", function(request, response) {
+	var filename = mealDir + "meal-" + request.params.id + ".txt";
+	fs.writeFile(filename, request.body.data, function(err, data) {
+    if (err) {
+     	response.send({"success": false});
+     } else {
+     	response.send({"success": true});
      }
     };
 });
