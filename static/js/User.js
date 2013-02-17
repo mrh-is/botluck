@@ -7,9 +7,9 @@ var userID = 0;
 
 function User(userName, password, name) {
 	this.id = userID++;
-	this.userName = userName;
-	this.password = password;
-	this.name = name;
+	if (userName !== undefined) this.userName = userName;
+	if (password !== undefined) this.password = password;
+	if (name !== undefined) this.name = name;
 }
 
 User.prototype.id = -1;
@@ -35,16 +35,16 @@ User.prototype.addFriend = function(friendID) {
 };
 
 User.prototype.fromJSON = function(data) {
-	this.id = data.id;
-	this.userName = data.userName;
-	this.name = data.name;
-	this.ingredients = data.ingredients;
-	this.friends = data.friends;
-	this.utensils = data.utensils;
-	this.karma = data.karma;
-	this.history = data.history;
-	this.currentMeals = data.currentMeals;
-	this.invites = data.invites;
+	if (data.id !== undefined) this.id = data.id;
+	if (data.userName !== undefined) this.userName = data.userName;
+	if (data.name !== undefined) this.name = data.name;
+	if (data.ingredients !== undefined) this.ingredients = data.ingredients;
+	if (data.friends !== undefined) this.friends = data.friends;
+	if (data.utensils !== undefined) this.utensils = data.utensils;
+	if (data.karma !== undefined) this.karma = data.karma;
+	if (data.history !== undefined) this.history = data.history;
+	if (data.currentMeals !== undefined) this.currentMeals = data.currentMeals;
+	if (data.invites !== undefined) this.invites = data.invites;
 };
 
 /* Test User */
