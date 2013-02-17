@@ -9,6 +9,7 @@ function Meal(ownerId, name, recipe, userIds) {
 	this.recipe = recipe;
 	this.userIds = userIds;
 	this.startTime = new Date();
+
 }
 
 Meal.prototype.id = -1;
