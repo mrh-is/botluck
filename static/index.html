@@ -27,7 +27,9 @@
 						data: {"username": username, "password": password},
 						url: "/verify/home.html",
 						success: function(data) {
-							 window.location.href = "/static/" + data.url + "?user=" + username + ",password=" + password;
+							if (data.success) {
+								window.location.href = "/static/" + data.url + "?id=" + data.uid;
+							}
 						}
 					});
 			});

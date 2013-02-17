@@ -6,53 +6,84 @@ var fs = require("fs");
 app.use(express.bodyParser());
 
 // handling user log in and passwords
-var passwordDB = {};
-var passwordFile = "user-password-info.txt";
-var readPasswords = function() {
-	fs.readFile(passwordFile, function(err, data) {
+var userDB = {}; //map from username to id and password
+var DBFile = "user-meta-data.txt";
+var readUserData = function() {
+	fs.readFile(DBFile, function(err, data) {
     if (err) {
-    	passwordDB = {};
+    	userDB = {};
     } else {
-     	passwordDB = JSON.parse(data);
-    }
+     	userDB = JSON.parse(data);
+    };
   });
 };
 
-readPasswords();
+readUserData();
 
-var writePasswords = function() {
-	fs.writeFile(passwordFile, JSON.stringify(passwordDB), function(err) {
+var writeUserData = function() {
+	fs.writeFile(DBFile, JSON.stringify(userDB), function(err) {
     if (err) {
-      console.log("Error writing file: ", passwordFile);
+      console.log("Error writing file: ", DBFile);
     } else {
-      console.log("Success writing file: ", passwordFile);
+      console.log("Success writing file: ", DBFile);
     }
   });
 }
 
 var checkPassword = function(username, password) {
-	if (passwordDB[username] !== undefined &&
-		passwordDB[username] === password) {
+	if (userDB[username].password !== undefined &&
+		userDB[username].password === password) {
 		return true;
 	}
 	return false;
 }
 
 var changePassword = function(username, password) {
-	passwordDB[username] = password;
+	userDB[username].password = password;
 }
 
 app.post("/verify/:url", function(request, response) {
 	var username = request.body.username;
 	var password = request.body.password;
 	var verified = false;
-	if (passwordDB[username] === password) {
+	if (userDB[username].password === password) {
 		verified = true;
 	}
 	response.send({
 		"success": verified,
-		"url": request.params.url
+		"url": request.params.url,
+		"uid": userDB[username].id
 	});
+});
+
+// This is for serving user data
+var userDir = "data/users/";
+app.get("/user/:id", function(request, response) {
+	var filename = userDir + "user-" + request.params.id + ".txt";
+	fs.readFile(filename, function(err, data) {
+    if (err) {
+     	response.send({"success": false});
+     } else {
+     	var userData = JSON.parse(data);
+     	userData.success = true;
+     	response.send(userData);
+     }
+    };
+});
+
+// This is for serving meal data
+var mealDir = "data/meals/";
+app.get("/meal/:id", function(request, response) {
+	var filename = mealDir + "meal-" + request.params.id + ".txt";
+	fs.readFile(filename, function(err, data) {
+    if (err) {
+     	response.send({"success": false});
+     } else {
+     	var mealData = JSON.parse(data);
+     	mealData.success = true;
+     	response.send(mealData);
+     }
+    };
 });
 
 // This is for serving javascript files
