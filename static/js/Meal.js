@@ -9,7 +9,6 @@ function Meal(ownerId, name, recipe, userIds) {
 	this.recipe = recipe;
 	this.userIds = userIds;
 	this.startTime = new Date();
-
 }
 
 Meal.prototype.id = -1;
@@ -30,14 +29,11 @@ Meal.prototype.fromJSON = function(data) {
 	if (data.endTime !== undefined) this.endTime = data.endTime;
 };
 Meal.prototype.toJSON = function() {
-	return JSON.stringify(this);
-	/*var res = {};
-	res.id = this.id;
-	res.ownerId = this.ownerId;
-	res.name = this.name;
-	res.recipe = this.recipe.toJSON();
-	res.userIds = data.userIds;
 	res.contributions = JSON.stringify(this.contributions);
 	res.startTime = this.startTime;
 	res.endTime = this.endTime;*/
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> meal json functions
