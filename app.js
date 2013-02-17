@@ -42,6 +42,19 @@ var changePassword = function(username, password) {
 	passwordDB[username] = password;
 }
 
+app.post("/verify/:url", function(request, response) {
+	var username = request.body.username;
+	var password = request.body.password;
+	var verified = false;
+	if (passwordDB[username] === password) {
+		verified = true;
+	}
+	response.send({
+		"success": verified,
+		"url": request.params.url
+	});
+});
+
 // This is for serving javascript files
 app.get("/js/:filename", function (request, response) {
 	response.sendfile("static/js/" + request.params.filename);

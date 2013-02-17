@@ -13,19 +13,21 @@
 		<form id="login-form" action="/static/home.html">
 			<input id="username-input" type="textarea"/>
 			<br>
-			<input id="username-input" type="textarea"/>
+			<input id="password-input" type="textarea"/>
 			<input id="button" type="button"> 
 				Submit
 			</input>
 		</form>
 		<script type="text/javascript">
 			$('#button').click(function() {
+				var username = $('#username-input').val();
+				var password = $('#password-input').val();
 				$.ajax({
 						type: "post",
-						data: {"user": "neil", "password": "abcd"},
-						url: "/static/home.html",
+						data: {"username": username, "password": password},
+						url: "/verify/home.html",
 						success: function(data) {
-							$
+							 window.location.href = "/static/" + data.url + "?user=" + username + ",password=" + password;
 						}
 					});
 			});
