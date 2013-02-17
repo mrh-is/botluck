@@ -30,6 +30,9 @@ User.prototype.addIngredient = function(ingredient) {
 User.prototype.addUtensil = function(utensil) {
 	this.utensils.push(utensil);
 };
+User.prototype.addFriend = function(id) {
+	this.friends.push(friendID);
+};
 User.prototype.addFriend = function(friendID) {
 	this.friends.push(friendID);
 };
@@ -46,7 +49,17 @@ User.prototype.fromJSON = function(data) {
 	if (data.currentMeals !== undefined) this.currentMeals = data.currentMeals;
 	if (data.invites !== undefined) this.invites = data.invites;
 };
+User.prototype.fromJSON = function(data) {
+	
+};
 
 /* Test User */
+<<<<<<< HEAD
 var TEST_USER = new User("Test User");
 TEST_USER.addIngredient(new Ingredient("tomatoes", 1, 1));
+TEST_USER.addIngredient(new Ingredient("tomatoes", 1, 1));
+=======
+var TEST_USER = new User(1, "Beyonce");
+TEST_USER.addIngredient(new Ingredient("tomatoes", 1, 1));
+TEST_USER.addIngredient(new Ingredient(4, "tomatoes", 1, 1));
+>>>>>>> beyonce test user
