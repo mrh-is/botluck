@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html>
-<header>
-	<script type="text/javascript" src="js/jquery-1.9.0.js"></script>
-	<script type="text/javascript" src="js/Supply.js"></script>
-	<script type="text/javascript" src="js/Ingredient.js"></script>
-	<script type="text/javascript" src="js/Utensil.js"></script>
-	<script type="text/javascript" src="js/User.js"></script>
-	<script type="text/javascript" src="js/MealFinder.js"></script>
-</header>
-<body>
-	<div> place holder </div>
-</body>
+	<header>
+		<script type="text/javascript" src="/js/jquery-1.9.0.js"></script>
+		<script type="text/javascript" src="/js/Supply.js"></script>
+		<script type="text/javascript" src="/js/Ingredient.js"></script>
+		<script type="text/javascript" src="/js/Utensil.js"></script>
+		<script type="text/javascript" src="/js/User.js"></script>
+		<script type="text/javascript" src="/js/MealFinder.js"></script>
+	</header>
+	<body>
+		<div> Index Page </div>
+		<form id="login-form" action="/static/home.html">
+			<input id="username-input" type="textarea"/>
+			<br>
+			<input id="username-input" type="textarea"/>
+			<input id="button" type="button"> 
+				Submit
+			</input>
+		</form>
+		<script type="text/javascript">
+			$('#button').click(function() {
+				$.ajax({
+						type: "post",
+						data: {"user": "neil", "password": "abcd"},
+						url: "/static/home.html",
+						success: function(data) {
+							$
+						}
+					});
+			});
+		</script>
+	</body>
 </html>

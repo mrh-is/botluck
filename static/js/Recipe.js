@@ -1,5 +1,5 @@
-$.getScript("Ingredient.js",function(){});
-$.getScript("Utensil.js",function(){});
+$.getScript("/js/Ingredient.js",function(){});
+$.getScript("/js/Utensil.js",function(){});
 function Recipe(id, name, ingredients, instructions, prepTime) {
 	this.id = id;
 	this.name = name;

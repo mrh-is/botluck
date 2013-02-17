@@ -1,19 +1,9 @@
+$.getScript("/js/Ingredient.js", function(){});
+$.getScript("/js/Utensils.js", function(){});
+$.getScript("/js/Meal.js", function(){});
 function User(id, name) {
-	this.self = 
 	this.id = id;
 	this.name = name;
-	
-	function addFriend(id) {
-		this.friends.push(id);
-	}
-
-	function addIngredient(ingredient) {
-		this.ingredients.push(ingredient);
-	}
-
-	function addUtensil(utensil) {
-		this.utensils.push(utensil);
-	}
 }
 
 User.prototype.id = -1;
@@ -26,6 +16,15 @@ User.prototype.history = [];
 User.prototype.currentMeals = [];
 User.prototype.invites = [];
 User.prototype.dirpath = "../../../data/users";
+User.prototype.addIngredient = function(ingredient) {
+	this.ingredients.push(ingredient);
+};
+User.prototype.addUtensil = function(utensil) {
+	this.utensils.push(utensil);
+};
+User.prototype.addFriend = function(id) {
+	this.friends.push(id);
+};
 
 /* Test User */
 var TEST_USER = new User(1, "Test User");

@@ -1,4 +1,4 @@
-$.getScript("Meal.js",function(){});
+$.getScript("/js/Meal.js",function(){});
 function MealFinder() {
 
 }
