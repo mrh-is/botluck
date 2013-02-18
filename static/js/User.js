@@ -1,15 +1,12 @@
 $.getScript("/static/js/Ingredient.js", function(){});
-$.getScript("/static/js/Utensils.js", function(){});
+$.getScript("/static/js/Utensil.js", function(){});
 $.getScript("/static/js/Meal.js", function(){});
 $.getScript("/static/js/Invite.js", function(){});
 
-var userID = 0;
-
-function User(userName, password, name) {
-	this.id = userID++;
+function User(userName, password, id) {
 	if (userName !== undefined) this.userName = userName;
 	if (password !== undefined) this.password = password;
-	if (name !== undefined) this.name = name;
+	if (id !== undefined) this.id = id;
 }
 
 User.prototype.id = -1;
@@ -27,12 +24,11 @@ User.prototype.invites = [];
 User.prototype.addIngredient = function(ingredient) {
 	this.ingredients.push(ingredient);
 };
+
 User.prototype.addUtensil = function(utensil) {
 	this.utensils.push(utensil);
 };
-User.prototype.addFriend = function(id) {
-	this.friends.push(id);
-};
+
 User.prototype.addFriend = function(friendID) {
 	this.friends.push(friendID);
 };
@@ -50,6 +46,47 @@ User.prototype.fromJSON = function(data) {
 	if (data.invites !== undefined) this.invites = data.invites;
 };
 
+User.prototype.initFromServer = function(id) {
+	var self = this;
+	$.ajax({
+		type: "get",
+		url: "/user/" + id,
+		success: function(data) {
+			if (data.success) {
+				self.fromJSON(data);
+			}
+		}
+	});
+};
+
+User.prototype.updateServer = function() {
+	$.ajax({
+		type: "post",
+		url: "/user/" + this.id,
+		data: JSON.stringify(this),
+		success: function(data) {
+
+		}
+	})
+}
+
+// takes a username and password, and tells the server to create
+// a new user. The server returns the new user id
+var createNewUser = function(username, password) {
+	var id;
+	$.ajax({
+		type: "post",
+		url: "/user",
+		data: {
+			"username": username,
+			"password": password
+		},
+		success: function(data) {
+			if (data.success) {
+				return (new User(username, password, data.id));
+			}
+		}
+	});
+	return undefined;
+}
 /* Test User */
-var TEST_USER = new User(1, "Beyonce");
-TEST_USER.addIngredient(new Ingredient("tomatoes", 1, 1));

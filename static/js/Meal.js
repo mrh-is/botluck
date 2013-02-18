@@ -1,4 +1,4 @@
-$.getScript("/js/Recipe.js",function(){});
+$.getScript("/static/js/Recipe.js",function(){});
 function Meal(id, ownerId, name, recipe, userIds) {
 	this.id = id;
 	this.ownerId = ownerId;
