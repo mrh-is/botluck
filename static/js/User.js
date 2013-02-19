@@ -67,8 +67,8 @@ User.prototype.updateServer = function() {
 		success: function(data) {
 
 		}
-	})
-}
+	});
+};
 
 // takes a username and password, and tells the server to create
 // a new user. The server returns the new user id
@@ -87,6 +87,5 @@ var createNewUser = function(username, password) {
 			}
 		}
 	});
-	return undefined;
 }
 /* Test User */

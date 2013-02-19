@@ -121,12 +121,12 @@ app.post("/user", function(request, response) {
 });
 
 // This is for serving meal data and storing meal data
-app.post("/meal/create", function(request, response) {
-    mealCount++;
+app.get("/mealId", function(request, response) {
     response.send({
-        "id": id,
+        "id": mealCount,
         "success": true
     });
+    mealCount++;
 });
 
 app.get("/meal/:id", function(request, response) {
@@ -136,8 +136,10 @@ app.get("/meal/:id", function(request, response) {
          	response.send({"success": false});
          } else {
          	var mealData = JSON.parse(data);
-         	mealData.success = true;
-         	response.send(mealData);
+         	response.send({
+                "success": true,
+                "mealData": mealData
+            });
          }
     });
 });
