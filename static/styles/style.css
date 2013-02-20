@@ -58,7 +58,7 @@ body {
 #headerBar {
 	width: 100%;
 	height: 300px;
-	background-color: #f1de41;
+	background-color: #F2D03A;
 }
 
 .headerText {
@@ -78,8 +78,14 @@ body {
 	/*background: red;*/
 }
 
-#greeting {
-	display: block;
+#mainCol {
+	display: inline-block;
+	margin-right: 50px;
+	width: 500px;
+	/*background-color: #faf4c0;*/
+}
+
+h1 {
 	width: 100%;
 	margin-top: 50px;
 	margin-bottom: 30px;
@@ -87,13 +93,7 @@ body {
 	font-size: 36px;
 }
 
-#mainCol {
-	display: inline-block;
-	width: 70%;
-	/*background-color: #faf4c0;*/
-}
-
-.title {
+h2 {
 	font-size: 15px;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -101,31 +101,141 @@ body {
 	padding-bottom: 30px;
 }
 
-.invitation {
-	padding-bottom: 20px;
+h3 {
+	
 }
 
-div.meal {
+.invitation {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	/*border-top: thin solid #F2E8BF;*/
+	border-bottom: thin solid #F2E8BF;
+}
+
+.invitation-top {
+	border-bottom: thin solid #F2E8BF;
+}
+
+.meal {
 	display: inline-block;
-	padding: 0;
-	padding-right: 5px;
-	width: 150px;
-	height: 150px;
+	padding: 5px 10px;
+	margin-right: 20px;
+	width: 200px;
+	/*height: 200px;*/
 	background-color: #faf4c0;
+	vertical-align: top;
+	padding-bottom: 10px;
 }
 
 
 #leftnav {
 	display: inline-block;
 	vertical-align: top;
-	background-color: #f2e151;
-	/*width: 10%;*/
+	text-align: center;
+	/*background-color: #fbf2c9;*/
+	width: 200px;
+	padding-top: 30px;
+	padding-bottom: 50px;
+	padding-left: 30px;
+	border-left: thin solid #F2D03A;
 }
 
 #pfPhoto {
-	/*display: inline-block;*/
+	display: inline-block;
 	background-color: #CCC;
 	width: 100px;
 	height: 100px;
 }
 
+.mealPhoto {
+	display: inline-block;
+	background-color: #DDD;
+	width: 200px;
+	height: 100px;
+}
+
+#pfName {
+	display: inline-block;
+}
+
+#karmaBadge {
+	display: block;
+	width: 200px;
+	height: 200px;
+	background-image: url("../assets/karma-points-badge.png");
+}
+
+.icon {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.invitation .content {
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 15px;
+	width: 300px;
+}
+
+button.details {
+	/*display: inline-block;*/
+	width:50px; 
+	height: 25px;
+	color: #000000;
+  	background-color: #F2D03A;
+  	border-radius: 1px;
+  	-moz-border-radius: 1px;
+  	border: none;
+  	font-family: "Roboto";
+  	margin-left: 20px;
+  	margin-top: 18px;
+}
+
+.date {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-bottom: 5px;
+	margin-top: 9px;
+	margin-right: 5px;
+}
+
+.mealTitle {
+	margin-top: 10px;
+	margin-bottom: 20px;
+	font-weight: 400;
+	/*height:40px;*/
+}
+
+
+button.navButton {
+	display: block;
+	width:200px; 
+	/*height: 25px;*/
+	font-family: "Roboto";
+	font-weight: 300;
+	font-size: 20px;
+	text-align: center;
+	color: #000000;
+  	background-color: #F2D03A;
+  	border-radius: 1px;
+  	-moz-border-radius: 1px;
+  	border: none;
+  	margin-top: 18px;
+}
+
+.contributions {
+	display: inline-block;
+}
+
+.meal .date {
+	/*vertical-align: top;*/
+}
+
+.columnEnd {
+	height: 50px;
+}
+
+.right {
+	text-align: right;
+}
