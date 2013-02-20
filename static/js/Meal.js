@@ -55,6 +55,20 @@ Meal.prototype.updateServer = function() {
 	});
 };
 
+Meal.prototype.inviteUser = function(userId) {
+	$.ajax({
+		type: "post",
+		url: "/invite",
+		data: {
+			"mealId": this.id,
+			"userId": userId
+		},
+		success: function(data) {
+			return data.success;
+		}
+	});
+}
+
 // initiates a new meal on the server side
 // returns the id of the meal
 var createNewMeal = function(ownerId, name, recipe, userIds) {
@@ -70,3 +84,4 @@ var createNewMeal = function(ownerId, name, recipe, userIds) {
 		}
 	});
 }
+

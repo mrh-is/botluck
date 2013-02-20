@@ -46,6 +46,10 @@ User.prototype.fromJSON = function(data) {
 	if (data.invites !== undefined) this.invites = data.invites;
 };
 
+User.prototype.toJSON = function() {
+	return JSON.stringify(this);
+}
+
 User.prototype.initFromServer = function(id) {
 	var self = this;
 	$.ajax({
@@ -53,7 +57,7 @@ User.prototype.initFromServer = function(id) {
 		url: "/user/" + id,
 		success: function(data) {
 			if (data.success) {
-				self.fromJSON(data);
+				self.fromJSON(data.userData);
 			}
 		}
 	});
@@ -63,17 +67,31 @@ User.prototype.updateServer = function() {
 	$.ajax({
 		type: "post",
 		url: "/user/" + this.id,
-		data: JSON.stringify(this),
+		data: this.toJSON(),
 		success: function(data) {
 
 		}
 	});
 };
 
+User.prototype.acceptInvite = function(mealId) {
+	$.ajax({
+		type: "post",
+		url: "/acceptInvite",
+		data: {
+			"userId": this.id,
+			"mealId": mealId
+		},
+		success: function(data) {}
+	});
+}
+
 // takes a username and password, and tells the server to create
 // a new user. The server returns the new user id
 var createNewUser = function(username, password) {
 	var id;
+	var wait = true;
+	var user = undefined;
 	$.ajax({
 		type: "post",
 		url: "/user",
@@ -83,9 +101,27 @@ var createNewUser = function(username, password) {
 		},
 		success: function(data) {
 			if (data.success) {
-				return (new User(username, password, data.id));
+				user = new User(username, password, data.id);
+				wait = false;
 			}
 		}
 	});
+	while (wait) {}
+	return user;
 }
+
+
 /* Test User */
+var TEST_USER = createNewUser("Beyonce", "1234");
+TEST_USER.addIngredient(new Ingredient("tomatoes", 1, 1));
+TEST_USER.addIngredient(new Ingredient("onions", 1, 1));
+TEST_USER.addIngredient(new Ingredient("garlic", 1, 1));
+TEST_USER.addIngredient(new Ingredient("potatoes", 1, 1));
+TEST_USER.addIngredient(new Ingredient("pasta", 1, 1));
+TEST_USER.addIngredient(new Ingredient("chicken breast", 1, 1));
+TEST_USER.name = "Beyonce Knowles";
+TEST_USER.addUtensil(new Utensil("spoons", 1, 1));
+TEST_USER.addUtensil(new Utensil("forks", 1, 1));
+TEST_USER.addUtensil(new Utensil("knives", 1, 1));
+TEST_USER.karma = 10;
+TEST_USER.updateServer();

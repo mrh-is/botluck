@@ -13,7 +13,7 @@ var userCount = 0;
 var mealDir = "/data/meals/";
 var mealCount = 0;
 
-var readUserData = function() {
+var readMetaUserData = function() {
 	fs.readFile(DBFile, function(err, data) {
     if (err) {
         userDB = {};
@@ -27,9 +27,9 @@ var readUserData = function() {
   });
 };
 
-readUserData();
+readMetaUserData();
 
-var writeUserData = function() {
+var writeMetaUserData = function() {
     var metadata = {
         "userDB": userDB,
         "userCount": userCount,
@@ -71,39 +71,54 @@ app.post("/verify/:url", function(request, response) {
 });
 
 // This is for serving user data
-app.get("/user/:id", function(request, response) {
-	var filename = userDir + "user-" + request.params.id + ".txt";
-	fs.readFile(filename, function(err, data) {
+var readUserData = function(id) {
+    var filename = userDir + "user-" + id + ".txt";
+    fs.readFile(filename, function(err, data) {
         if (err) {
-            response.send({"success": false});
+            return undefined;
         }
         else {
-            var userData = JSON.parse(data);
-            response.send({
-                "userData": userData,
-                "success": true
-            });
+            return data;
         }
     });
+};
+
+var writeUserData = function(id, data) {
+    var filename = userDir + "user-" + id + ".txt";
+    fs.writeFile(filename, data, function(err, data) {
+        if (err) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    });
+};
+
+app.get("/user/:id", function(request, response) {
+	var data = readUserData(request.params.id);
+    if (data === undefined) {
+        response.send({"success": false});
+    }
+    else {
+        response.send({
+            "userData": data,
+            "success": true
+        });
+    }
 });
 
 app.post("/user/:id", function(request, response) {
-	var filename = userDir + "user-" + request.params.id + ".txt";
-	fs.writeFile(filename, request.body.data, function(err, data) {
-        if (err) {
-            response.send({"success": false});
-        }
-        else {
-            response.send({"success": true});
-        }
+    var id = request.params.id;
+    var data = request.body.data;
+	response.send({
+        "success": writeUserData(id, data)
     });
 });
 
 app.post("/user", function(request, response) {
     var username = request.body.username;
     var password = request.body.password;
-    console.log(username);
-    console.log(password);
     var id = userCount;
     // user already exists
     console.log(userDB);
@@ -116,7 +131,7 @@ app.post("/user", function(request, response) {
             "id": id
         };
         userCount++;
-        writeUserData();
+        writeMetaUserData();
         response.send({
             "id": id,
             "success": true
@@ -125,6 +140,29 @@ app.post("/user", function(request, response) {
 });
 
 // This is for serving meal data and storing meal data
+var readMealData = function(id) {
+    var filename = mealDir + "meal-" + id + ".txt";
+    fs.readFile(filename, function(err, data) {
+        if (err) {
+            return undefined;
+        }
+        else {
+            return data;
+        }
+    });
+};
+
+var writeMealData = function(id, data) {
+    var filename = mealDir + "meal-" + id + ".txt";
+    fs.writeFile(filename, data, function(err, data) {
+        if (err) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+};
+
 app.get("/mealId", function(request, response) {
     response.send({
         "id": mealCount,
@@ -134,31 +172,56 @@ app.get("/mealId", function(request, response) {
 });
 
 app.get("/meal/:id", function(request, response) {
-	var filename = mealDir + "meal-" + request.params.id + ".txt";
-	fs.readFile(filename, function(err, data) {
-        if (err) {
-            response.send({"success": false});
-        }
-        else {
-            var mealData = JSON.parse(data);
-            response.send({
-                "success": true,
-                "mealData": mealData
-            });
-        }
-    });
+	var data = readMealData(request.params.id);
+    if (data === undefined) {
+        response.send({"success": false});
+    } else {
+        response.send({
+            "success": true,
+            "mealData": data
+        });
+    }
 });
 
 app.post("/meal/:id", function(request, response) {
-	var filename = mealDir + "meal-" + request.params.id + ".txt";
-	fs.writeFile(filename, request.body.data, function(err, data) {
-        if (err) {
-            response.send({"success": false});
-        }
-        else {
-            response.send({"success": true});
-        }
+    var id = request.params.id;
+    var data = request.body.data;
+    response.send({
+        "success": writeMealData(id, data)
     });
+});
+
+// This is for handling user invitations
+app.post("/invite", function(request, response) {
+    var mealId = request.body.mealId;
+    var userId = request.body.userId;
+    var data = readUserData(userId);
+    if (data === undefined) {
+        response.send({"success": false});
+    } else {
+        var userData = JSON.parse(data);
+        userData.invites.push(mealId);
+        data = JSON.stringify(userData);
+        response.send({
+            "success": writeUserData(userId, data)
+        });
+    }
+});
+
+app.post("/acceptInvite", function(request, response) {
+    var mealId = request.body.mealId;
+    var userId = request.body.userId;
+    var data = readMealData(mealId);
+    if (data === undefined) {
+        response.send({"success": false});
+    } else {
+        var mealData = JSON.parse(data);
+        mealData.userIds.push(userId);
+        data = JSON.stringify(mealData);
+        response.send({
+            "success": writeMealData(userId, data)
+        });
+    }
 });
 
 // This is for serving javascript files
@@ -186,7 +249,7 @@ app.get("/static/:staticFilename", function (request, response) {
 		console.log(request.body.user);
 		console.log(request.body.password);
 	}
-    response.sendfile("static/" + request.params.staticFilename);
+    response.sendfile("static/html/" + request.params.staticFilename);
 });
 
 app.listen(8889);
