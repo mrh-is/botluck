@@ -230,8 +230,8 @@ app.get("/static/js/:filename", function (request, response) {
 });
 
 // This is for serving css files
-app.get("/static/css/:filename", function (request, response) {
-	response.sendfile("static/css/" + request.params.filename);
+app.get("/static/styles/:filename", function (request, response) {
+	response.sendfile("static/styles/" + request.params.filename);
 });
 
 // This is for serving home pages
@@ -241,6 +241,11 @@ app.get("/static/home/meals/:filename", function (request, response) {
 
 app.get("/static/home/:filename", function (request, response) {
 	response.sendfile("static/html/home-" + request.params.filename);
+});
+
+// This is for serving assets
+app.get("/static/assets/:filename", function (request, response) {
+    response.sendfile("static/assets/" + request.params.filename);
 });
 
 // This is for serving files in the static directory

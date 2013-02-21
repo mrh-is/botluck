@@ -8,19 +8,21 @@ function User(userName, password, id) {
 	if (password !== undefined) this.password = password;
 	if (id !== undefined) this.id = id;
 
+	var self = this;
+
 	this.toJSON = function() {
 		var data = {
-			"id": , this.id,
-			"userName": , this.userName,
-			"password": , this.password,
-			"name": , this.name,
-			"ingredients": , this.ingredients,
-			"friends": , this.friends,
-			"utensils": , this.utensils,
-			"karma": , this.karma,
-			"history": , this.history,
-			"currentMeals": , this.currentMeals,
-			"invites": , this.invites
+			"id": this.id,
+			"userName": this.userName,
+			"password": this.password,
+			"name": this.name,
+			"ingredients": this.ingredients,
+			"friends": this.friends,
+			"utensils": this.utensils,
+			"karma": this.karma,
+			"history": this.history,
+			"currentMeals": this.currentMeals,
+			"invites": this.invites
 		};
 		return JSON.stringify(data);
 	};
