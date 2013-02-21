@@ -13,12 +13,15 @@
 			<input id="username-input" type="textarea"/>
 			<br>
 			<input id="password-input" type="textarea"/>
-			<input id="button" type="button"> 
+			<input id="loginBttn" type="button"> 
 				Submit
+			</input>
+			<input id="createNewUserBttn" type="button"> 
+				Create new user
 			</input>
 		</form>
 		<script type="text/javascript">
-			$('#button').click(function() {
+			$('#loginBttn').click(function() {
 				var username = $('#username-input').val();
 				var password = $('#password-input').val();
 				$.ajax({
@@ -31,6 +34,47 @@
 							}
 						}
 					});
+			});
+
+			// takes a username and password, and tells the server to create
+			// a new user. The server returns the new user id
+			var createNewUser = function(username, password, callbackfn) {
+				var id;
+				var wait = true;
+				$.ajax({
+					type: "post",
+					url: "/user",
+					data: {
+						"username": username,
+						"password": password
+					},
+					success: function(data) {
+						if (data.success) {
+							var user = new User(username, password, data.id);
+							callbackfn(user);
+						}
+					}
+				});
+			};
+
+
+			/* Test User */
+			$('#createNewUserBttn').click(function() {
+				var populateTestUser = function(user) {
+					user.addIngredient(new Ingredient("tomatoes", 1, 1));
+					user.addIngredient(new Ingredient("onions", 1, 1));
+					user.addIngredient(new Ingredient("garlic", 1, 1));
+					user.addIngredient(new Ingredient("potatoes", 1, 1));
+					user.addIngredient(new Ingredient("pasta", 1, 1));
+					user.addIngredient(new Ingredient("chicken breast", 1, 1));
+					user.name = "Beyonce Knowles";
+					user.addUtensil(new Utensil("spoons", 1, 1));
+					user.addUtensil(new Utensil("forks", 1, 1));
+					user.addUtensil(new Utensil("knives", 1, 1));
+					user.karma = 10;
+					user.updateServer();
+				};
+				createNewUser("Beyonce", "1234", populateTestUser);
 			});
 		</script>
 	</body>

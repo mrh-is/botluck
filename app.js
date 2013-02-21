@@ -109,6 +109,7 @@ app.get("/user/:id", function(request, response) {
 });
 
 app.post("/user/:id", function(request, response) {
+    console.log("here");
     var id = request.params.id;
     var data = request.body.data;
 	response.send({
@@ -121,18 +122,17 @@ app.post("/user", function(request, response) {
     var password = request.body.password;
     var id = userCount;
     // user already exists
-    console.log(userDB);
     if (userDB[username] !== undefined) {
         response.send({ "success": false });
     }
     else {
-        userDB[username] = {
+        /*userDB[username] = {
             "password": password,
             "id": id
         };
         userCount++;
         writeMetaUserData();
-        response.send({
+        */response.send({
             "id": id,
             "success": true
         });
