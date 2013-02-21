@@ -2,7 +2,7 @@
 <html>
 <header>
 	<title>Home</title>
-	<link rel="stylesheet" type="text/css" href="/static/styles/style.css">
+	<link rel="stylesheet" type="text/css" href="../styles/style.css">
 	<script type="text/javascript" src="js/jquery-1.9.0.js"></script>
 	<script type="text/javascript" src="js/Ingredient.js"></script>
 	<script type="text/javascript" src="js/Utensil.js"></script>
@@ -25,17 +25,17 @@
 			<div id="invitations">
 				<div class="invitation-top"></div>
 				<div class="invitation">
-					<div class="icon"><img src="/static/assets/invitation-icon.png"></div>
+					<div class="icon"><img src="../assets/invitation-icon.png"></div>
 					<div class="content">
-						<div class="subtitle">Feb 2</div>
+						<div class="date">Feb 2</div>
 						<div>Katy Perry has invited you to a botluck</div>
 					</div>
 					<button class="navButton" type="button">view</button>
 				</div>
 				<div class="invitation">
-					<div class="icon"><img src="/static/assets/invitation-icon.png"></div>
+					<div class="icon"><img src="../assets/invitation-icon.png"></div>
 					<div class="content">
-						<div class="subtitle">Jan 31</div>
+						<div class="date">Jan 31</div>
 						<div>Barack Obama has invited you to a botluck</div>
 					</div>
 					<button class="navButton" type="button">view</button>
@@ -44,47 +44,104 @@
 			<h2>Upcoming Botlucks</h2>
 			<div id="currentmeals">
 				<div class="meal">
-					<div class="subtitle">Feb 26</div>
-					<div class="mealPhoto">a meal photo</div>
+					<div class="date">Feb 26</div>
+					<div class="photo">a meal photo</div>
 					<div>
-						<div class="mealTitle">Jay-Z's Birthday Botluck</div>
-						<span class="subtitle">menu</span>
-						<span>Linguini</span><br>
-						<span class="subtitle">i'm bringing</span>
-						<div class="contributions">some stuff</div>
+						<div class="caption">Jay-Z's Birthday Botluck</div>
+						<div class="menu">
+							<span class="date">menu</span>
+							<span>Linguini</span><br>
+						</div>
+						<div class="date bringing">i'm bringing</div>
+						<div class="contributions">
+							<div class="contribution">
+								<div class="photo">a food photo</div>
+								<div class="caption">tomato sauce</div>
+							</div>
+							<div class="contribution">
+								<div class="photo">a food photo</div>
+								<div class="caption">pasta</div>
+							</div>
+						</div>
 						<div class="right"><button class="navButton" type="button">view</button></div>
 					</div>
 				</div>
 				<div class="meal">
-					<div class="subtitle">Mar 2</div>
-					<div class="mealPhoto">a meal photo</div>
+					<div class="date">Mar 2</div>
+					<div class="photo">a meal photo</div>
 					<div>
-						<div class="mealTitle">Lady Gaga's Muppet Botluck</div>
-						<span class="subtitle">menu</span>
-						<span>Sashimi</span><br>
-						<span class="subtitle">i'm bringing</span>
-						<div class="contributions">some stuff</div>
+						<div class="caption">Lady Gaga's Muppet Botluck</div>
+						<div class="menu">
+							<span class="date">menu</span>
+							<span>Sashimi</span><br>
+						</div>
+						<div class="date bringing">i'm bringing</div>
+						<div class="contributions">
+							<div class="contribution">
+								<div class="photo">a food photo</div>
+								<div class="caption">tuna</div>
+							</div>
+							<div class="contribution">
+								<div class="photo">a food photo</div>
+								<div class="caption">albacore</div>
+							</div>
+							<div class="contribution">
+								<div class="photo">a food photo</div>
+								<div class="caption">salmon</div>
+							</div>
+							<div class="contribution">
+								<div class="photo">a food photo</div>
+								<div class="caption">salt</div>
+							</div>
+						</div>
+						<div class="right"><button class="navButton" type="button">view</button></div>
+					</div>
+				</div>
+				<div class="meal">
+					<div class="date">Some other date</div>
+					<div class="photo">a meal photo</div>
+					<div>
+						<div class="caption">Some Other Botluck</div>
+						<div class="menu">
+							<span class="date">menu</span>
+							<span>Some Other Recipe</span><br>
+						</div>
+						<div class="date bringing">i'm bringing</div>
+						<div class="contributions">
+							<div class="contribution">
+								<div class="photo">a food photo</div>
+								<div class="caption">some other ingredient</div>
+							</div>
+							<div class="contribution">
+								<div class="photo">a food photo</div>
+								<div class="caption">Yet another ingredient</div>
+							</div>
+						</div>
 						<div class="right"><button class="navButton" type="button">view</button></div>
 					</div>
 				</div>
 
 			</div>
-			<div id="columnEnd"><button class="navButton" type="button">view past botlucks</button></div>
+			<div id="columnEnd">
+				<button class="navButton" type="button">view past botlucks</button>
+			</div>
 		</div>
 
 		<div id="leftnav">
 			<button class="navButton" type="button">start a botluck</button>
 			<br><br>
 			<!-- <h2>My Botluck</h2> -->
-			<!-- <div id="pfPhoto">avatar</div>
-			<div id="pfName">Beyonce Knowles</div> -->
-			<div id="karmaBadge"></div>
+			<!-- <div class="photo">avatar</div>
+			<div class="caption">Beyonce Knowles</div> -->
+			<div id="karmaBadge">78</div>
 			<h2>Contribute to more botlucks to earn more karma points!</h2>
 			<button class="navButton" type="button">my botlucks</button>
 			<button class="navButton" type="button">my kitchen</button>
 			<button class="navButton" type="button">my friends</button>
 
 		</div>
+
+		<div id="pageEnd"></div>
 
 	</div>
 

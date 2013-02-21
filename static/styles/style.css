@@ -1,3 +1,11 @@
+/*
+    styling to-do's if we have time 
+
+    add a footer
+    figure out how to tile better (e.g. heights of meals, no margin)
+
+*/
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -102,6 +110,8 @@ body {
 	display: inline-block;
 	margin-right: 50px;
 	width: 500px;
+	padding-right: 45px;
+	border-right: thin solid #F2D03A;
 	/*background-color: #faf4c0;*/
 }
 
@@ -122,14 +132,27 @@ h2 {
 	color: #62C4B4;
 }
 
-h3 {
-	
+.date {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-bottom: 5px;
+	margin-top: 9px;
+	margin-right: 5px;
+}
+
+.date.bringing {
+	margin-top: 15px;
+}
+
+.icon {
+	display: inline-block;
+	vertical-align: top;
 }
 
 .invitation {
 	padding-top: 20px;
 	padding-bottom: 20px;
-	/*border-top: thin solid #F2E8BF;*/
 	border-bottom: thin solid #F2E8BF;
 }
 
@@ -137,17 +160,62 @@ h3 {
 	border-bottom: thin solid #F2E8BF;
 }
 
+.invitation .content {
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 15px;
+	width: 300px;
+}
+
 .meal {
 	display: inline-block;
 	padding: 5px 10px;
 	margin-right: 20px;
 	width: 200px;
-	/*height: 200px;*/
 	background-color: #faf4c0;
 	vertical-align: top;
 	padding-bottom: 10px;
 }
 
+.contribution {
+	display: inline-block;
+	padding: 5px;
+	width: 50px;
+	vertical-align: top;
+	padding-bottom: 10px;
+}
+
+.photo {
+	display: inline-block;
+	background-color: #DDD;
+}
+
+.meal .photo {
+	width: 200px;
+	height: 100px;
+}
+
+.contribution .photo {
+	width: 50px;
+	height: 50px;
+}
+
+.meal .caption {
+	margin-top: 10px;
+	margin-bottom: 15px;
+	font-weight: 400;
+	/*height:40px;*/
+}
+
+.contribution .caption {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-size: 12px;
+	font-weight: 300;
+	text-transform: lowercase;
+	/*height:40px;*/
+	text-align: center;
+}
 
 #leftnav {
 	display: inline-block;
@@ -157,25 +225,15 @@ h3 {
 	width: 200px;
 	padding-top: 30px;
 	padding-bottom: 50px;
-	padding-left: 30px;
-	border-left: thin solid #F2D03A;
+	/*border-left: thin solid #F2D03A;*/
 }
 
-#pfPhoto {
-	display: inline-block;
-	background-color: #CCC;
+#leftnav .photo {
 	width: 100px;
 	height: 100px;
 }
 
-.mealPhoto {
-	display: inline-block;
-	background-color: #DDD;
-	width: 200px;
-	height: 100px;
-}
-
-#pfName {
+#leftnav .caption {
 	display: inline-block;
 }
 
@@ -183,19 +241,21 @@ h3 {
 	display: block;
 	width: 200px;
 	height: 200px;
-	background-image: url("/static/assets/karma-points-badge.png");
+	background-image: url("../assets/karma-points-badge.png");
+	font-size: 100px;
+	font-weight: 700;
+	line-height: 200px;
+	color: #F2D03A;
 }
 
-.icon {
-	display: inline-block;
-	vertical-align: top;
+
+#columnEnd {
+	display: block;
+	text-align: center;
 }
 
-.invitation .content {
-	display: inline-block;
-	vertical-align: top;
-	margin-left: 15px;
-	width: 300px;
+#pageEnd {
+	height: 50px;
 }
 
 button.navButton{
@@ -215,15 +275,9 @@ button.navButton{
 	height: 25px;
 }
 
-#columnEnd {
-	display: block;
-	text-align: center;
-}
-
 #leftnav button.navButton, #columnEnd button.navButton {
 	display: block;
 	width:200px; 
-	/*height: 25px;*/
 	font-family: "Roboto";
 	font-weight: 300;
 	font-size: 20px;
@@ -237,26 +291,6 @@ button.navButton{
 	margin-bottom: 50px;
 }
 
-.subtitle {
-	font-size: 12px;
-	font-weight: 700;
-	text-transform: uppercase;
-	margin-bottom: 5px;
-	margin-top: 9px;
-	margin-right: 5px;
-}
-
-.mealTitle {
-	margin-top: 10px;
-	margin-bottom: 20px;
-	font-weight: 400;
-	/*height:40px;*/
-}
-
-.contributions {
-	display: inline-block;
-}
-
 .columnEnd {
 	height: 50px;
 }
@@ -264,3 +298,4 @@ button.navButton{
 .right {
 	text-align: right;
 }
+
