@@ -12,95 +12,98 @@
 		<script type="text/javascript" src="/static/js/User.js"></script>
 	</header>
 	<body>
-		<div id="headerBar">
+	<div id="headerBar">
 		<div class="wrapper headerText"><br>Welcome to Botluck!</div>
 	</div>
 	<div id="headerBar2">
 	</div>
 	<div class="wrapper">
-		<br><br><br>
-		<h1>Login or join here</h1>
-		<br><br><br>
-		<form id="login-form" action="/static/home.html">
-			<input id="username-input" type="textarea" value="username"/>
-			<br>
-			<input id="password-input" type="textarea" value="password"/>
-			<br>
-		</form>
-		<br>
-		<br>
-		<br>
+		<div class="login-form">
+			<br><br><br>
+			<h1>Login or join here</h1>
+			<br><br><br>
+			<form action="/static/home.html">
+				<input id="username-input" type="textarea" value="username"/>
+				<br>
+				<input id="password-input" type="textarea" value="password"/>
+				<br>
+				<input id="loginBttn" type="button" value="Login"/> 
+				<input id="signUpBttn" type="button" value="Sign Up"/> 
+			</form>
 		</div>
+		<div class="login-form">
+			<form id="signup-form" style="display: none">
+				<h3> What's your name? <h3>
+				<input id="new-name-input" type="textarea" value=""/>
+				<br>
+				<h3> Choose your username </h3>
+				<input id="new-username-input" type="textarea" value=""/>
+				<br>
+				<h3> Choose a password </h3>
+				<input id="new-password-input" type="textarea" value=""/>
+				<br>
+				<input id="createNewUserBttn" type="button" value="Create New User"/>
+				<br>
+				<div id='success-message'></div>
+			</form>
+		</div>
+		<br><br><br> 
 	</div>
-
 	<div id="footerBar2"></div>
 	<div id="footerBar"></div>
-
-		
-		<script type="text/javascript">
-			$('#loginBttn').click(function() {
-				var username = $('#username-input').val();
-				var password = $('#password-input').val();
-				$.ajax({
-						type: "post",
-						data: {"username": username, "password": password},
-						url: "/verify/home.html",
-						success: function(data) {
-							if (data.success) {
-								window.location.href = "/static/" + data.url + "?id=" + data.uid;
-							}
-						}
-					});
-			});
-
-			// takes a username and password, and tells the server to create
-			// a new user. The server returns the new user id
-			var createNewUser = function(username, password, callbackfn) {
-				var id;
-				var wait = true;
-				$.ajax({
+	<script type="text/javascript">
+		$('#loginBttn').click(function() {
+			var username = $('#username-input').val();
+			var password = $('#password-input').val();
+			$.ajax({
 					type: "post",
-					url: "/user",
 					data: {
-						"username": username,
+						"username": username, 
 						"password": password
 					},
+					url: "/verify/home.html",
 					success: function(data) {
 						if (data.success) {
-							var user = new User(username, password, data.id);
-							if (callbackfn !== undefined) {
-								callbackfn(user);
-							}
+							window.location.href = "/static/" + data.url + "?id=" + data.uid;
+						} else {
+							// FAILED TO LOG IN!!!!!
+							// DISPLAY SOMETHING!!!
 						}
 					}
 				});
-			};
+		});
 
+		/* display sign up form */
+		$('#signUpBttn').click(function() {
+			$('#signup-form').show();
+		});
 
-			/* Test User Creation */
-			$('#createNewUserBttn').click(function() {
-				var populateTestUser = function(user) {
-					user.addIngredient(new Ingredient("tomatoes", 1, 1));
-					user.addIngredient(new Ingredient("onions", 1, 1));
-					user.addIngredient(new Ingredient("garlic", 1, 1));
-					user.addIngredient(new Ingredient("potatoes", 1, 1));
-					user.addIngredient(new Ingredient("pasta", 1, 1));
-					user.addIngredient(new Ingredient("chicken breast", 1, 1));
-					user.name = "Beyonce Knowles";
-					user.addUtensil(new Utensil("spoons", 1, 1));
-					user.addUtensil(new Utensil("forks", 1, 1));
-					user.addUtensil(new Utensil("knives", 1, 1));
-					user.karma = 10;
-					user.updateServer();
-				};
-				createNewUser("Beyonce", "1234", populateTestUser);
+		/* create new user */
+		$('#createNewUserBttn').click(function() {
+			var name = $('#new-name-input').val();
+			var username = $('#new-username-input').val();
+			var password = $('#new-password-input').val();
+			$.ajax({
+				type: "post",
+				url: "/user",
+				data: {
+					"username": username,
+					"password": password,
+					"name": name
+				},
+				success: function(data) {
+					console.log(data);
+					if (data.success) { // successfully created user
+						$('#success-message').html("Success! You will be redirected in a few seconds...").delay(1000);
+						window.location.href = "/static/home.html?id=" + data.uid;
+					} else if (data.usernameChosen) {
+						$('#success-message').html("The username you have requested is already in use.");
+					} else {
+						$('#success-message').html("There was an error contacting the server. Please refresh and try again.");
+					}
+				}
 			});
-
-			/* Test User Initialize From Server */
-			$('#initNewUserBttn').click(function() {
-				var user = new User("", "");
-				user.initFromServer(0);
-			});
-		</script>
+		});
+	</script>
 	</body>
 </html>

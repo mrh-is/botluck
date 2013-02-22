@@ -3,10 +3,11 @@ $.getScript("/static/js/Utensil.js", function(){});
 $.getScript("/static/js/Meal.js", function(){});
 $.getScript("/static/js/Invite.js", function(){});
 
-function User(userName, password, id) {
+function User(userName, password, id, name) {
 	if (userName !== undefined) this.userName = userName;
 	if (password !== undefined) this.password = password;
 	if (id !== undefined) this.id = id;
+	if (name !== undefined) this.name = name;
 
 	this.name = "";
 	this.ingredients = [];

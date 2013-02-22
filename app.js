@@ -35,6 +35,7 @@ var writeMetaUserData = function() {
         "userCount": userCount,
         "mealCount": mealCount
     };
+    console.log(metadata);
 	fs.writeFile(DBFile, JSON.stringify(metadata), function(err) {
     if (err) {
       console.log("Error writing file: ", DBFile);
@@ -81,6 +82,7 @@ var readUserData = function(id, response) {
             response.send({ "success": false });
         }
         else {
+            var userData = JSON.parse(data);
             response.send({
                 "userData": JSON.parse(data),
                 "success": true
@@ -95,9 +97,11 @@ var writeUserData = function(id, data, response) {
         if (err) {
             console.log("Error writing user file: ", filename);
             console.log(err);
-            response.send({ "success": false });
+            if (response !== undefined) {
+                response.send({ "success": false });
+            }
         }
-        else {
+        else if (response !== undefined) {
             response.send({ "success": true });
         }
     });
@@ -116,20 +120,30 @@ app.post("/user/:id", function(request, response) {
 app.post("/user", function(request, response) {
     var username = request.body.username;
     var password = request.body.password;
+    var name = request.body.name;
     var id = userCount;
     // user already exists
     if (userDB[username] !== undefined) {
-        response.send({ "success": false });
-    }
-    else {
+        response.send({ 
+            "success": false,
+            "usernameChosen": true
+        });
+    } else {
         userDB[username] = {
             "password": password,
             "id": id
         };
         userCount++;
         writeMetaUserData();
-        response.send({
+        var userData = {
             "id": id,
+            "username": username,
+            "password": password,
+            "name": name
+        };
+        writeUserData(id, JSON.stringify(userData));
+        response.send({
+            "uid": id,
             "success": true
         });
     }
