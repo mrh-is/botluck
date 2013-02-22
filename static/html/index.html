@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<header>
+		<title>Login</title>
+		<link rel="stylesheet" type="text/css" href="../styles/style.css">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,400,700,300' rel='stylesheet' type='text/css'>
+
 		<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>
 		<script type="text/javascript" src="/static/js/Ingredient.js"></script>
 		<script type="text/javascript" src="/static/js/Utensil.js"></script>
@@ -8,18 +12,33 @@
 		<script type="text/javascript" src="/static/js/User.js"></script>
 	</header>
 	<body>
-		<div> Index Page </div>
+		<div id="headerBar">
+		<div class="wrapper headerText"><br>Welcome to Botluck!</div>
+	</div>
+	<div id="headerBar2">
+	</div>
+	<div class="wrapper">
+		<br><br><br>
+		<h1>Login or join here</h1>
+		<br><br><br>
 		<form id="login-form" action="/static/home.html">
-			<input id="username-input" type="textarea"/>
+			<input id="username-input" type="textarea" value="username"/>
 			<br>
-			<input id="password-input" type="textarea"/>
-			<input id="loginBttn" type="button"> 
-				Submit
-			</input>
-			<input id="createNewUserBttn" type="button"> 
-				Create new user
-			</input>
+			<input id="password-input" type="textarea" value="password"/>
+			<br>
+			<input id="loginBttn" type="button" value="submit"/> 
+			<input id="createNewUserBttn" type="button" value="create new user"/> 
 		</form>
+		<br>
+		<br>
+		<br>
+		</div>
+	</div>
+
+	<div id="footerBar2"></div>
+	<div id="footerBar"></div>
+
+		
 		<script type="text/javascript">
 			$('#loginBttn').click(function() {
 				var username = $('#username-input').val();

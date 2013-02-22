@@ -1,11 +1,3 @@
-/*
-    styling to-do's if we have time 
-
-    add a footer
-    figure out how to tile better (e.g. heights of meals, no margin)
-
-*/
-
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -131,50 +123,24 @@ h2 {
 	padding-bottom: 30px;
 	color: #62C4B4;
 }
+.friend {
+	display: inline-block;
+}
 
 .date {
+	display: inline-block;
 	font-size: 12px;
 	font-weight: 700;
 	text-transform: uppercase;
 	margin-bottom: 5px;
 	margin-top: 9px;
 	margin-right: 5px;
+	vertical-align: middle;
 }
 
-.date.bringing {
-	margin-top: 15px;
-}
-
-.icon {
+.friendContributions {
 	display: inline-block;
 	vertical-align: top;
-}
-
-.invitation {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	border-bottom: thin solid #F2E8BF;
-}
-
-.invitation-top {
-	border-bottom: thin solid #F2E8BF;
-}
-
-.invitation .content {
-	display: inline-block;
-	vertical-align: top;
-	margin-left: 15px;
-	width: 300px;
-}
-
-.meal {
-	display: inline-block;
-	padding: 5px 10px;
-	margin-right: 20px;
-	width: 200px;
-	background-color: #faf4c0;
-	vertical-align: top;
-	padding-bottom: 10px;
 }
 
 .contribution {
@@ -188,23 +154,38 @@ h2 {
 .photo {
 	display: inline-block;
 	background-color: #DDD;
+	vertical-align: bottom;
+	margin-right: 20px;
 }
 
-.meal .photo {
+.friendRow {
+	background-color: #faf4c0;
+	padding: 3px 10px;
+	margin-bottom: 20px;
+}
+
+.mealDetail .photo {
 	width: 200px;
 	height: 100px;
+}
+
+.friend .photo {
+	width: 75px;
+	height: 75px;
+	vertical-align: top;
+}
+
+.caption {
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-top: 15px;
+	margin-bottom: 5px;
 }
 
 .contribution .photo {
 	width: 50px;
 	height: 50px;
-}
-
-.meal .caption {
-	margin-top: 10px;
-	margin-bottom: 15px;
-	font-weight: 400;
-	/*height:40px;*/
 }
 
 .contribution .caption {
@@ -258,28 +239,7 @@ h2 {
 	height: 50px;
 }
 
-#username-input, #password-input, #loginBttn, #createNewUserBttn {
-	font-family: "Roboto";
-	font-size: 14px;
-	line-height: 24px;
-	width: 258px;
-}
-
-#loginBttn, #createNewUserBttn {
-	color: #000000;
-  	background-color: #F2D03A;
-  	border-radius: 1px;
-  	-moz-border-radius: 1px;
-  	border: none;
-  	
-  	/*display: block;*/
-	width:125px;
-	height: 40px;
-	margin-right: 8px;
-	padding-top: 5px;
-}
-
-button.navButton, #loginBttn, #createNewUserBttn {
+button.navButton {
 	color: #000000;
   	background-color: #F2D03A;
   	border-radius: 1px;
@@ -287,13 +247,6 @@ button.navButton, #loginBttn, #createNewUserBttn {
   	border: none;
   	font-family: "Roboto";
   	margin-top: 18px;
-}
-
-.invitation button.navButton, .meal button.navButton {
-	/*display: inline-block;*/
-	width:50px; 
-	margin-left: 20px;
-	height: 25px;
 }
 
 #leftnav button.navButton, #columnEnd button.navButton {
@@ -309,14 +262,15 @@ button.navButton, #loginBttn, #createNewUserBttn {
 #columnEnd button.navButton {
 	width: 300px;
 	margin-top: 50px;
-	margin-bottom: 50px;
+}
+
+.mealDetail button {
+	width:100px; 
+	/*margin-left: 20px;*/
+	height: 25px;
+	margin-top: 10px;
 }
 
 .columnEnd {
 	height: 50px;
 }
-
-.right {
-	text-align: right;
-}
-
