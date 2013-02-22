@@ -1,37 +1,39 @@
 function MealFinder() {
-	this.findMeals = function(ids) {
+	this.findMeals = function(ids, p) {
+		var page = p;
+		if (page === undefined) {
+			page = 1;
+		}
 		$.ajax({
 			type: "get",
 			url: "/allIngredients/" + ids.join(","),
 			success: function(data) {
 				console.log(data);
 				if (data.success) {
-					getPossibleMeals(data.ingredients);
+					getPossibleMeals(data.ingredients, p);
 				} else {
-					getPossibleMeals([]);
+					getPossibleMeals([], p);
 				}
 			}
 		});	
 	};
 
 	// This makes the call to the Recipe Puppy Api 
-	// which returns a nice JSON file
-	var getPossibleMeals = function(ingredients) {
+	// which returns a 10 meals
+	var getPossibleMeals = function(ingredients, page) {
 	    var names = []
 	    ingredients.forEach(function(i) {
 	        names.push(i.name);
 	    });
 
-	    $.ajax({
-	        type: "get",
-	        url: "http://www.recipepuppy.com/api/?i=" + names.join(","),
-	        success: function(data) {
-	            if (data.results.length === 0) {
-	                console.log(data.results);
-	            } else {
-	                
-	            }
-	        }
-	    });
+	     $.ajax({
+		   type: "GET",
+		   dataType: "jsonp",
+		   url: "http://www.recipepuppy.com/api/?i=" + names.join(",") + "&p="+page,
+		   jsonpCallback: 'callback',
+		   success: function(data) {
+		      console.log(data);
+		   }
+		});
 	};
 };
