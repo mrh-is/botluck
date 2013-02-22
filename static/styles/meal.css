@@ -230,26 +230,28 @@ h2 {
 }
 
 
-#columnEnd {
+#columnEnd, #columnEndInvite {
 	display: block;
 	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #pageEnd {
 	height: 50px;
 }
 
-button.navButton {
+.navButton {
 	color: #000000;
   	background-color: #F2D03A;
   	border-radius: 1px;
   	-moz-border-radius: 1px;
-  	border: none;
+  	border: none;	
   	font-family: "Roboto";
   	margin-top: 18px;
 }
 
-#leftnav button.navButton, #columnEnd button.navButton {
+#leftnav button.navButton, #columnEnd button.navButton, .friends .navButton {
 	display: block;
 	width:200px; 
 	font-family: "Roboto";
@@ -260,8 +262,31 @@ button.navButton {
 }
 
 #columnEnd button.navButton {
-	width: 300px;
+	width: 350px;
 	margin-top: 50px;
+}
+
+#columnEndInvite button.navButton {
+	display: inline-block;
+	font-size: 20px;
+	font-weight: 300;
+	width: 180px;
+	margin-top: 50px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+select {
+	font-family: "Roboto";
+	font-weight: 300;
+	font-size: 16px;
+}
+
+.friends .navButton {
+	font-size: 14px;
+	width: 150px;
+	margin-left: 0;
+	margin-top: 5px;
 }
 
 .mealDetail button {

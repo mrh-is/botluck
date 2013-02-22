@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <header>
+	<title>New Botluck</title>
+	<link rel="stylesheet" type="text/css" href="/static/styles/meal.css">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,400,700,300' rel='stylesheet' type='text/css'>
+
 	<script type="text/javascript" src="js/jquery-1.9.0.js"></script>
 	<script type="text/javascript" src="js/Supply.js"></script>
 	<script type="text/javascript" src="js/Ingredient.js"></script>
@@ -9,6 +13,196 @@
 	<script type="text/javascript" src="js/MealFinder.js"></script>
 </header>
 <body>
-	<div> New Meal </div>
+	<div id="headerBar">
+		<div class="wrapper headerText">A more stylized Botluck	logo of some kind <span class="subHeaderText">and a robot</span> !</div>
+	</div>
+	<div id="headerBar2">
+	</div>
+
+	<div class="wrapper">
+		<h1>Create a new botluck</h1>
+		<div id="mainCol">
+			<div class="mealDetail">
+				<h2>Start Time</h2>
+				some of these should probably be dynamically populated and/or validated
+				<br>
+				<br>
+				<form class="" action="">
+					<select name="startMonth">
+						<option value="1">Jan</option>
+						<option value="2" selected>Feb</option>
+						<option value="3">Mar</option>
+						<option value="4">Apr</option>
+						<option value="5">May</option>
+						<option value="6">Jun</option>
+						<option value="7">Jul</option>
+						<option value="8">Aug</option>
+						<option value="9">Sep</option>
+						<option value="10">Oct</option>
+						<option value="11">Nov</option>
+						<option value="12">Dec</option>
+					</select>
+					<select name="startDay">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+						<option value="24">24</option>
+						<option value="25">25</option>
+						<option value="26">26</option>
+						<option value="27">27</option>
+						<option value="28">28</option>
+						<option value="29">29</option>
+						<option value="30">30</option>
+						<option value="31">31</option>
+					</select>
+					<select name="startHour">
+						<option value="1" selected>1:00</option>
+						<option value="2">2:00</option>
+						<option value="3">3:00</option>
+						<option value="4">4:00</option>
+						<option value="5">5:00</option>
+						<option value="6">6:00</option>
+						<option value="7">7:00</option>
+						<option value="8">8:00</option>
+						<option value="9">9:00</option>
+						<option value="10">10:00</option>
+						<option value="11">11:00</option>
+						<option value="12">12:00</option>
+					</select>
+					<select name="startAMPM">
+						<option value="0">AM</option>
+						<option value="1">PM</option>
+					</select>
+				<h2>End Time</h2>
+					<select name="startMonth">
+						<option value="1">Jan</option>
+						<option value="2" selected>Feb</option>
+						<option value="3">Mar</option>
+						<option value="4">Apr</option>
+						<option value="5">May</option>
+						<option value="6">Jun</option>
+						<option value="7">Jul</option>
+						<option value="8">Aug</option>
+						<option value="9">Sep</option>
+						<option value="10">Oct</option>
+						<option value="11">Nov</option>
+						<option value="12">Dec</option>
+					</select>
+					<select name="startDay">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						<option value="21">21</option>
+						<option value="22">22</option>
+						<option value="23">23</option>
+						<option value="24">24</option>
+						<option value="25">25</option>
+						<option value="26">26</option>
+						<option value="27">27</option>
+						<option value="28">28</option>
+						<option value="29">29</option>
+						<option value="30">30</option>
+						<option value="31">31</option>
+					</select>
+					<select name="startHour">
+						<option value="1" selected>1:00</option>
+						<option value="2">2:00</option>
+						<option value="3">3:00</option>
+						<option value="4">4:00</option>
+						<option value="5">5:00</option>
+						<option value="6">6:00</option>
+						<option value="7">7:00</option>
+						<option value="8">8:00</option>
+						<option value="9">9:00</option>
+						<option value="10">10:00</option>
+						<option value="11">11:00</option>
+						<option value="12">12:00</option>
+					</select>
+					<select name="startAMPM">
+						<option value="0">AM</option>
+						<option value="1">PM</option>
+					</select>
+				</form>
+				<h2>Invite Friends</h2>
+				<form class="friends" action="">
+					<input type="checkbox" name="friends" value="userid">Barack Obama<br>
+					<input type="checkbox" name="friends" value="userid">John Mayer<br>
+					<input type="checkbox" name="friends" value="userid">Rihanna 
+					<br>
+					<br>
+					<input type="submit" class="navButton" value="add to guest list">
+					<br>
+				</form>
+				<div class="friendRow">
+					<div class="caption">Friends to be invited (to be populated as boxes get checked?)</div>
+					<br>
+					<div class="friend">
+						<div class="photo">a profile photo</div>
+						<div class="caption">friend name</div>
+					</div>
+				</div>
+			</div>
+			<div id="columnEnd">
+				<button class="navButton" type="button">create botluck & send invitations</button>
+			</div>
+		</div>
+
+		<div id="leftnav">
+			<button class="navButton" type="button">start a botluck</button>
+			<br><br>
+			<!-- <h2>My Botluck</h2> -->
+			<!-- <div class="photo">avatar</div>
+			<div class="caption">Beyonce Knowles</div> -->
+			<div id="karmaBadge">78</div>
+			<h2>Contribute to more botlucks to earn more karma points!</h2>
+			<button class="navButton" type="button">my botlucks</button>
+			<button class="navButton" type="button">my kitchen</button>
+			<button class="navButton" type="button">my friends</button>
+
+		</div>
+
+		<div id="pageEnd"></div>
+
+	</div>
+
+	<div id="footerBar2"></div>
+	<div id="footerBar"></div>
 </body>
 </html>
