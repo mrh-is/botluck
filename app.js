@@ -16,13 +16,12 @@ var mealCount = 0;
 var readMetaUserData = function() {
 	fs.readFile(DBFile, function(err, data) {
     if (err) {
-        userDB = {};
-    }
-    else {
+        console.log("Error reading meta user data: " + err);
+    } else {
         var metadata = JSON.parse(data);
-        userDB = metadata.userDB;
-        userCount = metadata.userCount;
-        mealCount = metadata.mealCount;
+        if (metadata.userDB !== undefined) userDB = metadata.userDB;
+        if (metadata.userCount !== undefined) userCount = metadata.userCount;
+        if (metadata.mealCount !== undefined) mealCount = metadata.mealCount;
     }
   });
 };
@@ -58,18 +57,22 @@ var changePassword = function(username, password) {
 	userDB[username].password = password;
 };
 
-app.post("/verify/:url", function(request, response) {
+app.post("/verify", function(request, response) {
 	var username = request.body.username;
 	var password = request.body.password;
 	var verified = false;
-	if (userDB[username].password === password) {
+	if (userDB[username] !== undefined && 
+        userDB[username].password === password) {
 		verified = true;
 	}
-	response.send({
-		"success": verified,
-		"url": request.params.url,
-		"uid": userDB[username].id
-	});
+    if (verified) {
+    	response.send({
+    		"success": verified,
+    		"uid": userDB[username].id
+    	});
+    } else {
+        response.send({ "success": false });
+    }
 });
 
 // This is for serving user data

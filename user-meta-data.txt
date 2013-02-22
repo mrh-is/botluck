@@ -1,1 +1,1 @@
-{"userDB":{"Beyonce":{"password":"1234","id":0},"mlaliwal":{"password":"1234","id":1}},"userCount":2,"mealCount":0}
+{"userDB":{"Beyonce":{"password":"1234","id":0}},"userCount":1,"mealCount":0}

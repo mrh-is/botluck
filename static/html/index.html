@@ -44,9 +44,9 @@
 				<br>
 				<input id="createNewUserBttn" type="button" value="Create New User"/>
 				<br>
-				<div id='success-message'></div>
 			</form>
 		</div>
+		<div id='success-message'></div>
 		<br><br><br> 
 	</div>
 	<div id="footerBar2"></div>
@@ -55,19 +55,22 @@
 		$('#loginBttn').click(function() {
 			var username = $('#username-input').val();
 			var password = $('#password-input').val();
+			if (username === undefined || password === undefined ||
+				username === "" || password === "") {
+				return;
+			}
 			$.ajax({
 					type: "post",
 					data: {
 						"username": username, 
 						"password": password
 					},
-					url: "/verify/home.html",
+					url: "/verify",
 					success: function(data) {
 						if (data.success) {
-							window.location.href = "/static/" + data.url + "?id=" + data.uid;
+							window.location.href = "/static/home.html?id=" + data.uid;
 						} else {
-							// FAILED TO LOG IN!!!!!
-							// DISPLAY SOMETHING!!!
+							$('#success-message').html("The username and password are incorrect.");
 						}
 					}
 				});
@@ -92,9 +95,8 @@
 					"name": name
 				},
 				success: function(data) {
-					console.log(data);
 					if (data.success) { // successfully created user
-						$('#success-message').html("Success! You will be redirected in a few seconds...").delay(1000);
+						$('#success-message').html("Success! You will be redirected in a few seconds...").delay(2500);
 						window.location.href = "/static/home.html?id=" + data.uid;
 					} else if (data.usernameChosen) {
 						$('#success-message').html("The username you have requested is already in use.");

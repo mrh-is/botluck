@@ -1,5 +1,3 @@
-$.getScript("/static/js/Meal.js",function(){});
-
-function MealFinder() {
+function MealFinder(ids) {
 
 }
