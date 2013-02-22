@@ -26,8 +26,6 @@
 			<br>
 			<input id="password-input" type="textarea" value="password"/>
 			<br>
-			<input id="loginBttn" type="button" value="submit"/> 
-			<input id="createNewUserBttn" type="button" value="create new user"/> 
 		</form>
 		<br>
 		<br>
@@ -70,14 +68,16 @@
 					success: function(data) {
 						if (data.success) {
 							var user = new User(username, password, data.id);
-							callbackfn(user);
+							if (callbackfn !== undefined) {
+								callbackfn(user);
+							}
 						}
 					}
 				});
 			};
 
 
-			/* Test User */
+			/* Test User Creation */
 			$('#createNewUserBttn').click(function() {
 				var populateTestUser = function(user) {
 					user.addIngredient(new Ingredient("tomatoes", 1, 1));
@@ -94,6 +94,12 @@
 					user.updateServer();
 				};
 				createNewUser("Beyonce", "1234", populateTestUser);
+			});
+
+			/* Test User Initialize From Server */
+			$('#initNewUserBttn').click(function() {
+				var user = new User("", "");
+				user.initFromServer(0);
 			});
 		</script>
 	</body>

@@ -8,7 +8,68 @@ function User(userName, password, id) {
 	if (password !== undefined) this.password = password;
 	if (id !== undefined) this.id = id;
 
-	var self = this;
+	this.name = "";
+	this.ingredients = [];
+	this.friends = [];
+	this.utensils = [];
+	this.karma = 0;
+	this.history = [];
+	this.currentMeals = [];
+	this.invites = [];
+
+
+	this.addIngredient = function(ingredient) {
+		this.ingredients.push(ingredient);
+	};
+
+	this.addUtensil = function(utensil) {
+		this.utensils.push(utensil);
+	};
+
+	this.addFriend = function(friendID) {
+		this.friends.push(friendID);
+	};
+
+	this.initFromServer = function(id, callbackfn) {
+		var self = this;
+		$.ajax({
+			type: "get",
+			url: "/user/" + id,
+			success: function(data) {
+				if (data.success) {
+					self.fromJSON(data.userData);
+				}
+				if (callbackfn != undefined) {
+					callbackfn();
+				}
+			}
+		});
+	};
+
+	this.updateServer = function(callbackfn) {
+		$.ajax({
+			type: "post",
+			url: "/user/" + this.id,
+			data: { "userData": this.toJSON() },
+			success: function(data) {
+				if (callbackfn !== undefined) {
+					callbackfn();
+				}
+			}
+		});
+	};
+
+	this.acceptInvite = function(mealId) {
+		$.ajax({
+			type: "post",
+			url: "/acceptInvite",
+			data: {
+				"userId": this.id,
+				"mealId": mealId
+			},
+			success: function(data) {}
+		});
+	};
 
 	this.toJSON = function() {
 		var data = {
@@ -40,65 +101,3 @@ function User(userName, password, id) {
 		if (data.invites !== undefined) this.invites = data.invites;
 	};
 };
-
-User.prototype.id = -1;
-User.prototype.userName = "";
-User.prototype.password = "";
-User.prototype.name = "";
-User.prototype.ingredients = [];
-User.prototype.friends = [];
-User.prototype.utensils = [];
-User.prototype.karma = 0;
-User.prototype.history = [];
-User.prototype.currentMeals = [];
-User.prototype.invites = [];
-
-User.prototype.addIngredient = function(ingredient) {
-	this.ingredients.push(ingredient);
-};
-
-User.prototype.addUtensil = function(utensil) {
-	this.utensils.push(utensil);
-};
-
-User.prototype.addFriend = function(friendID) {
-	this.friends.push(friendID);
-};
-
-User.prototype.initUserFromServer = function(id) {
-	$.ajax({
-		type: "get",
-		url: "/user/" + id,
-		success: function(data) {
-			if (data.success) {
-				this.fromJSON(data.userData);
-			}
-		}
-	});
-};
-
-User.prototype.updateServer = function() {
-	console.log(this);
-	$.ajax({
-		type: "post",
-		url: "/user/" + this.id,
-		data: this.stringify(),
-		success: function(data) {
-
-		}
-	});
-};
-
-User.prototype.acceptInvite = function(mealId) {
-	$.ajax({
-		type: "post",
-		url: "/acceptInvite",
-		data: {
-			"userId": this.id,
-			"mealId": mealId
-		},
-		success: function(data) {}
-	});
-};
-
-console.log("here");
