@@ -209,6 +209,19 @@ h3 {
 	height: 50px;
 }
 
+.ingredient {
+	display: inline-block;
+	padding: 5px;
+	width: 75px;
+	vertical-align: top;
+	padding-bottom: 10px;
+}
+
+.ingredient .photo {
+	width: 75px;
+	height: 75px;
+}
+
 .meal .caption {
 	margin-top: 10px;
 	margin-bottom: 15px;
@@ -298,6 +311,7 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn {
   	margin-top: 18px;
 }
 
+<<<<<<< HEAD
 .login-form {
 	display: inline-block;
 	margin-bottom: 20px;
@@ -306,6 +320,11 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn {
 #signup-form {
 	display: block;
 	margin-left: 100px;
+=======
+.ingredient button.navButton {
+	background-color: #DDD;
+	margin: 10px auto;
+>>>>>>> remaining html css
 }
 
 .invitation button.navButton, .meal button.navButton {
@@ -315,7 +334,7 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn {
 	height: 25px;
 }
 
-#leftnav button.navButton, #columnEnd button.navButton {
+#leftnav button.navButton, #columnEnd button.navButton, button.navButton.add {
 	display: block;
 	width:200px; 
 	font-family: "Roboto";
@@ -339,3 +358,8 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn {
 	text-align: right;
 }
 
+button.navButton.add {
+	width: 200px;
+	/*margin-left: 50px;*/
+	margin-bottom: 40px;
+}
