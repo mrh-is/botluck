@@ -1,10 +1,21 @@
-function Meal(id, ownerId, name, recipe, userIds) {
+var NOCHOICE = "n/a";
+function Meal(id, ownerId, name, userIds, date, choice) {
 	if (id !== undefined) this.id = id;
 	if (ownerId !== undefined) this.ownerId = ownerId;
 	if (name !== undefined) this.name = name;
-	if (recipe !== undefined) this.recipe = recipe;
 	if (userIds !== undefined) this.userIds = userIds;
-	this.startTime = new Date();
+	if (date !== undefined) this.date = date;
+	if (choice !== undefined) {
+		this.choice = choice;
+	} else {
+		this.choice = NOCHOICE;
+	}
+
+	this.contributions = {};
+
+	this.contribute = function(id, ingredients) {
+		this.contributions[id] = ingredients;
+	}
 
 	this.initFromServer = function(id) {
 		var self = this;
@@ -51,12 +62,14 @@ function Meal(id, ownerId, name, recipe, userIds) {
 		if (data.id !== undefined) this.id = data.id;
 		if (data.ownerId !== undefined) this.ownerId = data.ownerId;
 		if (data.name !== undefined) this.name = data.name;
-		var recipe = new Recipe();
-		if (data.recipe !== undefined) this.recipe = recipe.fromJSON(data.recipe);
 		if (data.userIds !== undefined) this.userIds = data.userIds;
 		if (data.contributions !== undefined) this.contributions = JSON.parse(data.contributions);
-		if (data.startTime !== undefined) this.startTime = data.startTime;
-		if (data.endTime !== undefined) this.endTime = data.endTime;
+		if (data.date !== undefined) this.date = data.date;
+		if (data.choice !== undefined) {
+			this.choice = data.choice;
+		} else {
+			this.choice = NOCHOICE;
+		}
 	};
 
 	this.toJSON = function() {

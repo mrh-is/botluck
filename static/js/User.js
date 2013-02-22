@@ -18,7 +18,6 @@ function User(userName, password, id, name) {
 	this.currentMeals = [];
 	this.invites = [];
 
-
 	this.addIngredient = function(ingredient) {
 		this.ingredients.push(ingredient);
 	};
@@ -31,6 +30,14 @@ function User(userName, password, id, name) {
 		this.friends.push(friendID);
 	};
 
+	this.addInvite = function(invite) {
+		this.invites.push(invite);
+	}
+
+	this.addMeal = function(meal) {
+		this.currentMeals.push(meal);
+	}
+
 	this.initFromServer = function(id, callbackfn) {
 		var self = this;
 		$.ajax({
@@ -39,10 +46,9 @@ function User(userName, password, id, name) {
 			success: function(data) {
 				if (data.success) {
 					self.fromJSON(data.userData);
-					console.log(data.userData);
 				}
 				if (callbackfn != undefined) {
-					callbackfn();
+					callbackfn(self);
 				}
 			}
 		});
