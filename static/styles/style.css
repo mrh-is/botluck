@@ -311,20 +311,18 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn {
   	margin-top: 18px;
 }
 
-<<<<<<< HEAD
 .login-form {
 	display: inline-block;
 	margin-bottom: 20px;
 }
 
 #signup-form {
-	display: block;
 	margin-left: 100px;
-=======
+}
+
 .ingredient button.navButton {
 	background-color: #DDD;
 	margin: 10px auto;
->>>>>>> remaining html css
 }
 
 .invitation button.navButton, .meal button.navButton {

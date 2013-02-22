@@ -39,6 +39,7 @@ function User(userName, password, id, name) {
 			success: function(data) {
 				if (data.success) {
 					self.fromJSON(data.userData);
+					console.log(data.userData);
 				}
 				if (callbackfn != undefined) {
 					callbackfn();

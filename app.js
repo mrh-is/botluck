@@ -76,21 +76,29 @@ app.post("/verify", function(request, response) {
 });
 
 // This is for serving user data
-var readUserData = function(id, response) {
+var readUserData = function(id, response, callbackfn, done) {
     var filename = userDir + "user-" + id + ".txt";
     fs.readFile(filename, function(err, data) {
         if (err) {
             console.log("Error reading user file: ", filename);
             console.log(err);
-            response.send({ "success": false });
+            if (response !== undefined) {
+                response.send({ "success": false });
+            }
         }
         else {
             var userData = JSON.parse(data);
-            response.send({
-                "userData": JSON.parse(data),
-                "success": true
-            });
+            if (response !== undefined) {
+                response.send({
+                    "userData": JSON.parse(data),
+                    "success": true
+                });
+            }
+            if (callbackfn !== undefined) {
+                callbackfn(userData);
+            }
         }
+        done = true;
     });
 };
 
@@ -140,7 +148,7 @@ app.post("/user", function(request, response) {
         writeMetaUserData();
         var userData = {
             "id": id,
-            "username": username,
+            "userName": username,
             "password": password,
             "name": name
         };
@@ -232,6 +240,40 @@ app.post("/acceptInvite", function(request, response) {
             "success": writeMealData(userId, data)
         });
     }
+});
+
+// takes list of ids and returns the combined ingredients
+// of all the users, does this recursively to handle async
+// requests
+app.get("/allIngredients/:ids", function(request, response) {
+    var idsString = request.params.ids;
+    var idArr = idsString.split(",");
+
+    var addIngredients = function(ids, ingredients1) {
+        if (ids.length === 0) {
+            response.send({
+                "success": true,
+                "ingredients": ingredients1
+            });
+        }
+        var id = ids[0];
+        ids.splice(0,1);
+        var add = function(userData) {
+            var ingredients2 = ingredients1;
+            if (userData !== undefined &&
+                userData.ingredients !== undefined) {
+                for (var i in userData.ingredients) {
+                    ingredients2.push(userData.ingredients[i]);
+                }
+            }
+            addIngredients(ids, ingredients2);
+        }
+        if (id !== undefined) {
+            readUserData(id, undefined, add);
+        }
+    }
+
+    addIngredients(idArr, []);
 });
 
 // This is for serving javascript files
