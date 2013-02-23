@@ -263,7 +263,7 @@ h3 {
 	display: block;
 	width: 200px;
 	height: 200px;
-	background-image: url("../assets/karma-points-badge.png");
+	background-image: url("/static/assets/karma-points-badge.png");
 	font-size: 100px;
 	font-weight: 700;
 	line-height: 200px;

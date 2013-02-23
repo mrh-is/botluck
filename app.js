@@ -295,12 +295,12 @@ app.get("/static/home/:query", function (request, response) {
     var query = request.params.query;
     var filename;
     var i = query.indexOf("?");
-    if (i < -1) {
+    if (i === -1) {
         filename = query;
     } else {
         filename = query.substring(0, i);
     }
-	response.sendfile("static/html/home-" + request.params.filename);
+	response.sendfile("static/html/home-" + query);
 });
 
 // This is for serving assets
