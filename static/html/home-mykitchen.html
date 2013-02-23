@@ -6,10 +6,11 @@
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,400,700,300' rel='stylesheet' type='text/css'>
 
 	<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>
-	<script type="text/javascript" src="/static/js/Ingredient.js"></script>
-	<script type="text/javascript" src="/static/js/Utensil.js"></script>
-	<script type="text/javascript" src="/static/js/User.js"></script>
-	<script type="text/javascript" src="/static/js/MealFinder.js"></script>
+
+	<script type="text/javascript" src="/static/classes/Ingredient.js"></script>
+	<script type="text/javascript" src="/static/classes/Utensil.js"></script>
+	<script type="text/javascript" src="/static/classes/User.js"></script>
+	<script type="text/javascript" src="/static/classes/MealFinder.js"></script>
 </header>
 <body>
 	<div id="headerBar">
@@ -26,12 +27,12 @@
 				<div class="ingredient">
 					<div class="photo">a food photo</div>
 					<div class="caption">tomato sauce</div>
-					<button class="navButton" type="button">delete</button>
+					<button class="navButton">delete</button>
 				</div>
 				<div class="ingredient">
 					<div class="photo">a food photo</div>
 					<div class="caption">tomato sauce</div>
-					<button class="navButton" type="button">delete</button>
+					<button class="navButton">delete</button>
 				</div>
 				<div class="ingredient">
 					<div class="photo">a food photo</div>
@@ -46,23 +47,23 @@
 			</div>
 			<button class="navButton add" type="button">add new ingredient</button>
 			<h2>My utensils</h2>
-			<div id="utensilss">
-				<div class="ingredient">
+			<div id="utensils">
+				<div class="utensil">
 					<div class="photo">a food photo</div>
 					<div class="caption">tomato sauce</div>
 					<button class="navButton" type="button">delete</button>
 				</div>
-				<div class="ingredient">
+				<div class="utensil">
 					<div class="photo">a food photo</div>
 					<div class="caption">tomato sauce</div>
 					<button class="navButton" type="button">delete</button>
 				</div>
-				<div class="ingredient">
+				<div class="utensil">
 					<div class="photo">a food photo</div>
 					<div class="caption">tomato sauce</div>
 					<button class="navButton" type="button">delete</button>
 				</div>
-				<div class="ingredient">
+				<div class="utensil">
 					<div class="photo">a food photo</div>
 					<div class="caption">tomato sauce</div>
 					<button class="navButton" type="button">delete</button>
@@ -80,7 +81,7 @@
 			<!-- <h2>My Botluck</h2> -->
 			<!-- <div class="photo">avatar</div>
 			<div class="caption">Beyonce Knowles</div> -->
-			<div id="karmaBadge">78</div>
+			<div id="karmaBadge">0</div>
 			<h2>Contribute to more botlucks to earn more karma points!</h2>
 			<button class="navButton" type="button">my botlucks</button>
 			<button class="navButton" type="button">my kitchen</button>
@@ -94,5 +95,7 @@
 
 	<div id="footerBar2"></div>
 	<div id="footerBar"></div>
+
+	<script type="text/javascript" src="/static/js/mykitchen.js"></script>
 </body>
 </html>

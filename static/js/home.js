@@ -38,16 +38,16 @@ var addInvite = function(invite) {
 	$("<div>").html(invite.username + " has invited you to a botluck").appendTo(content);
 	content.appendTo(mainDiv);
 	var btn = $("<button class=\"navButton\" type=\"button\">").html("view");
-			// set it such that clicking the button takes them to the meal page
-			(function() {
-				var mealId = invite.mealId;
-				btn.click(function() {
-					window.location.href = "/home/meal.html?uid=" + user.id + "&mid=" + mealId;
-				});
-			})();
-			btn.appendTo(mainDiv);
-			mainDiv.appendTo($("#invitations"));
-		}
+	// set it such that clicking the button takes them to the meal page
+	(function() {
+		var mealId = invite.mealId;
+		btn.click(function() {
+			window.location.href = "/home/meal.html?uid=" + user.id + "&mid=" + mealId;
+		});
+	})();
+	btn.appendTo(mainDiv);
+	mainDiv.appendTo($(".invitations"));
+};
 
 // populate current meals
 var addMeal = function(meal) {
@@ -65,7 +65,7 @@ var addMeal = function(meal) {
 	var contributions = meal.contributions[user.id];
 	console.log(contributions);
 	contributions.forEach(function(ingredient) {
-		var div = $("<div>").addClass("contribution")
+		var div = $("<div>").addClass("contribution");
 		$("<div>").addClass("photo").html("a food photo").appendTo(div);
 		$("<div>").addClass("caption").html(ingredient.name).appendTo(div);
 		div.appendTo(contributionDiv);
@@ -83,34 +83,34 @@ var addMeal = function(meal) {
 	mainDiv.appendTo($("#currentmeals"));
 };
 
-		// set the nav bar buttons on the right
-		$("#myBotlucksBttn").click(function() {
+// set the nav bar buttons on the right
+$("#myBotlucksBttn").click(function() {
 			// go to your botluck page
 		});
 
-		$("#myKitchenBttn").click(function() {
-			window.location.href = "/static/home/mykitchen.html?id=" + user.id;
-		});
+$("#myKitchenBttn").click(function() {
+	window.location.href = "/static/home/mykitchen.html?uid=" + user.id;
+});
 
-		$("#myFriendsBttn").click(function() {
-			// go to some friends page
-		});
+$("#myFriendsBttn").click(function() {
+	// go to some friends page
+});
 
-		// on load, the user is initialized from the server
-		// and populatePageData is called
-		window.onload = function() {
-			var url = window.location.href;
-			var i = url.indexOf("uid=");
-			if (i === -1) {
-				console.log("You were redirected to home without a vaild user id");
-				return;
-			}
-			id = parseInt(url.substring(i+4));
-			if (id === NaN) {
-				console.log("You were redirected to home without a vaild user id");
-				return;
-			}
+// on load, the user is initialized from the server
+// and populatePageData is called
+window.onload = function() {
+	var url = window.location.href;
+	var i = url.indexOf("uid=");
+	if (i === -1) {
+		console.log("You were redirected to home without a vaild user id");
+		return;
+	}
+	id = parseInt(url.substring(i+4),10);
+	if (isNaN(id)) {
+		console.log("You were redirected to home without a vaild user id");
+		return;
+	}
 
-			user = new User();
-			user.initFromServer(id, populatePageData);
-		};
+	user = new User();
+	user.initFromServer(id, populatePageData);
+};
