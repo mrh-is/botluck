@@ -30,6 +30,15 @@ var showUtensil = function(utensil) {
 	$("<button>").addClass("navButton").attr("type","button").html("delete").appendTo(utensilDiv);
 };
 
+// add new supplies
+$("#addIngredientButton").click(function() {
+	// window.location.href = "/static/home/addingredient.html?uid=" + user.id;
+});
+
+$("#addUtensilButton").click(function() {
+	// window.location.href = "/static/home/addutensil.html?uid=" + user.id;
+});
+
 // set the nav bar buttons on the right
 $("#myBotlucksBttn").click(function() {
 	// go to your botluck page
