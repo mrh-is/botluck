@@ -141,6 +141,21 @@ h3 {
 	color: #62C4B4;
 }
 
+.newKitchenItem {
+	padding: 15px;
+	background-color: #faf4c0;
+}
+
+.formBlock {
+	display: inline-block;
+	margin-left: 20px;
+	margin-bottom: 5px;
+}
+
+.formBlock:nth-child(1) {
+	margin-left: 0;
+}
+
 .date {
 	font-size: 12px;
 	font-weight: 700;
@@ -263,7 +278,7 @@ h3 {
 	display: block;
 	width: 200px;
 	height: 200px;
-	background-image: url("/static/assets/karma-points-badge.png");
+	background-image: url("../assets/karma-points-badge.png");
 	font-size: 100px;
 	font-weight: 700;
 	line-height: 200px;
@@ -280,11 +295,25 @@ h3 {
 	height: 50px;
 }
 
-#username-input, #password-input, #loginBttn, #signUpBttn, #createNewUserBttn, #new-username-input, #new-name-input, #new-password-input {
+#username-input, #password-input, #loginBttn, #signUpBttn, #createNewUserBttn, #new-username-input, #new-name-input, #new-password-input, #ingredient-name, #ingredient-qty, #unit, #ingredient-price, #utensil-name, #utensil-qty {
 	font-family: "Roboto";
 	font-size: 14px;
 	line-height: 24px;
 	width: 258px;
+}
+
+#ingredient-qty, #utensil-qty {
+	width: 30px;
+}
+
+#unit {
+	width: 70px;
+	height: 30px;
+	margin-top: 2px;
+}
+
+#ingredient-price {
+	width: 70px;
 }
 
 #loginBttn, #signUpBttn, #createNewUserBttn {
@@ -301,7 +330,7 @@ h3 {
 	padding-top: 5px;
 }
 
-button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn {
+button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn, #add-ingredient, #cancel-ingredient, #add-utensil, #cancel-utensil {
 	color: #000000;
   	background-color: #F2D03A;
   	border-radius: 1px;
@@ -360,4 +389,24 @@ button.navButton.add {
 	width: 200px;
 	/*margin-left: 50px;*/
 	margin-bottom: 40px;
+}
+
+.friend {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.friend .photo {
+	width: 75px;
+	height: 75px;
+}
+
+.friend .caption {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-size: 14px;
+	font-weight: 400;
+	text-transform: lowercase;
+	/*height:40px;*/
+	text-align: center;
 }

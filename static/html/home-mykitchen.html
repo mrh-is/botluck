@@ -26,10 +26,64 @@
 			<div id="ingredients">
 			</div>
 			<button id="addIngredientButton" class="navButton add" type="button">add new ingredient</button>
+			<div class="newKitchenItem login-form">
+				<form id="new-ingredient">
+					<div class="formBlock">
+						<div class="date">qty</div>
+						<input id="ingredient-qty" type="text" value="0"/>
+						<br>
+					</div>
+					<div class="formBlock">
+						<div class="date">unit</div>
+						<select id="unit"> 	
+							<option value="1">tsp</option>
+							<option value="2" selected>Tbsp</option>
+							<option value="3">c</option>
+							<option value="4">pint</option>
+							<option value="5">qt</option>
+							<option value="6">gal</option>
+							<option value="7">L</option>
+							<option value="8">oz</option>
+							<option value="9">lb</option>
+							<option value="10">g</option>
+							<option value="11">kg</option>
+							<option value="12">lightyear</option>
+						</select>
+						<br>
+					</div>
+					<div class="formBlock">
+						<div class="date">ingredient name</div>
+						<input id="ingredient-name" type="text" value=""/>
+						<br>
+					</div>
+					<div class="date">price per unit</div>
+					$ <input id="ingredient-price" type="text" value="0"/>
+					<br>
+					<input id="add-ingredient" type="button" value="add"/> <input id="cancel-ingredient" type="button" value="cancel"/>
+					<br>
+				</form>
+			</div>
 			<h2>My utensils</h2>
 			<div id="utensils">
 			</div>
 			<button id="addUtensilButton" class="navButton add" type="button">add new utensil</button>
+			<div class="newKitchenItem login-form">
+				<form id="new-utensil">
+					<div class="formBlock">
+						<div class="date">qty</div>
+						<input id="utensil-qty" type="text" value="0"/>
+						<br>
+					</div>
+					<div class="formBlock">
+						<div class="date">utensil name</div>
+						<input id="utensil-name" type="text" value=""/>
+						<br>
+					</div>
+					<br>
+					<input id="add-utensil" type="button" value="add"/> <input id="cancel-utensil" type="button" value="cancel"/>
+					<br>
+				</form>
+			</div>
 			<div id="columnEnd">
 				
 			</div>
