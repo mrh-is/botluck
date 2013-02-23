@@ -323,7 +323,11 @@ app.get("/allIngredients/:ids", function(request, response) {
 
 // This is for serving javascript files
 app.get("/static/js/:filename", function (request, response) {
-	response.sendfile("static/js/" + request.params.filename);
+    response.sendfile("static/js/" + request.params.filename);
+});
+
+app.get("/static/classes/:filename", function (request, response) {
+    response.sendfile("static/classes/" + request.params.filename);
 });
 
 // This is for serving css files

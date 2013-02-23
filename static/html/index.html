@@ -6,11 +6,12 @@
 		<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,400,700,300' rel='stylesheet' type='text/css'>
 
 		<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>
-		<script type="text/javascript" src="/static/js/Ingredient.js"></script>
-		<script type="text/javascript" src="/static/js/Utensil.js"></script>
-		<script type="text/javascript" src="/static/js/Meal.js"></script>
-		<script type="text/javascript" src="/static/js/User.js"></script>
-		<script type="text/javascript" src="/static/js/MealFinder.js"></script>
+
+		<script type="text/javascript" src="/static/classes/Ingredient.js"></script>
+		<script type="text/javascript" src="/static/classes/Utensil.js"></script>
+		<script type="text/javascript" src="/static/classes/Meal.js"></script>
+		<script type="text/javascript" src="/static/classes/User.js"></script>
+		<script type="text/javascript" src="/static/classes/MealFinder.js"></script>
 	</header>
 	<body>
 	<div id="headerBar">
@@ -26,7 +27,7 @@
 			<form action="/static/home.html">
 				<input id="username-input" type="textarea" placeholder="username"/>
 				<br>
-				<input id="password-input" type="textarea" placeholder="password"/>
+				<input id="password-input" type="password" placeholder="password"/>
 				<br>
 				<input id="loginBttn" type="button" value="Login"/> 
 				<input id="signUpBttn" type="button" value="Sign Up"/> 
@@ -52,61 +53,6 @@
 	</div>
 	<div id="footerBar2"></div>
 	<div id="footerBar"></div>
-	<script type="text/javascript">
-		$('#loginBttn').click(function() {
-			var username = $('#username-input').val();
-			var password = $('#password-input').val();
-			if (username === undefined || password === undefined ||
-				username === "" || password === "") {
-				return;
-			}
-			$.ajax({
-					type: "post",
-					data: {
-						"username": username, 
-						"password": password
-					},
-					url: "/verify",
-					success: function(data) {
-						if (data.success) {
-							window.location.href = "/static/home.html?uid=" + data.uid;
-						} else {
-							$('#success-message').html("The username and password are incorrect.");
-						}
-					}
-				});
-		});
-
-		/* display sign up form */
-		$('#signUpBttn').click(function() {
-			$('#signup-form').show();
-		});
-
-		/* create new user */
-		$('#createNewUserBttn').click(function() {
-			var name = $('#new-name-input').val();
-			var username = $('#new-username-input').val();
-			var password = $('#new-password-input').val();
-			$.ajax({
-				type: "post",
-				url: "/user",
-				data: {
-					"username": username,
-					"password": password,
-					"name": name
-				},
-				success: function(data) {
-					if (data.success) { // successfully created user
-						$('#success-message').html("Success! You will be redirected in a few seconds...").delay(2500);
-						window.location.href = "/static/home.html?uid=" + data.uid;
-					} else if (data.usernameChosen) {
-						$('#success-message').html("The username you have requested is already in use.");
-					} else {
-						$('#success-message').html("There was an error contacting the server. Please refresh and try again.");
-					}
-				}
-			});
-		});
-	</script>
+	<script type="text/javascript" src="/static/js/index.js"></script>
 	</body>
 </html>
