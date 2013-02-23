@@ -337,19 +337,12 @@ app.get("/static/styles/:filename", function (request, response) {
 
 // This is for serving home pages
 app.get("/static/home/meals/:filename", function (request, response) {
-	response.sendfile("static/html/home-meals-" + request.params.filename);
+    response.sendfile("static/html/home-meals-" + request.params.filename);
 });
 
-app.get("/static/home/:query", function (request, response) {
-    var query = request.params.query;
-    var filename;
-    var i = query.indexOf("?");
-    if (i === -1) {
-        filename = query;
-    } else {
-        filename = query.substring(0, i);
-    }
-	response.sendfile("static/html/home-" + query);
+app.get("/static/home/:filename", function (request, response) {
+    var filename = request.params.filename;
+	response.sendfile("static/html/home-" + filename);
 });
 
 // This is for serving assets
@@ -358,12 +351,9 @@ app.get("/static/assets/:filename", function (request, response) {
 });
 
 // This is for serving files in the static directory
-app.get("/static/:staticFilename", function (request, response) {
-	if (request.body.user !== undefined) {
-		console.log(request.body.user);
-		console.log(request.body.password);
-	}
-    response.sendfile("static/html/" + request.params.staticFilename);
+app.get("/static/:filename", function (request, response) {
+	var filename = request.params.filename;
+    response.sendfile("static/html/" + filename);
 });
 
 app.listen(8889);
