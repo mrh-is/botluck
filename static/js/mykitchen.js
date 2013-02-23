@@ -16,7 +16,7 @@ var populatePageData = function(user) {
 
 // populate ingredients
 var showIngredient = function(ingredient) {
-	var ingredientDiv = $("<div>").addClass("ingredient").appendTo($(".ingredients"));
+	var ingredientDiv = $("<div>").addClass("ingredient").appendTo($("#ingredients"));
 	$("<div>").addClass("photo").html(ingredient.name).appendTo(ingredientDiv);
 	$("<div>").addClass("caption").html(ingredient.name).appendTo(ingredientDiv);
 	$("<button>").addClass("navButton").attr("type","button").html("delete").appendTo(ingredientDiv);
@@ -24,7 +24,7 @@ var showIngredient = function(ingredient) {
 
 // populate utensils
 var showUtensil = function(utensil) {
-	var utensilDiv = $("<div>").addClass("utensil").appendTo($(".utensils"));
+	var utensilDiv = $("<div>").addClass("utensil").appendTo($("#utensils"));
 	$("<div>").addClass("photo").html(utensil.name).appendTo(utensilDiv);
 	$("<div>").addClass("caption").html(utensil.name).appendTo(utensilDiv);
 	$("<button>").addClass("navButton").attr("type","button").html("delete").appendTo(utensilDiv);

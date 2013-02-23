@@ -46,7 +46,7 @@ var addInvite = function(invite) {
 		});
 	})();
 	btn.appendTo(mainDiv);
-	mainDiv.appendTo($(".invitations"));
+	mainDiv.appendTo($("#invitations"));
 };
 
 // populate current meals
