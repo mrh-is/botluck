@@ -1,0 +1,1 @@
+id":10,"userName":"adsfaadsfdfg","password":"1234","name":"","ingredients":[],"friends":[],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}

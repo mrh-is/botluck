@@ -118,6 +118,12 @@ var writeUserData = function(id, data, response) {
     });
 };
 
+var isValidId = function(id) {
+    return (typeof(id) === typeof(1) &&
+        id !== NaN && 
+        id >= 0);
+}
+
 app.get("/user/:id", function(request, response) {
 	readUserData(request.params.id, response);
 });
@@ -158,6 +164,42 @@ app.post("/user", function(request, response) {
             "success": true
         });
     }
+});
+
+// given a list of user ids, 
+// returns the real name of the user
+app.get("/friendsInfo/:ids", function(request, response) {
+    var idsString = request.params.ids;
+    var idArr = idsString.split(",");
+    var intIds = [];
+    idArr.forEach(function(id) {
+        intIds.push(parseInt(id));
+    });
+
+    var getFriendInfo = function(ids, friendInfo) {
+        if (ids.length === 0) {
+            response.send({
+                "success": true,
+                "usersData": friendInfo
+            });
+        }
+        var id = ids[0];
+        ids.splice(0,1);
+        var recursive = function(userData) {
+            var friendInfo1 = friendInfo;
+            if (userData !== undefined &&
+                userData.name !== undefined &&
+                userData.id !== undefined) {
+                friendInfo1[userData.id] = userData.name;
+            }
+            getFriendInfo(ids, friendInfo1);
+        }
+        if (isValidId(id)) {
+            readUserData(id, undefined, recursive);
+        }
+    }
+
+    getFriendInfo(intIds, {});
 });
 
 // This is for serving meal data and storing meal data
@@ -248,6 +290,9 @@ app.post("/acceptInvite", function(request, response) {
 app.get("/allIngredients/:ids", function(request, response) {
     var idsString = request.params.ids;
     var idArr = idsString.split(",");
+    idArr.forEach(function(id) {
+        id = parseInt(id);
+    });
 
     var addIngredients = function(ids, ingredients1) {
         if (ids.length === 0) {
@@ -268,7 +313,7 @@ app.get("/allIngredients/:ids", function(request, response) {
             }
             addIngredients(ids, ingredients2);
         }
-        if (id !== undefined) {
+        if (isValidId(id)) {
             readUserData(id, undefined, add);
         }
     }

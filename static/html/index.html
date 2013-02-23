@@ -69,7 +69,7 @@
 					url: "/verify",
 					success: function(data) {
 						if (data.success) {
-							window.location.href = "/static/home.html?id=" + data.uid;
+							window.location.href = "/static/home.html?uid=" + data.uid;
 						} else {
 							$('#success-message').html("The username and password are incorrect.");
 						}
@@ -98,7 +98,7 @@
 				success: function(data) {
 					if (data.success) { // successfully created user
 						$('#success-message').html("Success! You will be redirected in a few seconds...").delay(2500);
-						window.location.href = "/static/home.html?id=" + data.uid;
+						window.location.href = "/static/home.html?uid=" + data.uid;
 					} else if (data.usernameChosen) {
 						$('#success-message').html("The username you have requested is already in use.");
 					} else {
