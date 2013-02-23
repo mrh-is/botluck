@@ -32,8 +32,8 @@ var showUtensil = function(utensil) {
 
 // set the nav bar buttons on the right
 $("#myBotlucksBttn").click(function() {
-			// go to your botluck page
-		});
+	// go to your botluck page
+});
 
 $("#myKitchenBttn").click(function() {
 	window.location.href = "/static/home/mykitchen.html?uid=" + user.id;
