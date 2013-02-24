@@ -78,14 +78,27 @@ body {
 }
 
 .headerText {
-	padding-top: 120px;
+	padding-top: 10px;
 	color: white;
 	font-weight: 700;
 	font-size: 70px;
 }
 
-.subHeaderText {
-	font-size: 20px;
+#mycanvas {
+	width: 278px;
+	height: 370px;
+	display: inline-block;
+	margin-left: 0px;
+}
+
+#botluckTitle {
+	width: 391px;
+	height: 206px;
+	background-image: url("/static/assets/title.png");
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 90px;
+	margin-left: -20px;
 }
 
 .wrapper {
@@ -222,7 +235,7 @@ h2 {
 	display: block;
 	width: 200px;
 	height: 200px;
-	background-image: url("../assets/karma-points-badge.png");
+	background-image: url("/static/assets/karma-points-badge.png");
 	font-size: 100px;
 	font-weight: 700;
 	line-height: 200px;

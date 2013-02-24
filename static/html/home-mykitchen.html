@@ -2,7 +2,7 @@
 <html>
 <header>
 	<title>My Kitchen</title>
-	<link rel="stylesheet" type="text/css" href="../styles/style.css">
+	<link rel="stylesheet" type="text/css" href="/static/styles/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,400,700,300' rel='stylesheet' type='text/css'>
 
 	<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>
@@ -14,7 +14,10 @@
 </header>
 <body>
 	<div id="headerBar">
-		<div class="wrapper headerText">A more stylized Botluck	logo of some kind <span class="subHeaderText">and a robot</span> !</div>
+		<div class="wrapper headerText">
+			<canvas id="mycanvas" width="300" height="400"></canvas>
+			<div id="botluckTitle"></div>
+		</div>
 	</div>
 	<div id="headerBar2">
 	</div>
@@ -110,6 +113,7 @@
 	<div id="footerBar2"></div>
 	<div id="footerBar"></div>
 
+	<script type="text/javascript" src="/static/js/bot.js"></script>
 	<script type="text/javascript" src="/static/js/mykitchen.js"></script>
 </body>
 </html>
