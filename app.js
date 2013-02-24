@@ -76,33 +76,31 @@ app.post("/verify", function(request, response) {
 });
 
 // This is for serving user data
-var readUserData = function(id, response, callbackfn, done) {
+var readUserData = function(id, callbackfn) {
+    id = parseInt(id);
+    if (!isValidId(id)) {
+        return;
+    }
     var filename = userDir + "user-" + id + ".txt";
     fs.readFile(filename, function(err, data) {
         if (err) {
             console.log("Error reading user file: ", filename);
             console.log(err);
-            if (response !== undefined) {
-                response.send({ "success": false });
-            }
         }
         else {
             var userData = JSON.parse(data);
-            if (response !== undefined) {
-                response.send({
-                    "userData": JSON.parse(data),
-                    "success": true
-                });
-            }
             if (callbackfn !== undefined) {
                 callbackfn(userData);
             }
         }
-        done = true;
     });
 };
 
 var writeUserData = function(id, data, response) {
+    id = parseInt(id);
+    if (!isValidId(id)) {
+        return;
+    }
     var filename = userDir + "user-" + id + ".txt";
     fs.writeFile(filename, data, function(err, data) {
         if (err) {
@@ -125,7 +123,13 @@ var isValidId = function(id) {
 }
 
 app.get("/user/:id", function(request, response) {
-	readUserData(request.params.id, response);
+    var sendResponse = function(userData) {
+        response.send({
+            "userData": userData,
+            "success": true
+        });
+    };
+	readUserData(request.params.id, sendResponse);
 });
 
 app.post("/user/:id", function(request, response) {
@@ -195,7 +199,7 @@ app.get("/friendsInfo/:ids", function(request, response) {
             getFriendInfo(ids, friendInfo1);
         }
         if (isValidId(id)) {
-            readUserData(id, undefined, recursive);
+            readUserData(id, recursive);
         }
     }
 
@@ -236,10 +240,11 @@ var writeMealData = function(id, data, response) {
 
 app.get("/mealId", function(request, response) {
     response.send({
-        "id": mealCount,
+        "mid": mealCount,
         "success": true
     });
     mealCount++;
+    writeMetaUserData();
 });
 
 app.get("/meal/:id", function(request, response) {
@@ -254,18 +259,20 @@ app.post("/meal/:id", function(request, response) {
 
 // This is for handling user invitations
 app.post("/invite", function(request, response) {
-    var mealId = request.body.mealId;
-    var userId = request.body.userId;
-    var userData = readUserData(userId);
-    if (userData === undefined) {
-        response.send({"success": false});
-    } else {
-        userData.invites.push(mealId);
-        data = JSON.stringify(userData);
-        response.send({
-            "success": writeUserData(userId, data)
-        });
+    var mealId = request.body.mid;
+    var userId = request.body.uid;
+
+    var addInvite = function(userData) {
+        if (userData.invites !== undefined) {
+            userData.invites.push(mealId);
+        } else {
+            userData.invites = [mealId];
+        }
+        writeUserData(userData.id, JSON.stringify(userData));
+        response.send({ "success": true });
     }
+
+    readUserData(userId, addInvite);
 });
 
 app.post("/acceptInvite", function(request, response) {
@@ -314,7 +321,7 @@ app.get("/allIngredients/:ids", function(request, response) {
             addIngredients(ids, ingredients2);
         }
         if (isValidId(id)) {
-            readUserData(id, undefined, add);
+            readUserData(id, add);
         }
     }
 

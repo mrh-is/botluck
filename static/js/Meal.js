@@ -1,11 +1,10 @@
 var NOCHOICE = "n/a";
-function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
+function Meal(id, ownerId, name, userIds, startTime, endTime choice) {
 	if (id !== undefined) this.id = id;
 	if (ownerId !== undefined) this.ownerId = ownerId;
 	if (name !== undefined) this.name = name;
 	if (userIds !== undefined) this.userIds = userIds;
-	if (startTime !== undefined) this.startTime = startTime;
-	if (endTime !== undefined) this.endTime = endTime;
+	if (date !== undefined) this.date = date;
 	if (choice !== undefined) {
 		this.choice = choice;
 	} else {
@@ -35,16 +34,13 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 	};
 
 	this.updateServer = function(callbackfn) {
-		var mealData = this.toJSON();
 		$.ajax({
 			type: "post",
 			url: "/meal/" + this.id,
-			data: { 
-				"mealData": mealData 
-			},
+			data: { "mealData": this.toJSON() },
 			success: function(data) {
 				if (callbackfn !== undefined) {
-					callbackfn(data);
+					callbackfn();
 				}
 			}
 		});
@@ -55,8 +51,8 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 			type: "post",
 			url: "/invite",
 			data: {
-				"mid": this.id,
-				"uid": userId
+				"mealId": this.id,
+				"userId": userId
 			},
 			success: function(data) {}
 		});
@@ -68,8 +64,7 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 		if (data.name !== undefined) this.name = data.name;
 		if (data.userIds !== undefined) this.userIds = data.userIds;
 		if (data.contributions !== undefined) this.contributions = JSON.parse(data.contributions);
-		if (data.startTime !== undefined) this.startTime = data.startTime;
-		if (data.endTime !== undefined) this.endTime = data.endTime;
+		if (data.date !== undefined) this.date = data.date;
 		if (data.choice !== undefined) {
 			this.choice = data.choice;
 		} else {
@@ -78,16 +73,6 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 	};
 
 	this.toJSON = function() {
-		var data = {
-			"id": this.id,
-			"ownerId": this.ownerId,
-			"name": this.name,
-			"userIds": this.userIds,
-			"contributions": this.contributions,
-			"startTime": this.startTime,
-			"endTime": this.endTime,
-			"choice": this.choice
-		};
-		return JSON.stringify(data);
+		return JSON.stringify(this);
 	};
 }

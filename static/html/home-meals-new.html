@@ -5,11 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="/static/styles/meal.css">
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,400,700,300' rel='stylesheet' type='text/css'>
 
+<<<<<<< HEAD
 	<script type="text/javascript" src="/static//static/js/jquery-1.9.0.js"></script>
 	<script type="text/javascript" src="/static//static/js/Ingredient.js"></script>
 	<script type="text/javascript" src="/static//static/js/Utensil.js"></script>
 	<script type="text/javascript" src="/static//static/js/User.js"></script>
 	<script type="text/javascript" src="/static//static/js/MealFinder.js"></script>
+=======
+>>>>>>> create meal done
 </header>
 <body>
 	<div id="headerBar">
@@ -32,7 +35,7 @@
 				<form class="" action="">
 					<select id="startMonth">
 						<option value="1">Jan</option>
-						<option value="2" selected>Feb</option>
+						<option value="2">Feb</option>
 						<option value="3">Mar</option>
 						<option value="4">Apr</option>
 						<option value="5">May</option>
@@ -77,7 +80,7 @@
 						<option value="30">30</option>
 						<option value="31">31</option>
 					</select>
-					<select name="startHour">
+					<select id="startHour">
 						<option value="1" selected>1:00</option>
 						<option value="2">2:00</option>
 						<option value="3">3:00</option>
@@ -91,7 +94,7 @@
 						<option value="11">11:00</option>
 						<option value="12">12:00</option>
 					</select>
-					<select name="startAMPM">
+					<select id="startAMPM">
 						<option value="0">AM</option>
 						<option value="1">PM</option>
 					</select>
@@ -143,7 +146,7 @@
 						<option value="30">30</option>
 						<option value="31">31</option>
 					</select>
-					<select name="endHour">
+					<select id="endHour">
 						<option value="1" selected>1:00</option>
 						<option value="2">2:00</option>
 						<option value="3">3:00</option>
@@ -157,7 +160,7 @@
 						<option value="11">11:00</option>
 						<option value="12">12:00</option>
 					</select>
-					<select name="endAMPM">
+					<select id="endAMPM">
 						<option value="0">AM</option>
 						<option value="1">PM</option>
 					</select>
@@ -169,8 +172,6 @@
 						<input type="checkbox" name="friends" value="userid">John Mayer<br>
 						<input type="checkbox" name="friends" value="userid">Rihanna<br>
 					</div> 
-					<br>
-					<input type="submit" class="navButton" value="add to guest list">
 					<br>
 				</form>
 				<div class="friendRow">
@@ -216,31 +217,102 @@
 
 		// creates a new meal from input data
 		$("#createNewMealBttn").click(function() {
+			$.ajax({
+				type: "get",
+				url: "/mealId",
+				success: function(data) {
+					if (data.success) {
+						alert("Created meal successfully! Sending invitations...");
+						var mid = data.mid;
+						var uid = user.id;
+						var name = "" + uid + mid;
+						var date = new Date();
+						var startTime = new Date(
+							date.getFullYear(), 
+							parseInt($("#startMonth").val()), 
+							parseInt($("#startDay").val()),
+							parseInt($("#startHour").val()) + 12*parseInt($("#startAMPM").val()),
+							0,0,0);
+						var endTime = new Date(
+							date.getFullYear(),
+							parseInt($("#endMonth").val()), 
+							parseInt($("#endDay").val()),
+							parseInt($("#endHour").val()) + 12*parseInt($("#endAMPM").val()),
+							0,0,0);
+						var invites = [];
+						$.each($("#friendList input:checked"),
+							function() {
+								invites.push(this.id);
+							}
+						);
 
+						// update meal
+						var meal = new Meal(mid, uid, name, invites, startTime, endTime);
+						meal.updateServer();
+
+						// update user
+						if (user.currentMeals === undefined) {
+							user.currentMeals = [mid];
+						} else {
+							user.currentMeals.push(mid);
+						}
+						user.updateServer();
+
+						// send invites
+						var length = invites.length;
+						for (var i=0; i < length; i++) {
+							meal.inviteUser(invites[i]);
+						}
+					}
+				}
+			});
 		});
-
-		// changes the invited friends
-		$('')
 
 		var populateFriendList = function(data) {
 			var wrapper = $("#friendList");
-			console.log(data);
 			for (var id in data) {
-				var checkbox = $("<input type=\"checkbox\" name=\"friends\" value=\"" + id + "\">").appendTo(wrapper);
+				var checkbox = $("<input type=\"checkbox\" class=\"friend-check-box\" name=\"friends\" id=\"" + id + "\">").appendTo(wrapper);
+				checkbox.click(function() {
+					if (this.checked) {
+						var id = this.id;
+						$.each($("#invitedFriends > .friend"), 
+							function() {
+								if (this.id === id) {
+									$(this).show();
+								}
+						})
+					} else {
+						var id = this.id;
+						$.each($("#invitedFriends > .friend"), 
+							function(i, v) {
+								if (this.id === id) {
+									$(this).hide();
+								}
+						})
+					}
+				});
 				wrapper.append(data[id]);
 				$("<br>").appendTo(wrapper);
+
+				var invitedBox = $("<div>").addClass("friend").attr("id", id);
+				$("<div>").addClass("photo").html("a profile photo").appendTo(invitedBox);
+				$("<div>").addClass("caption").html(data[id]).appendTo(invitedBox);
+				invitedBox.appendTo($("#invitedFriends"));
+				invitedBox.hide();
 			}
-		}
+		};
 
 		var populatePageData = function() {
 			$("#karmaBadge").html(user.karma);
 
 			// set start/end date to today
+			// DOESNT WORK!!!
 			var date = new Date();
 			var month = date.getMonth();
 			var day = date.getDate();
 
-			$("#startMonth:nth-child(" + month + ")").attr("selected", "selected");
+
+			$("#startMonth").attr("selectedIndex", month);
 			$("#startDay:nth-child(" + day + ")").attr("selected", "selected");
 			$("#endMonth:nth-child(" + month + ")").attr("selected", "selected");
 			$("#endDay:nth-child(" + day + ")").attr("selected", "selected");
@@ -250,7 +322,6 @@
 				type: "get",
 				url: "/friendsInfo/" + user.friends.join(","),
 				success: function(data) {
-					console.log(data);
 					if (data.success) {
 						populateFriendList(data.usersData);
 					}

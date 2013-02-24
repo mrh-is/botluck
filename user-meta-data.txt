@@ -1,1 +1,1 @@
-{"userDB":{"michael":{"password":"asdf","id":0}},"userCount":1,"mealCount":0}
+{"userDB":{"michael":{"password":"asdf","id":0},"nbatliv":{"password":"asdf","id":1},"mlaliwal":{"password":"asdf","id":2}},"userCount":3,"mealCount":3}

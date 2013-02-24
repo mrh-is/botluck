@@ -1,1 +1,0 @@
-{"name":"","ingredients":[],"friends":[2],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}

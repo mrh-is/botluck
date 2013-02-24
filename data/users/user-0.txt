@@ -1,1 +1,1 @@
-{"id":0,"userName":"michael","password":"asdf","name":"Michael"}
+{"id":0,"userName":"michael","password":"asdf","name":"Michael","invites":["0","2"]}
