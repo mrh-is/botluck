@@ -259,20 +259,24 @@ app.post("/meal/:id", function(request, response) {
 
 // This is for handling user invitations
 app.post("/invite", function(request, response) {
-    var mealId = request.body.mid;
-    var userId = request.body.uid;
-
+    var invite = {
+        "mealId": request.body.mid,
+        "userId": request.body.uid,
+        "username": request.body.name,
+        "date": request.body.date
+    };
+    
     var addInvite = function(userData) {
         if (userData.invites !== undefined) {
-            userData.invites.push(mealId);
+            userData.invites.push(invite);
         } else {
-            userData.invites = [mealId];
+            userData.invites = [invite];
         }
         writeUserData(userData.id, JSON.stringify(userData));
         response.send({ "success": true });
     }
 
-    readUserData(userId, addInvite);
+    readUserData(invite.userId, addInvite);
 });
 
 app.post("/acceptInvite", function(request, response) {

@@ -50,13 +50,15 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 		});
 	};
 
-	this.inviteUser = function(userId) {
+	this.inviteUser = function(userId, name, date) {
 		$.ajax({
 			type: "post",
 			url: "/invite",
 			data: {
 				"mid": this.id,
-				"uid": userId
+				"uid": userId,
+				"name": name,
+				"date": date
 			},
 			success: function(data) {}
 		});

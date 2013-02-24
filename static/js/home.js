@@ -14,6 +14,7 @@ var populatePageData = function(user) {
 	user.addMeal(m);
 	user.karma = 10; */
 
+	console.log(user);
 	$("#welcome-message").html("Welcome, " + user.name + "!");
 	$("#karmaBadge").html(user.karma);
 
@@ -27,14 +28,39 @@ var populatePageData = function(user) {
 
 };
 
+var month = new Array(12);
+month[0] = "Jan";
+month[1] = "Feb";
+month[2] = "Mar";
+month[3] = "Apr";
+month[4] = "May";
+month[5] = "Jun";
+month[6] = "Jul";
+month[7] = "Aug";
+month[8] = "Sep";
+month[9] = "Oct";
+month[10] = "Nov";
+month[11] = "Dec";
+
+var weekday=new Array(7);
+weekday[0]="Sun";
+weekday[1]="Mon";
+weekday[2]="Tue";
+weekday[3]="Wed";
+weekday[4]="Thu";
+weekday[5]="Fri";
+weekday[6]="Sat";
+
 // populate invites
 var addInvite = function(invite) {
 	var mainDiv = $("<div class=\"invitation\">");
-	$("<img src=\"static/assets/invitation-icon.png\">")
+	$("<img src=\"/static/assets/invitation-icon.png\">")
 	.appendTo($("<div class=\"icon\">"))
 	.appendTo(mainDiv);
 	var content = $("<div>").addClass("content");
-	$("<div>").addClass("date").html(invite.date).appendTo(content);
+	var date = new Date(invite.date);
+	var dateString = weekday[date.getDay()] + ", " + month[date.getMonth()] + " " + date.getDay();
+	$("<div>").addClass("date").html(dateString).appendTo(content);
 	$("<div>").html(invite.username + " has invited you to a botluck").appendTo(content);
 	content.appendTo(mainDiv);
 	var btn = $("<button class=\"navButton\" type=\"button\">").html("view");
