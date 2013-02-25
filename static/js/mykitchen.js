@@ -7,11 +7,9 @@ var populatePageData = function(user) {
 	user.ingredients.forEach(function(ingredient) {
 		showIngredient(ingredient);
 	});
-
 	user.utensils.forEach(function(utensil) {
 		showUtensil(utensil);
 	});
-
 };
 
 // populate ingredients
@@ -19,7 +17,9 @@ var showIngredient = function(ingredient) {
 	var ingredientDiv = $("<div>").addClass("ingredient").appendTo($("#ingredients"));
 	$("<div>").addClass("photo").html(ingredient.name).appendTo(ingredientDiv);
 	$("<div>").addClass("caption").html(ingredient.name).appendTo(ingredientDiv);
-	$("<button>").addClass("navButton").attr("type","button").html("delete").appendTo(ingredientDiv);
+	$("<button>").addClass("navButton").addClass("deleteIngredientButton").attr("ingredient",user.ingredients.indexOf(ingredient)).attr("type","button").html("delete").click(function(button) {
+		deleteIngredient($(button.currentTarget).attr("ingredient"));
+	}).appendTo(ingredientDiv);
 };
 
 // populate utensils
@@ -27,10 +27,12 @@ var showUtensil = function(utensil) {
 	var utensilDiv = $("<div>").addClass("utensil").appendTo($("#utensils"));
 	$("<div>").addClass("photo").html(utensil.name).appendTo(utensilDiv);
 	$("<div>").addClass("caption").html(utensil.name).appendTo(utensilDiv);
-	$("<button>").addClass("navButton").attr("type","button").html("delete").appendTo(utensilDiv);
+	$("<button>").addClass("navButton").addClass("deleteUtensilButton").attr("utensil",user.utensils.indexOf(utensil)).attr("type","button").html("delete").click(function(button) {
+		deleteUtensil($(button.currentTarget).attr("utensil"));
+	}).appendTo(utensilDiv);
 };
 
-// add new supplies
+// add new ingredient
 $("#addIngredientButton").click(function() {
 	$("#new-ingredient").parent().show();
 });
@@ -50,17 +52,51 @@ $("#add-ingredient").click(function() {
 	}
     user.ingredients.push(new Ingredient($("#ingredient-name").val(), $("#ingredient-qty").val(), $("#ingredient-price").val()));
     user.updateServer(showIngredient(user.ingredients[user.ingredients.length-1]));
+	$("#new-ingredient").parent().hide();
+	$("#new-ingredient")[0].reset();
 });
 
 $("#cancel-ingredient").click(function() {
-	console.log($("#ingredient-name").val());
-	$("#new-ingredient")[0].reset();
 	$("#new-ingredient").parent().hide();
+	$("#new-ingredient")[0].reset();
 });
 
+// add new utensil
 $("#addUtensilButton").click(function() {
 	$("#new-utensil").parent().show();
 });
+
+$("#add-utensil").click(function() {
+	if ($("#utensil-name").val() === undefined) {
+		alert("Your utensil needs a name!");
+		return;
+	}
+	if (isNaN($("#utensil-qty").val())) {
+		alert("Your utensil needs a numerical quantity!");
+		return;
+	}
+    user.utensils.push(new Utensil($("#utensil-name").val(), $("#utensil-qty").val()));
+    user.updateServer(showUtensil(user.utensils[user.utensils.length-1]));
+	$("#new-utensil").parent().hide();
+	$("#new-utensil")[0].reset();
+});
+
+$("#cancel-utensil").click(function() {
+	$("#new-utensil").parent().hide();
+	$("#new-utensil")[0].reset();
+});
+
+// delete ingredient
+var deleteIngredient = function(index) {
+	user.ingredients.splice(index,1);
+	user.updateServer($(".ingredient")[index].remove());
+};
+
+// delete utensil
+var deleteUtensil = function(index) {
+	user.utensils.splice(index,1);
+	user.updateServer($(".utensil")[index].remove());
+};
 
 // set the nav bar buttons on the right
 $("#myBotlucksBttn").click(function() {

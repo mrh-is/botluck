@@ -362,7 +362,7 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn, #add-ingredient, 
 	margin-left: 100px;
 }
 
-.ingredient button.navButton {
+.ingredient button.navButton,.utensil button.navButton {
 	background-color: #DDD;
 	margin: 10px auto;
 }
