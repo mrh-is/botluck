@@ -78,7 +78,7 @@ app.post("/verify", function(request, response) {
 
 // This is for serving user data
 var readUserData = function(id, callbackfn) {
-    id = parseInt(id,10);
+    id = parseInt(id);
     if (!isValidId(id)) {
         return;
     }
@@ -118,7 +118,7 @@ var writeUserData = function(id, data, response) {
 };
 
 var isValidId = function(id) {
-    return (typeof(id) === typeof(1) && isNaN(id) &&  id >= 0);
+    return (typeof(id) === typeof(1) && !isNaN(id) &&  id >= 0);
 };
 
 app.get("/user/:id", function(request, response) {
@@ -309,10 +309,7 @@ app.get("/allIngredients/:ids", function(request, response) {
     var idArr = request.params.ids.split(",");
     var ids = [];
     idArr.forEach(function(id) {
-<<<<<<< HEAD
-        id = parseInt(id,10);
-=======
->>>>>>> recipe finding
+        ids.push(parseInt(id));
     });
 
     var addIngredients = function(ids, data1) {
@@ -331,13 +328,8 @@ app.get("/allIngredients/:ids", function(request, response) {
                 userData.ingredients !== undefined) {
                 data2[userData.id] = userData.ingredients;
             }
-<<<<<<< HEAD
-            addIngredients(ids, ingredients2);
-        };
-=======
             addIngredients(ids, data2);
         }
->>>>>>> recipe finding
         if (isValidId(id)) {
             readUserData(id, add);
         }

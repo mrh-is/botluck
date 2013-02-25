@@ -1,20 +1,12 @@
-var NOCHOICE = new Recipe("n/a", [], "", "");
-function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
+var NORECIPE = new Recipe("n/a", [], "", "");
+function Meal(id, ownerId, name, userIds, startTime, endTime) {
 	if (id !== undefined) this.id = id;
 	if (ownerId !== undefined) this.ownerId = ownerId;
 	if (name !== undefined) this.name = name;
 	if (userIds !== undefined) this.userIds = userIds;
 	if (startTime !== undefined) this.startTime = startTime;
 	if (endTime !== undefined) this.endTime = endTime;
-	if (choice !== undefined) {
-<<<<<<< HEAD
-		this.choice = choice;
-	}
-	else {
-		this.choice = NOCHOICE;
-=======
->>>>>>> recipe finding
-	}
+	this.recipe = NORECIPE;
 
 	this.contributions = {};
 	this.recipeChosen = false;
@@ -83,18 +75,10 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 		if (data.contributions !== undefined) this.contributions = data.contributions;
 		if (data.startTime !== undefined) this.startTime = data.startTime;
 		if (data.endTime !== undefined) this.endTime = data.endTime;
-<<<<<<< HEAD
-		if (data.choice !== undefined) {
-			this.choice = data.choice;
-		}
-		else {
-			this.choice = NOCHOICE;
-=======
 		if (data.recipe !== undefined) {
 			this.recipe = data.recipe;
 		} else {
-			this.recipe = NOCHOICE;
->>>>>>> recipe finding
+			this.recipe = NORECIPE;
 		}
 		if (data.recipeChosen !== undefined) this.recipeChosen = data.recipeChosen;
 	};
