@@ -1,32 +1,31 @@
 function MealFinder() {
-	this.findMeals = function(ids, p, callbackfn) {
-		var page = p;
-		if (page === undefined) {
-			page = 1;
-		}
+	this.findUserIngredients = function(ids, callbackfn) {
 		$.ajax({
 			type: "get",
 			url: "/allIngredients/" + ids.join(","),
 			success: function(data) {
-				console.log(data);
-				if (data.success) {
-					getPossibleMeals(data.ingredients, p, callbackfn);
-				} else {
-					getPossibleMeals([], p, callbackfn);
+				if (data.success && 
+					callbackfn !== undefined) {
+					callbackfn(data.ingredients);
 				}
 			}
 		});
 	};
 
-	// This makes the call to the Recipe Puppy Api 
-	// which returns a 10 meals
-	var getPossibleMeals = function(ingredients, page, callbackfn) {
-	    var names = []
-	    ingredients.forEach(function(i) {
-	        names.push(i.name);
+	// makes the call to the Recipe Puppy API
+	// and calls callbackfn on the results
+	this.findMeals = function(ingredients, p, callbackfn) {
+		var page = p;
+		if (page === undefined) {
+			page = 1;
+		}
+
+		var names = [];
+	    $.each(ingredients, function(i, ingredient) {
+	        names.push(ingredient.name);
 	    });
 
-	     $.ajax({
+	    $.ajax({
 		   type: "GET",
 		   dataType: "jsonp",
 		   url: "http://www.recipepuppy.com/api/?i=" + names.join(",") + "&p="+page,

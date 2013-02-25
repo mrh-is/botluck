@@ -306,37 +306,44 @@ app.post("/acceptInvite", function(request, response) {
 // of all the users, does this recursively to handle async
 // requests
 app.get("/allIngredients/:ids", function(request, response) {
-    var idsString = request.params.ids;
-    var idArr = idsString.split(",");
+    var idArr = request.params.ids.split(",");
+    var ids = [];
     idArr.forEach(function(id) {
+<<<<<<< HEAD
         id = parseInt(id,10);
+=======
+>>>>>>> recipe finding
     });
 
-    var addIngredients = function(ids, ingredients1) {
+    var addIngredients = function(ids, data1) {
         if (ids.length === 0) {
+            console.log(data1);
             response.send({
                 "success": true,
-                "ingredients": ingredients1
+                "ingredients": data1
             });
         }
         var id = ids[0];
         ids.splice(0,1);
         var add = function(userData) {
-            var ingredients2 = ingredients1;
+            var data2 = data1;
             if (userData !== undefined &&
                 userData.ingredients !== undefined) {
-                for (var i in userData.ingredients) {
-                    ingredients2.push(userData.ingredients[i]);
-                }
+                data2[userData.id] = userData.ingredients;
             }
+<<<<<<< HEAD
             addIngredients(ids, ingredients2);
         };
+=======
+            addIngredients(ids, data2);
+        }
+>>>>>>> recipe finding
         if (isValidId(id)) {
             readUserData(id, add);
         }
     };
 
-    addIngredients(idArr, []);
+    addIngredients(ids, {});
 });
 
 // This is for serving javascript files

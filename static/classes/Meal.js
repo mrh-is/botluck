@@ -1,4 +1,4 @@
-var NOCHOICE = "n/a";
+var NOCHOICE = new Recipe("n/a", [], "", "");
 function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 	if (id !== undefined) this.id = id;
 	if (ownerId !== undefined) this.ownerId = ownerId;
@@ -7,19 +7,29 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 	if (startTime !== undefined) this.startTime = startTime;
 	if (endTime !== undefined) this.endTime = endTime;
 	if (choice !== undefined) {
+<<<<<<< HEAD
 		this.choice = choice;
 	}
 	else {
 		this.choice = NOCHOICE;
+=======
+>>>>>>> recipe finding
 	}
 
 	this.contributions = {};
+	this.recipeChosen = false;
 
 	this.contribute = function(id, ingredients) {
 		this.contributions[id] = ingredients;
 	};
 
-	this.initFromServer = function(id) {
+	this.chooseRecipe = function(data) {
+		this.recipeChosen = true;
+		this.recipe = new Recipe();
+		this.recipe.parse(data);
+	};
+
+	this.initFromServer = function(id, callbackfn) {
 		var self = this;
 		$.ajax({
 			type: "get",
@@ -70,15 +80,23 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 		if (data.ownerId !== undefined) this.ownerId = data.ownerId;
 		if (data.name !== undefined) this.name = data.name;
 		if (data.userIds !== undefined) this.userIds = data.userIds;
-		if (data.contributions !== undefined) this.contributions = JSON.parse(data.contributions);
+		if (data.contributions !== undefined) this.contributions = data.contributions;
 		if (data.startTime !== undefined) this.startTime = data.startTime;
 		if (data.endTime !== undefined) this.endTime = data.endTime;
+<<<<<<< HEAD
 		if (data.choice !== undefined) {
 			this.choice = data.choice;
 		}
 		else {
 			this.choice = NOCHOICE;
+=======
+		if (data.recipe !== undefined) {
+			this.recipe = data.recipe;
+		} else {
+			this.recipe = NOCHOICE;
+>>>>>>> recipe finding
 		}
+		if (data.recipeChosen !== undefined) this.recipeChosen = data.recipeChosen;
 	};
 
 	this.toJSON = function() {
@@ -90,7 +108,8 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 			"contributions": this.contributions,
 			"startTime": this.startTime,
 			"endTime": this.endTime,
-			"choice": this.choice
+			"recipe": this.recipe,
+			"recipeChosen": this.recipeChosen
 		};
 		return JSON.stringify(data);
 	};

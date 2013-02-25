@@ -1,18 +1,19 @@
-$.getScript("/static/js/Ingredient.js",function(){});
-$.getScript("/static/js/Utensil.js",function(){});
+function Recipe(title, ingredients, url, thumbnail) {
+	if (title !== undefined) this.title = title;
+	if (ingredients !== undefined) this.ingredients = ingredients;
+	if (url !== undefined) this.url = url;
+	if (thumbnail !== undefined) this.thumbnail = thumbnail;
 
-var recipeID = 0;
-
-function Recipe(name, ingredients, instructions, prepTime) {
-	this.id = recipeID++;
-	this.name = name;
-	this.ingredients = ingredients;
-	this.instructions = instructions;
-	this.prepTime = prepTime;
-}
-
-Recipe.prototype.id = -1;
-Recipe.prototype.name = "";
-Recipe.prototype.ingredients = [];
-Recipe.prototype.instructions = [];
-Recipe.prototype.prepTime = -1;
+	// parse according to format from Puppy Recipes
+	this.parse = function(data) {
+		this.title = $.trim(data.title);
+		this.url = decodeURI(data.href);
+		this.thumbnail = decodeURI(data.thumbnail);
+		var ingredients = [];
+		var ingredientNames = data.ingredients.split(", ");
+		$.each(ingredientNames, function(i, name) {
+			ingredients.push(new Ingredient(name));
+		});
+		this.ingredients = ingredients;
+	};
+};
