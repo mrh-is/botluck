@@ -337,7 +337,7 @@ h3 {
   	background-color: #F2D03A;
   	border-radius: 1px;
   	-moz-border-radius: 1px;
-  	border: none;
+  	border: thin solid white;
   	
   	/*display: block;*/
 	width:125px;

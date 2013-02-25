@@ -168,8 +168,6 @@ h2 {
 	display: inline-block;
 	background-color: #DDD;
 	vertical-align: bottom;
-	margin-right: 20px;
-	text-align: center;
 }
 
 .photo img {
@@ -265,7 +263,7 @@ h2 {
   	background-color: #F2D03A;
   	border-radius: 1px;
   	-moz-border-radius: 1px;
-  	border: none;	
+  	border: thin solid white;
   	font-family: "Roboto";
   	margin-top: 18px;
 }
@@ -333,10 +331,37 @@ button.navButton:not(.current):hover {
 
 .recipe {
 	display: inline-block;
-	padding-bottom: 20px;
-	padding-right: 20px;
+	padding: 0;
+	margin-bottom: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.recipe {
+	width: 100px;
+	overflow: hidden;
+	text-align: center;
+}
+.recipe .caption {
+	text-transform: none;
+	font-weight: 300;
+}
+
+.recipe div {
+	text-align: center;
+}
+
+.recipe .navButton {
+	margin-top: 0;
+	/*margin-bottom: 15px;*/
 }
 
 .recipe:hover {
-	background-color: lightblue;
+	background-color: #b8e4dd;
+}
+
+.center {
+	/*margin: 0 auto;*/
 }
