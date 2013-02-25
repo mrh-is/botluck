@@ -14,7 +14,6 @@ var populatePageData = function(user) {
 	user.addMeal(m);
 	user.karma = 10; */
 
-	console.log(user);
 	$("#welcome-message").html("Welcome, " + user.name + "!");
 	$("#karmaBadge").html(user.karma);
 

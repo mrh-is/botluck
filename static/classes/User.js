@@ -92,15 +92,20 @@ function User(userName, password, id, name) {
 	};
 
 	this.fromJSON = function(data) {
-		if (data.id !== undefined) this.id = data.id;
-		if (data.userName !== undefined) this.userName = data.userName;
-		if (data.name !== undefined) this.name = data.name;
-		if (data.ingredients !== undefined) this.ingredients = data.ingredients;
-		if (data.friends !== undefined) this.friends = data.friends;
-		if (data.utensils !== undefined) this.utensils = data.utensils;
-		if (data.karma !== undefined) this.karma = data.karma;
-		if (data.history !== undefined) this.history = data.history;
-		if (data.currentMeals !== undefined) this.currentMeals = data.currentMeals;
-		if (data.invites !== undefined) this.invites = data.invites;
+		var user = this;
+		if (data.id !== undefined) user.id = data.id;
+		if (data.userName !== undefined) user.userName = data.userName;
+		if (data.name !== undefined) user.name = data.name;
+		if (data.ingredients !== undefined) {
+			data.ingredients.forEach(function(ingredient) {
+				user.ingredients.push(new Ingredient(ingredient.name, ingredient.amount, ingredient.price));
+			});
+		}
+		if (data.friends !== undefined) user.friends = data.friends;
+		if (data.utensils !== undefined) user.utensils = data.utensils;
+		if (data.karma !== undefined) user.karma = data.karma;
+		if (data.history !== undefined) user.history = data.history;
+		if (data.currentMeals !== undefined) user.currentMeals = data.currentMeals;
+		if (data.invites !== undefined) user.invites = data.invites;
 	};
 };

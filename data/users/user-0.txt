@@ -1,1 +1,1 @@
-{"id":0,"userName":"michael","password":"asdf","name":"Michael","invites":[{"mealId":"0","userId":"0","username":"Neil Batlivala","date":"Sat Feb 23 2013 23:27:17 GMT-0500 (Eastern Standard Time)"}]}
+{"id":0,"userName":"michael","name":"Michael","ingredients":[{"name":"chicken","amount":"1","price":"5"}],"friends":[],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[{"mealId":"0","userId":"0","username":"Neil Batlivala","date":"Sat Feb 23 2013 23:27:17 GMT-0500 (Eastern Standard Time)"}]}

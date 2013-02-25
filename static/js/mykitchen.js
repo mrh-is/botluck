@@ -32,11 +32,34 @@ var showUtensil = function(utensil) {
 
 // add new supplies
 $("#addIngredientButton").click(function() {
-	// window.location.href = "/static/home/addingredient.html?uid=" + user.id;
+	$("#new-ingredient").parent().show();
+});
+
+$("#add-ingredient").click(function() {
+	if ($("#ingredient-name").val() === undefined) {
+		alert("Your ingredient needs a name!");
+		return;
+	}
+	if (isNaN($("#ingredient-qty").val())) {
+		alert("Your ingredient needs a numerical quantity!");
+		return;
+	}
+	if (isNaN($("#ingredient-price").val())) {
+		alert("Your ingredient needs a numerical price!");
+		return;
+	}
+    user.ingredients.push(new Ingredient($("#ingredient-name").val(), $("#ingredient-qty").val(), $("#ingredient-price").val()));
+    user.updateServer(showIngredient(user.ingredients[user.ingredients.length-1]));
+});
+
+$("#cancel-ingredient").click(function() {
+	console.log($("#ingredient-name").val());
+	$("#new-ingredient")[0].reset();
+	$("#new-ingredient").parent().hide();
 });
 
 $("#addUtensilButton").click(function() {
-	// window.location.href = "/static/home/addutensil.html?uid=" + user.id;
+	$("#new-utensil").parent().show();
 });
 
 // set the nav bar buttons on the right
