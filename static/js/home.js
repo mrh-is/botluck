@@ -45,7 +45,7 @@ var showInvite = function(invite) {
 	(function() {
 		var mealId = invite.mealId;
 		btn.click(function() {
-			window.location.href = "/home/meal.html?uid=" + user.id + "&mid=" + mealId;
+			window.location.href = "/static/home/meal.html?uid=" + user.id + "&mid=" + mealId;
 		});
 	})();
 };
