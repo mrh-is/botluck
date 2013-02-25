@@ -15,15 +15,16 @@ var mealCount = 0;
 
 var readMetaUserData = function() {
 	fs.readFile(DBFile, function(err, data) {
-    if (err) {
-        console.log("Error reading meta user data: " + err);
-    } else {
-        var metadata = JSON.parse(data);
-        if (metadata.userDB !== undefined) userDB = metadata.userDB;
-        if (metadata.userCount !== undefined) userCount = metadata.userCount;
-        if (metadata.mealCount !== undefined) mealCount = metadata.mealCount;
-    }
-  });
+        if (err) {
+            console.log("Error reading meta user data: " + err);
+        }
+        else {
+            var metadata = JSON.parse(data);
+            if (metadata.userDB !== undefined) userDB = metadata.userDB;
+            if (metadata.userCount !== undefined) userCount = metadata.userCount;
+            if (metadata.mealCount !== undefined) mealCount = metadata.mealCount;
+        }
+    });
 };
 
 readMetaUserData();
@@ -35,22 +36,22 @@ var writeMetaUserData = function() {
         "mealCount": mealCount
     };
     console.log(metadata);
-	fs.writeFile(DBFile, JSON.stringify(metadata), function(err) {
-    if (err) {
-      console.log("Error writing file: ", DBFile);
-      console.log(err);
-    } else {
-      console.log("Success writing file: ", DBFile);
-    }
+    fs.writeFile(DBFile, JSON.stringify(metadata), function(err) {
+        if (err) {
+          console.log("Error writing file: ", DBFile);
+          console.log(err);
+      }
+      else {
+          console.log("Success writing file: ", DBFile);
+      }
   });
 };
 
 var checkPassword = function(username, password) {
-	if (userDB[username].password !== undefined &&
-		userDB[username].password === password) {
+	if (userDB[username].password !== undefined && userDB[username].password === password) {
 		return true;
-	}
-	return false;
+    }
+    return false;
 };
 
 var changePassword = function(username, password) {
@@ -61,23 +62,23 @@ app.post("/verify", function(request, response) {
 	var username = request.body.username;
 	var password = request.body.password;
 	var verified = false;
-	if (userDB[username] !== undefined && 
-        userDB[username].password === password) {
+	if (userDB[username] !== undefined && userDB[username].password === password) {
 		verified = true;
-	}
+    }
     if (verified) {
-    	response.send({
-    		"success": verified,
-    		"uid": userDB[username].id
-    	});
-    } else {
+        response.send({
+            "success": verified,
+            "uid": userDB[username].id
+        });
+    }
+    else {
         response.send({ "success": false });
     }
 });
 
 // This is for serving user data
 var readUserData = function(id, callbackfn) {
-    id = parseInt(id);
+    id = parseInt(id,10);
     if (!isValidId(id)) {
         return;
     }
@@ -97,7 +98,7 @@ var readUserData = function(id, callbackfn) {
 };
 
 var writeUserData = function(id, data, response) {
-    id = parseInt(id);
+    id = parseInt(id,10);
     if (!isValidId(id)) {
         return;
     }
@@ -117,10 +118,8 @@ var writeUserData = function(id, data, response) {
 };
 
 var isValidId = function(id) {
-    return (typeof(id) === typeof(1) &&
-        id !== NaN && 
-        id >= 0);
-}
+    return (typeof(id) === typeof(1) && isNaN(id) &&  id >= 0);
+};
 
 app.get("/user/:id", function(request, response) {
     var sendResponse = function(userData) {
@@ -129,7 +128,7 @@ app.get("/user/:id", function(request, response) {
             "success": true
         });
     };
-	readUserData(request.params.id, sendResponse);
+    readUserData(request.params.id, sendResponse);
 });
 
 app.post("/user/:id", function(request, response) {
@@ -145,11 +144,12 @@ app.post("/user", function(request, response) {
     var id = userCount;
     // user already exists
     if (userDB[username] !== undefined) {
-        response.send({ 
+        response.send({
             "success": false,
             "usernameChosen": true
         });
-    } else {
+    }
+    else {
         userDB[username] = {
             "password": password,
             "id": id
@@ -170,14 +170,14 @@ app.post("/user", function(request, response) {
     }
 });
 
-// given a list of user ids, 
+// given a list of user ids,
 // returns the real name of the user
 app.get("/friendsInfo/:ids", function(request, response) {
     var idsString = request.params.ids;
     var idArr = idsString.split(",");
     var intIds = [];
     idArr.forEach(function(id) {
-        intIds.push(parseInt(id));
+        intIds.push(parseInt(id,10));
     });
 
     var getFriendInfo = function(ids, friendInfo) {
@@ -191,19 +191,24 @@ app.get("/friendsInfo/:ids", function(request, response) {
         ids.splice(0,1);
         var recursive = function(userData) {
             var friendInfo1 = friendInfo;
-            if (userData !== undefined &&
-                userData.name !== undefined &&
-                userData.id !== undefined) {
+            if (userData !== undefined && userData.name !== undefined && userData.id !== undefined) {
                 friendInfo1[userData.id] = userData.name;
             }
             getFriendInfo(ids, friendInfo1);
-        }
+        };
         if (isValidId(id)) {
             readUserData(id, recursive);
         }
-    }
+    };
 
     getFriendInfo(intIds, {});
+});
+
+app.get("/friendsInfo", function(request, response) {
+    response.send({
+        "success": true,
+        "usersData": {}
+    });
 });
 
 // This is for serving meal data and storing meal data
@@ -269,12 +274,13 @@ app.post("/invite", function(request, response) {
     var addInvite = function(userData) {
         if (userData.invites !== undefined) {
             userData.invites.push(invite);
-        } else {
+        }
+        else {
             userData.invites = [invite];
         }
         writeUserData(userData.id, JSON.stringify(userData));
         response.send({ "success": true });
-    }
+    };
 
     readUserData(invite.userId, addInvite);
 });
@@ -285,7 +291,8 @@ app.post("/acceptInvite", function(request, response) {
     var data = readMealData(mealId);
     if (data === undefined) {
         response.send({"success": false});
-    } else {
+    }
+    else {
         var mealData = JSON.parse(data);
         mealData.userIds.push(userId);
         data = JSON.stringify(mealData);
@@ -302,7 +309,7 @@ app.get("/allIngredients/:ids", function(request, response) {
     var idsString = request.params.ids;
     var idArr = idsString.split(",");
     idArr.forEach(function(id) {
-        id = parseInt(id);
+        id = parseInt(id,10);
     });
 
     var addIngredients = function(ids, ingredients1) {
@@ -323,11 +330,11 @@ app.get("/allIngredients/:ids", function(request, response) {
                 }
             }
             addIngredients(ids, ingredients2);
-        }
+        };
         if (isValidId(id)) {
             readUserData(id, add);
         }
-    }
+    };
 
     addIngredients(idArr, []);
 });
@@ -353,7 +360,7 @@ app.get("/static/home/meals/:filename", function (request, response) {
 
 app.get("/static/home/:filename", function (request, response) {
     var filename = request.params.filename;
-	response.sendfile("static/html/home-" + filename);
+    response.sendfile("static/html/home-" + filename);
 });
 
 // This is for serving assets

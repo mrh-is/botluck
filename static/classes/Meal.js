@@ -8,7 +8,8 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 	if (endTime !== undefined) this.endTime = endTime;
 	if (choice !== undefined) {
 		this.choice = choice;
-	} else {
+	}
+	else {
 		this.choice = NOCHOICE;
 	}
 
@@ -16,7 +17,7 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 
 	this.contribute = function(id, ingredients) {
 		this.contributions[id] = ingredients;
-	}
+	};
 
 	this.initFromServer = function(id) {
 		var self = this;
@@ -27,7 +28,7 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 				if (data.success) {
 					self.fromJSON(data.mealData);
 				}
-				if (callbackfn != undefined) {
+				if (callbackfn !== undefined) {
 					callbackfn();
 				}
 			}
@@ -39,8 +40,8 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 		$.ajax({
 			type: "post",
 			url: "/meal/" + this.id,
-			data: { 
-				"mealData": mealData 
+			data: {
+				"mealData": mealData
 			},
 			success: function(data) {
 				if (callbackfn !== undefined) {
@@ -74,7 +75,8 @@ function Meal(id, ownerId, name, userIds, startTime, endTime, choice) {
 		if (data.endTime !== undefined) this.endTime = data.endTime;
 		if (data.choice !== undefined) {
 			this.choice = data.choice;
-		} else {
+		}
+		else {
 			this.choice = NOCHOICE;
 		}
 	};

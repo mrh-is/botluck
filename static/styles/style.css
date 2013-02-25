@@ -185,6 +185,9 @@ h3 {
 .icon {
 	display: inline-block;
 	vertical-align: top;
+	width: 69px;
+	height: 48px;
+	background-image: url("/static/assets/invitation-icon.png");
 }
 
 .invitation {

@@ -17,8 +17,8 @@ var showIngredient = function(ingredient) {
 	var ingredientDiv = $("<div>").addClass("ingredient").appendTo($("#ingredients"));
 	$("<div>").addClass("photo").html(ingredient.name).appendTo(ingredientDiv);
 	$("<div>").addClass("caption").html(ingredient.name).appendTo(ingredientDiv);
-	$("<button>").addClass("navButton").addClass("deleteIngredientButton").attr("ingredient",user.ingredients.indexOf(ingredient)).attr("type","button").html("delete").click(function(button) {
-		deleteIngredient($(button.currentTarget).attr("ingredient"));
+	$("<button>").addClass("navButton").attr("ingredient",user.ingredients.indexOf(ingredient)).attr("type","button").html("delete").click(function(evt) {
+		deleteIngredient($(evt.currentTarget).attr("ingredient"));
 	}).appendTo(ingredientDiv);
 };
 
@@ -27,8 +27,8 @@ var showUtensil = function(utensil) {
 	var utensilDiv = $("<div>").addClass("utensil").appendTo($("#utensils"));
 	$("<div>").addClass("photo").html(utensil.name).appendTo(utensilDiv);
 	$("<div>").addClass("caption").html(utensil.name).appendTo(utensilDiv);
-	$("<button>").addClass("navButton").addClass("deleteUtensilButton").attr("utensil",user.utensils.indexOf(utensil)).attr("type","button").html("delete").click(function(button) {
-		deleteUtensil($(button.currentTarget).attr("utensil"));
+	$("<button>").addClass("navButton").attr("utensil",user.utensils.indexOf(utensil)).attr("type","button").html("delete").click(function(evt) {
+		deleteUtensil($(evt.currentTarget).attr("utensil"));
 	}).appendTo(utensilDiv);
 };
 
@@ -100,7 +100,7 @@ var deleteUtensil = function(index) {
 
 // set the nav bar buttons on the right
 $("#myBotlucksBttn").click(function() {
-	// go to your botluck page
+	window.location.href = "/static/home/meals/history.html?uid=" + user.id;
 });
 
 $("#myKitchenBttn").click(function() {
@@ -108,7 +108,7 @@ $("#myKitchenBttn").click(function() {
 });
 
 $("#myFriendsBttn").click(function() {
-	// go to some friends page
+	window.location.href = "/static/home/friends.html?uid=" + user.id;
 });
 
 // on load, the user is initialized from the server

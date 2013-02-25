@@ -18,51 +18,29 @@ var populatePageData = function(user) {
 	$("#karmaBadge").html(user.karma);
 
 	user.invites.forEach(function(i) {
-		addInvite(i);
+		showInvite(i);
 	});
 
 	user.currentMeals.forEach(function(meal) {
-		addMeal(meal);
+		showMeal(meal);
 	});
 
 };
 
-var month = new Array(12);
-month[0] = "Jan";
-month[1] = "Feb";
-month[2] = "Mar";
-month[3] = "Apr";
-month[4] = "May";
-month[5] = "Jun";
-month[6] = "Jul";
-month[7] = "Aug";
-month[8] = "Sep";
-month[9] = "Oct";
-month[10] = "Nov";
-month[11] = "Dec";
+var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-var weekday=new Array(7);
-weekday[0]="Sun";
-weekday[1]="Mon";
-weekday[2]="Tue";
-weekday[3]="Wed";
-weekday[4]="Thu";
-weekday[5]="Fri";
-weekday[6]="Sat";
+var weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 // populate invites
-var addInvite = function(invite) {
-	var mainDiv = $("<div class=\"invitation\">");
-	$("<img src=\"/static/assets/invitation-icon.png\">")
-	.appendTo($("<div class=\"icon\">"))
-	.appendTo(mainDiv);
-	var content = $("<div>").addClass("content");
+var showInvite = function(invite) {
+	var mainDiv = $("<div>").addClass("invitation").appendTo($("#invitations"));
+	$("<div>").addClass("icon").appendTo(mainDiv);
+	var content = $("<div>").addClass("content").appendTo(mainDiv);
 	var date = new Date(invite.date);
 	var dateString = weekday[date.getDay()] + ", " + month[date.getMonth()] + " " + date.getDay();
 	$("<div>").addClass("date").html(dateString).appendTo(content);
 	$("<div>").html(invite.username + " has invited you to a botluck").appendTo(content);
-	content.appendTo(mainDiv);
-	var btn = $("<button class=\"navButton\" type=\"button\">").html("view");
+	var btn = $("<button>").addClass("navButton").attr("type","button").html("view").appendTo(mainDiv);
 	// set it such that clicking the button takes them to the meal page
 	(function() {
 		var mealId = invite.mealId;
@@ -70,12 +48,10 @@ var addInvite = function(invite) {
 			window.location.href = "/home/meal.html?uid=" + user.id + "&mid=" + mealId;
 		});
 	})();
-	btn.appendTo(mainDiv);
-	mainDiv.appendTo($("#invitations"));
 };
 
 // populate current meals
-var addMeal = function(meal) {
+var showMeal = function(meal) {
 	var mainDiv = $("<div>").addClass("meal");
 	$("<div>").addClass("date").html(meal.date).appendTo(mainDiv);
 	$("<div>").addClass("photo").html("a meal photo").appendTo(mainDiv);
@@ -110,7 +86,7 @@ var addMeal = function(meal) {
 
 // set the nav bar buttons on the right
 $("#myBotlucksBttn").click(function() {
-	// go to your botluck page
+	window.location.href = "/static/home/meals/history.html?uid=" + user.id;
 });
 
 $("#myKitchenBttn").click(function() {
@@ -118,7 +94,7 @@ $("#myKitchenBttn").click(function() {
 });
 
 $("#myFriendsBttn").click(function() {
-	// go to some friends page
+	window.location.href = "/static/home/friends.html?uid=" + user.id;
 });
 
 // on load, the user is initialized from the server
