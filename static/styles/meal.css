@@ -114,7 +114,7 @@ body {
 #mainCol {
 	display: inline-block;
 	margin-right: 50px;
-	width: 500px;
+	width: 480px;
 	padding-right: 45px;
 	border-right: thin solid #F2D03A;
 	/*background-color: #faf4c0;*/
@@ -122,7 +122,7 @@ body {
 
 h1 {
 	width: 100%;
-	margin-top: 50px;
+	margin-top: 100px;
 	margin-bottom: 30px;
 	/*background-color: #CCC;*/
 	font-size: 36px;
@@ -317,6 +317,18 @@ select {
 
 .columnEnd {
 	height: 50px;
+}
+
+.navButton.current {
+	background-color: #62C4B4;
+	color: white;
+	border: thin solid #F2D03A;
+}
+
+button.navButton:not(.current):hover {
+	background-color: white;
+	color: #F2D03A;
+	border: thin solid #F2D03A;
 }
 
 .recipe {

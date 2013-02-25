@@ -100,7 +100,7 @@ var deleteUtensil = function(index) {
 
 // set the nav bar buttons on the right
 $("#myBotlucksBttn").click(function() {
-	window.location.href = "/static/home/meals/history.html?uid=" + user.id;
+	window.location.href = "/static/home.html?uid=" + user.id;
 });
 
 $("#myKitchenBttn").click(function() {

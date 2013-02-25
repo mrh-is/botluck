@@ -114,6 +114,19 @@ var populatePageData = function() {
 	});
 };
 
+// set the nav bar buttons on the right
+$("#myBotlucksBttn").click(function() {
+	window.location.href = "/static/home.html?uid=" + user.id;
+});
+
+$("#myKitchenBttn").click(function() {
+	window.location.href = "/static/home/mykitchen.html?uid=" + user.id;
+});
+
+$("#myFriendsBttn").click(function() {
+	window.location.href = "/static/home/friends.html?uid=" + user.id;
+});
+
 window.onload = function() {
 	var url = window.location.href;
 	var i = url.indexOf("uid=");
