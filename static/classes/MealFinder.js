@@ -15,7 +15,7 @@ function MealFinder() {
 					getPossibleMeals([], p, callbackfn);
 				}
 			}
-		});	
+		});
 	};
 
 	// This makes the call to the Recipe Puppy Api 
