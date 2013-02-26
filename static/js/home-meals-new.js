@@ -91,16 +91,16 @@ var populatePageData = function() {
 	$("#karmaBadge").html(user.karma);
 
 	// set start/end date to today
-	// DOESNT WORK!!!
 	var date = new Date();
+	date.setHurs(7);
 	var month = date.getMonth();
 	var day = date.getDate();
+	var hour = date.getHours();
 
-
-	$("#startMonth").attr("selectedIndex", month);
-	$("#startDay:nth-child(" + day + ")").attr("selected", "selected");
-	$("#endMonth:nth-child(" + month + ")").attr("selected", "selected");
-	$("#endDay:nth-child(" + day + ")").attr("selected", "selected");
+	$("#startMonth,#endMonth").val(month);
+	$("#startDay,#endDay").val(day);
+	$("#startHour,#endHour").val(hour%12);
+	$("#startAMPM,#endAMPM").val((hour < 12) ? 0 : 1);
 
 	// populate friends list
 	$.ajax({

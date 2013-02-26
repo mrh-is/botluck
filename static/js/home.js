@@ -88,6 +88,10 @@ var showMeal = function(meal) {
 };
 
 // set the nav bar buttons on the right
+$("#startButton").click(function() {
+	window.location.href = "/static/home/meals/new.html?uid=" + user.id;
+});
+
 $("#myBotlucksBttn").click(function() {
 	window.location.href = "/static/home.html?uid=" + user.id;
 });
