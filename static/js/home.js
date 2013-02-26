@@ -3,17 +3,6 @@ var user;
 
 var populatePageData = function(user) {
 
-	/* user.addInvite(new Invite(5, "Mishq", 4, "Feb 4"));
-	user.addInvite(new Invite(2, "Beyonce", 3, "Jan 29"));
-
-	var m = new Meal(4, 3, "Jack's Dinner Party", [1,4,3], "Feb 6");
-	m.contributions[user.id] = [user.ingredients[0]];
-	user.addMeal(m);
-	m = new Meal(4, 3, "MadHatter's Tea Party", [4,2,1], "Oct 20", "Tea and Biscuits");
-	m.contributions[user.id] = [user.ingredients[1]];
-	user.addMeal(m);
-	user.karma = 10; */
-
 	$("#welcome-message").html("Welcome, " + user.name + "!");
 	$("#karmaBadge").html(user.karma);
 	$("#invitations").html("");

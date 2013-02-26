@@ -20,7 +20,7 @@ var populatePageData = function() {
 };
 
 var populateMyData = function() {
-	var mainDiv = $("#my-contributions");
+	var mainDiv = $("#my-contributions").html("");
 	var list;
 	if (meal.recipeChosen) {
 		list = meal.contributions[user.id];
@@ -42,9 +42,9 @@ var populateFriendData = function() {
 	var wrapper = $("#friendRows").html("");
 	var populate = function(userIngredients, usersData) {
 		friendInfo = usersData;
-		userInredientsMap = userIngredients;
+		userIngredientsMap = userIngredients;
 		$.each(userIngredients, function(id, ingredients) {
-			if (id !== user.id) {
+			if (parseInt(id) !== user.id) {
 				allIngredients = allIngredients.concat(ingredients);
 				var friendRow = $("<div>").addClass("friendRow");
 				$("<div>").addClass("caption")
@@ -55,11 +55,13 @@ var populateFriendData = function() {
 				friend.appendTo(friendRow);
 				if (meal.recipeChosen) { // displaying contributions
 					$("<div>").addClass("date").html("is bringing").appendTo(friendRow);
-				}
-				else { // display all user ingedients
+				} else { // display all user ingedients
 					$("<div>").addClass("date").html("has").appendTo(friendRow);
 				}
 				var contributions = $("<div>").addClass("friendContributions");
+				if (ingredients.length === 0) {
+					$("<div>").addClass("date").html(" nothing").appendTo(contributions);
+				}
 				$.each(ingredients, function(i, ingredient) {
 					var contribution = $("<div>").addClass("contribution");
 					$("<div>").addClass("photo").html("a food photo").appendTo(contribution);
@@ -96,7 +98,6 @@ var populateFriendData = function() {
 };
 
 var populateRecipeData = function() {
-	var wrapper = $("#recipe-list").html("");
 	var addRecipesToList = function(list) {
 		$.each(list, function(i, recipe) {
 			var item = $("<li>").addClass("recipe");
@@ -117,15 +118,49 @@ var populateRecipeData = function() {
 			titleString += line;
 			$("<div>").addClass("caption").html(titleString).appendTo(item);
 			var bttn = $("<button class='navButton' type='button'>view recipe</button>");
-			var newbttn = $("<button class='navButton like' type='button'>like</button>");
+			var newbttn = $("<button class='navButton like' type='button'>");
+			if (meal.voteCount[recipe.title] !== undefined) {
+				var votes = meal.voteCount[recipe.title].length;
+				newbttn.html("like (votes: " + votes + ")");
+			} else {
+				newbttn.html("like");
+			}
 			(function() {
-				var url = recipe.url;
+				var url = recipe.href;
 				bttn.click(function() {
 					window.location.href = url;
 				});
+
+				var recipeTitle = recipe.title;
+				newbttn.click(function() {
+					if (meal.voteCount === undefined) {
+						meal.voteCount = {};
+					}
+					var voters = meal.voteCount[recipeTitle];
+					if (voters === undefined) {
+						meal.voteCount[recipeTitle] = [user.id];
+						meal.updateServer();
+					} else {
+						// check if user already voted
+						var alreadyVoted = false;
+						for (var i=0; i < voters.length; i++) {
+							if (parseInt(voters[i]) === user.id) {
+								alreadyVoted = true;
+								break;
+							}
+						}
+						if (!alreadyVoted) {
+							meal.voteCount[recipeTitle].push(user.id);
+							meal.updateServer();
+						}
+					}
+					$(this).html("like (votes: " + meal.voteCount[recipeTitle].length + ")");
+				});
 			})();
 			bttn.appendTo(item);
-			newbttn.appendTo(item);
+			if (!meal.recipeChosen) {
+				newbttn.appendTo(item);
+			}
 			(function() {
 				var r = recipe;
 				item.click(function() {
@@ -136,10 +171,23 @@ var populateRecipeData = function() {
 			item.appendTo(wrapper);
 		});
 	};
-	if (meal.recipeChosen) {
+	if (meal.recipeChosen) { // hide some stuff
+		$("#choose-recipe-bttn").hide();
+		$("#prev-page").hide();
+		$("#next-page").hide();
+		$("#choice-title").hide();
 		addRecipesToList([meal.recipe]);
 		$("#ingredients-title").html("What I'm Bringing");
+		console.log(meal.missingIngredients);
+		$.each(meal.missingIngredients, function(i, ingredient) {
+			var missing = $("<div>").addClass("contribution");
+			$("<div>").addClass("photo").html("a food photo").appendTo(missing);
+			$("<div>").addClass("caption").html(ingredient.name).appendTo(missing);
+			missing.appendTo($("#missing"));
+		});
 	} else {
+		var wrapper = $("#recipe-list").html("");
+		$("#missing-ingredients").hide();
 		mealfinder.findMeals(allIngredients, page, addRecipesToList);
 	}
 };
@@ -157,12 +205,17 @@ $("#prev-page").click(function() {
 
 // this button handles the logic behind contributions
 $("#choose-recipe-bttn").click(function() {
-	if (meal.recipe === undefined) {
+	if (meal.recipe === undefined || 
+		meal.ownerId !== user.id) {
 		return;
 	}
+	meal.recipeChosen = true;
 	var ingredients = meal.recipe.ingredients;
+	meal.contributions = {};
+	meal.missingIngredients = [];
 	$.each(ingredients, function(i, ingredient) {
 		var contributed = false;
+		console.log(ingredient);
 		$.each(userIngredientsMap, function(id, uingreds) {
 			for (var j = 0; j < uingreds.length; j++) {
 				if (uingreds[j].name === ingredient.name) {
@@ -172,12 +225,33 @@ $("#choose-recipe-bttn").click(function() {
 					} else {
 						meal.contributions[id].push(ingredient);
 					}
+					console.log(id);
 					break;
 				}
 			}
-			return (!contributed);
+			return !contributed;
 		});
+		if (!contributed) {
+			meal.missingIngredients.push(ingredient)
+		}
 	});
+
+	// ensure each userid is a key in contributions map
+	var users = meal.userIds;
+	users.push(meal.ownerId);
+	$.each(users, function(i, id) {
+		id = parseInt(id);
+		if (meal.contributions[id] === undefined) {
+			meal.contributions[id] = [];
+		}
+	});
+
+	// load same page with recipe chosen this time
+	var callbackfn = function() {
+		window.location.href = "/static/home/meal.html?uid=" + user.id + "&mid=" + meal.id;
+	}
+
+	meal.updateServer(callbackfn);
 });
 
 // set the nav bar buttons on the right

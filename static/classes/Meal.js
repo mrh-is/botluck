@@ -10,13 +10,14 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 
 	this.contributions = {};
 	this.recipeChosen = false;
+	this.voteCount = {};
+	this.missingIngredients = [];
 
 	this.contribute = function(id, ingredients) {
 		this.contributions[id] = ingredients;
 	};
 
 	this.chooseRecipe = function(data) {
-		this.recipeChosen = true;
 		this.recipe = new Recipe();
 		this.recipe.parse(data);
 	};
@@ -69,7 +70,7 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 
 	this.fromJSON = function(data) {
 		if (data.id !== undefined) this.id = parseInt(data.id);
-		if (data.ownerId !== undefined) this.ownerId = data.ownerId;
+		if (data.ownerId !== undefined) this.ownerId = parseInt(data.ownerId);
 		if (data.name !== undefined) this.name = data.name;
 		if (data.userIds !== undefined) this.userIds = data.userIds;
 		if (data.contributions !== undefined) this.contributions = data.contributions;
@@ -81,6 +82,8 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 			this.recipe = NORECIPE;
 		}
 		if (data.recipeChosen !== undefined) this.recipeChosen = data.recipeChosen;
+		if (data.voteCount !== undefined) this.voteCount = data.voteCount;
+		if (data.missingIngredients !== undefined) this.missingIngredients = data.missingIngredients;
 	};
 
 	this.toJSON = function() {
@@ -93,7 +96,9 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 			"startTime": this.startTime,
 			"endTime": this.endTime,
 			"recipe": this.recipe,
-			"recipeChosen": this.recipeChosen
+			"recipeChosen": this.recipeChosen,
+			"voteCount": this.voteCount,
+			"missingIngredients": this.missingIngredients
 		};
 		return JSON.stringify(data);
 	};

@@ -305,7 +305,6 @@ app.get("/allIngredients/:ids", function(request, response) {
 
     var addIngredients = function(ids, data1) {
         if (ids.length === 0) {
-            console.log(data1);
             response.send({
                 "success": true,
                 "ingredients": data1
