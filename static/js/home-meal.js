@@ -117,6 +117,7 @@ var populateRecipeData = function() {
 			titleString += line;
 			$("<div>").addClass("caption").html(titleString).appendTo(item);
 			var bttn = $("<button class='navButton' type='button'>view recipe</button>");
+			var newbttn = $("<button class='navButton like' type='button'>like</button>");
 			(function() {
 				var url = recipe.url;
 				bttn.click(function() {
@@ -124,6 +125,7 @@ var populateRecipeData = function() {
 				});
 			})();
 			bttn.appendTo(item);
+			newbttn.appendTo(item);
 			(function() {
 				var r = recipe;
 				item.click(function() {

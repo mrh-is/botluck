@@ -365,3 +365,9 @@ button.navButton:not(.current):hover {
 .center {
 	/*margin: 0 auto;*/
 }
+
+button.navButton.like {
+	color: #000000;
+	background: #F2D03A url("/static/assets/like.png") no-repeat left top;
+	padding-left: 30px;
+}
