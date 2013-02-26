@@ -16,7 +16,10 @@ var populatePageData = function(user) {
 
 	$("#welcome-message").html("Welcome, " + user.name + "!");
 	$("#karmaBadge").html(user.karma);
-
+	$("#invitations").html("");
+	if (user.invites.length === 0) {
+		$("#invitations").html("No new invitations");
+	}
 	user.invites.forEach(function(i) {
 		showInvite(i);
 	});
@@ -45,7 +48,7 @@ var showInvite = function(invite) {
 	(function() {
 		var mealId = invite.mealId;
 		btn.click(function() {
-			window.location.href = "/static/home/meal.html?uid=" + user.id + "&mid=" + mealId;
+			window.location.href = "/static/home/invite.html?uid=" + user.id + "&mid=" + mealId;
 		});
 	})();
 };

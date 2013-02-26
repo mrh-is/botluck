@@ -421,7 +421,7 @@ button.navButton:not(.current):hover {
 
 .friend {
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 20px;
 }
 
 .friend .photo {

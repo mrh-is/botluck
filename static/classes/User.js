@@ -93,7 +93,7 @@ function User(userName, password, id, name) {
 
 	this.fromJSON = function(data) {
 		var user = this;
-		if (data.id !== undefined) user.id = data.id;
+		if (data.id !== undefined) user.id = parseInt(data.id);
 		if (data.userName !== undefined) user.userName = data.userName;
 		if (data.name !== undefined) user.name = data.name;
 		if (data.ingredients !== undefined) {

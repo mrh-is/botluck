@@ -68,7 +68,7 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 	};
 
 	this.fromJSON = function(data) {
-		if (data.id !== undefined) this.id = data.id;
+		if (data.id !== undefined) this.id = parseInt(data.id);
 		if (data.ownerId !== undefined) this.ownerId = data.ownerId;
 		if (data.name !== undefined) this.name = data.name;
 		if (data.userIds !== undefined) this.userIds = data.userIds;

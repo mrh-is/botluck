@@ -178,7 +178,6 @@ $("#choose-recipe-bttn").click(function() {
 			return (!contributed);
 		});
 	});
-	console.log(meal);
 });
 
 // set the nav bar buttons on the right

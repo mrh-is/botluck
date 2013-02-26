@@ -212,19 +212,17 @@ app.get("/friendsInfo", function(request, response) {
 });
 
 // This is for serving meal data and storing meal data
-var readMealData = function(id, response) {
+var readMealData = function(id, callbackfn) {
     var filename = mealDir + "meal-" + id + ".txt";
     fs.readFile(filename, function(err, data) {
         if (err) {
             console.log("Error reading user file: ", filename);
             console.log(err);
-            response.send({ "success": false });
         }
         else {
-            response.send({
-                "mealData": JSON.parse(data),
-                "success": true
-            });
+            if (callbackfn !== undefined) {
+                callbackfn(JSON.parse(data));
+            }
         }
     });
 };
@@ -235,10 +233,14 @@ var writeMealData = function(id, data, response) {
         if (err) {
             console.log("Error writing user file: ", filename);
             console.log(err);
-            response.send({ "success": false });
+            if (response !== undefined) {
+                response.send({ "success": false });
+            }
         }
         else {
-            response.send({ "success": true });
+            if (response !== undefined) {
+                response.send({ "success": true });
+            }
         }
     });
 };
@@ -253,7 +255,13 @@ app.get("/mealId", function(request, response) {
 });
 
 app.get("/meal/:id", function(request, response) {
-	readMealData(request.params.id, response);
+    var callbackfn = function(data) {
+        response.send({
+            "success": true,
+            "mealData": data
+        });
+    };
+	readMealData(request.params.id, callbackfn);
 });
 
 app.post("/meal/:id", function(request, response) {
@@ -283,23 +291,6 @@ app.post("/invite", function(request, response) {
     };
 
     readUserData(invite.userId, addInvite);
-});
-
-app.post("/acceptInvite", function(request, response) {
-    var mealId = request.body.mealId;
-    var userId = request.body.userId;
-    var data = readMealData(mealId);
-    if (data === undefined) {
-        response.send({"success": false});
-    }
-    else {
-        var mealData = JSON.parse(data);
-        mealData.userIds.push(userId);
-        data = JSON.stringify(mealData);
-        response.send({
-            "success": writeMealData(userId, data)
-        });
-    }
 });
 
 // takes list of ids and returns the combined ingredients
