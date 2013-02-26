@@ -2,6 +2,33 @@ var user; //user initialized on load
 
 // creates a new meal from input data
 $("#createNewMealBttn").click(function() {
+	var date = new Date();
+	var startTime = new Date(
+		date.getFullYear(),
+		parseInt($("#startMonth").val(),10),
+		parseInt($("#startDay").val(),10),
+		parseInt($("#startHour").val(),10) + 12*parseInt($("#startAMPM").val(),10),
+		0,0,0);
+	var endTime = new Date(
+		date.getFullYear(),
+		parseInt($("#endMonth").val(),10),
+		parseInt($("#endDay").val(),10),
+		parseInt($("#endHour").val(),10) + 12*parseInt($("#endAMPM").val(),10),
+		0,0,0);
+	if (startTime.valueOf() > endTime.valueOf()) {
+		alert("Your meal ends before it even begins! Check your times and try again.");
+		return;
+	}
+	if (startTime.valueOf() === endTime.valueOf()) {
+		alert("That's a short meal! Check your times and try again.");
+		return;
+	}
+
+	if ($("#friendList input:checked").length === 0) {
+		alert("You forgot to invite your friends! Check some boxes and try again.");
+		return;
+	}
+
 	$.ajax({
 		type: "get",
 		url: "/mealId",
@@ -11,19 +38,6 @@ $("#createNewMealBttn").click(function() {
 				var mid = data.mid;
 				var uid = user.id;
 				var name = "" + uid + mid;
-				var date = new Date();
-				var startTime = new Date(
-					date.getFullYear(), 
-					parseInt($("#startMonth").val()), 
-					parseInt($("#startDay").val()),
-					parseInt($("#startHour").val()) + 12*parseInt($("#startAMPM").val()),
-					0,0,0);
-				var endTime = new Date(
-					date.getFullYear(),
-					parseInt($("#endMonth").val()), 
-					parseInt($("#endDay").val()),
-					parseInt($("#endHour").val()) + 12*parseInt($("#endAMPM").val()),
-					0,0,0);
 				var invites = [];
 				$.each($("#friendList input:checked"),
 					function() {
@@ -65,7 +79,7 @@ var populateFriendList = function(data) {
 						if (this.id === id) {
 							$(this).show();
 						}
-				})
+					})
 			} else {
 				var id = this.id;
 				$.each($("#invitedFriends > .friend"), 
@@ -73,7 +87,7 @@ var populateFriendList = function(data) {
 						if (this.id === id) {
 							$(this).hide();
 						}
-				})
+					})
 			}
 		});
 		wrapper.append(data[id]);
@@ -92,7 +106,6 @@ var populatePageData = function() {
 
 	// set start/end date to today
 	var date = new Date();
-	date.setHurs(7);
 	var month = date.getMonth();
 	var day = date.getDate();
 	var hour = date.getHours();
