@@ -55,9 +55,10 @@ var populateFriendData = function() {
 				friend.appendTo(friendRow);
 				if (meal.recipeChosen) { // displaying contributions
 					$("<div>").addClass("date").html("is bringing").appendTo(friendRow);
-				} else { // display all user ingedients
+				}
+				else { // display all user ingedients
 					$("<div>").addClass("date").html("has").appendTo(friendRow);
-				}				
+				}
 				var contributions = $("<div>").addClass("friendContributions");
 				$.each(ingredients, function(i, ingredient) {
 					var contribution = $("<div>").addClass("contribution");
@@ -81,12 +82,13 @@ var populateFriendData = function() {
 					populate(userIngredients, data.usersData);
 				}
 			}
-		})
+		});
 	};
 
 	if (meal.recipeChosen) { // get ingredients from contributions
 		getUserInfo(meal.contributions);
-	} else { //display all ingredients from everyone 
+	}
+	else { //display all ingredients from everyone
 		mealfinder.findUserIngredients(meal.userIds, getUserInfo);
 	}
 
@@ -111,7 +113,7 @@ var populateRecipeData = function() {
 				} else {
 					line += word + " ";
 				}
-			})
+			});
 			titleString += line;
 			$("<div>").addClass("caption").html(titleString).appendTo(item);
 			var bttn = $("<button class='navButton' type='button'>view recipe</button>");
@@ -131,7 +133,7 @@ var populateRecipeData = function() {
 			})();
 			item.appendTo(wrapper);
 		});
-	}
+	};
 	if (meal.recipeChosen) {
 		addRecipesToList([meal.recipe]);
 		$("#ingredients-title").html("What I'm Bringing");
@@ -201,19 +203,20 @@ window.onload = function() {
 		return;
 	}
 	if (i <= j) { // mid after uid
-		mid = parseInt(url.substring(j+4));
-		uid = parseInt(url.substring(0, j).substring(i+4));
+		mid = parseInt(url.substring(j+4),10);
+		uid = parseInt(url.substring(0, j).substring(i+4),10);
 	} else {
-		uid = parseInt(url.substring(i+4));
-		mid = parseInt(url.substring(0, i).substring(j+4));
+		uid = parseInt(url.substring(i+4),10);
+		mid = parseInt(url.substring(0, i).substring(j+4),10);
 	}
-	var id = parseInt(url.substring(i+4));
-	if (id === NaN) {
+	var id = parseInt(url.substring(i+4),10);
+	if (isNaN(id)) {
 		console.log("You were redirected to home without a vaild user id");
 		return;
 	}
 
 	var getMeal = function() {
+		$("#karmaBadge").html(user.karma);
 		// check if user created this meal
 		$.each(user.currentMeals, function(i, mealId) {
 			if (mealId === mid) {
