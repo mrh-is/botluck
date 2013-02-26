@@ -1,0 +1,8 @@
+make sure karma works
+link to meal info page from somewhere
+make people have friends
+light yellow is weird
+show amount next to ingredients in my kitchen
+get rid of utensils?
+clicking header should go home
+get rid of default html
