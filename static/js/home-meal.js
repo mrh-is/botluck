@@ -30,7 +30,7 @@ var populateMyData = function() {
 	}
 	$.each(list, function(i, ingredient) {
 		var wrapper = $("<div>").addClass("contribution");
-		$("<div>").addClass("photo").html("a food photo").appendTo(wrapper);
+		var thing = new ImageFinder(ingredient.name,$("<div>").addClass("photo").html("a food photo").appendTo(wrapper));
 		$("<div>").addClass("caption").html(ingredient.name).appendTo(wrapper);
 		wrapper.appendTo(mainDiv);
 	});
