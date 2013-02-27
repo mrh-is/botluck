@@ -14,10 +14,14 @@ var populatePageData = function(user) {
 	});
 
 	$("#currentmeals").html(""); // clear template data
-	user.currentMeals.forEach(function(meal) {
-		console.log("here");
-		showMeal(meal);
-	});
+	if (user.currentMeals === undefined || user.currentMeals.length === 0) {
+		$("#currentmeals").html("No upcoming meals");
+	} else {
+		user.currentMeals.forEach(function(meal) {
+			console.log("here");
+			showMeal(meal);
+		});
+	}
 
 };
 
