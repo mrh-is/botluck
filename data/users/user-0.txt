@@ -1,1 +1,1 @@
-{"id":0,"userName":"michael","name":"Michael","ingredients":[{"name":"turkey","amount":"1","price":"6"}],"friends":[],"utensils":[{"name":"spoon","amount":"1"}],"karma":0,"history":[],"currentMeals":[],"invites":[]}
+{"id":0,"userName":"michael","name":"Michael","ingredients":[{"name":"turkey","amount":"1","price":"6"}],"friends":[],"utensils":[{"name":"spoon","amount":"1"}],"karma":0,"history":[],"currentMeals":[4],"invites":[]}

@@ -1,0 +1,1 @@
+{"id":4,"ownerId":1,"name":"Neil's Birthday Dinner","userIds":["0","2",1,1],"contributions":{},"startTime":"2013-02-28T02:00:00.000Z","endTime":"2013-02-28T03:00:00.000Z","recipe":{"title":"n/a","ingredients":[],"url":"","thumbnail":""},"recipeChosen":false,"voteCount":{},"missingIngredients":[]}

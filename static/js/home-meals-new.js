@@ -2,6 +2,11 @@ var user; //user initialized on load
 
 // creates a new meal from input data
 $("#createNewMealBttn").click(function() {
+	var mealname = $("#meal-name-input").val();
+	if (mealname === "") {
+		alert("Please give a valid meal name");
+		return;
+	}
 	var date = new Date();
 	var startTime = new Date(
 		date.getFullYear(),
@@ -34,10 +39,10 @@ $("#createNewMealBttn").click(function() {
 		url: "/mealId",
 		success: function(data) {
 			if (data.success) {
-				alert("Created meal successfully! Sending invitations...");
+				alert("Created meal successfully! Sending invitations");
 				var mid = data.mid;
 				var uid = user.id;
-				var name = "" + uid + mid;
+				var name = mealname;
 				var invites = [];
 				$.each($("#friendList input:checked"),
 					function() {
@@ -62,13 +67,16 @@ $("#createNewMealBttn").click(function() {
 				for (var i=0; i < length; i++) {
 					meal.inviteUser(invites[i], user.name, date);
 				}
+
+				window.location.href = "/static/home/meal.html?uid=" + user.id + "&mid=" + meal.id;
 			}
 		}
 	});
 });
 
 var populateFriendList = function(data) {
-	var wrapper = $("#friendList");
+	var wrapper = $("#friendList").html("");
+	$("#invitedFriends").html("");
 	for (var id in data) {
 		var checkbox = $("<input type=\"checkbox\" class=\"friend-check-box\" name=\"friends\" id=\"" + id + "\">").appendTo(wrapper);
 		checkbox.click(function() {
