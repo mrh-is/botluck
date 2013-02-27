@@ -1,1 +1,1 @@
-{"id":3,"userName":"vibhar","name":"Vibha","ingredients":[],"friends":[],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}
+{"id":3,"userName":"vibhar","name":"Vibha","ingredients":[],"friends":[],"utensils":[],"karma":0,"history":[],"currentMeals":[15],"invites":[{"mealId":"14","userId":"3","username":"Beyonce Knowles","date":"Wed Feb 27 2013 15:49:20 GMT-0500 (Eastern Standard Time)"}]}

@@ -80,9 +80,10 @@ var viewMeal = function(mealID) {
 $("#startButton").click(function() {
 	window.location.href = "/static/home/meals/new.html?uid=" + user.id;
 });
-// $("#myBotlucksBttn").click(function() {
-// 	window.location.href = "/static/home.html?uid=" + user.id;
-// });
+
+$("#myBotlucksBttn").click(function() {
+	window.location.href = "/static/home.html?uid=" + user.id;
+});
 
 $("#mycanvas").click(function() {
 	window.location.href = "/static/home.html?uid=" + user.id;
@@ -94,10 +95,6 @@ $("#botluckTitle").click(function() {
 
 $("#myKitchenBttn").click(function() {
 	window.location.href = "/static/home/mykitchen.html?uid=" + user.id;
-});
-
-$("#myFriendsBttn").click(function() {
-	window.location.href = "/static/home/friends.html?uid=" + user.id;
 });
 
 // on load, the user is initialized from the server

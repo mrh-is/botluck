@@ -87,7 +87,7 @@ function Meal(id, ownerId, name, invitedIds, startTime, endTime) {
 		});
 	};
 
-	this.inviteUser = function(userId, name, date) {
+	this.inviteUser = function(userId, name, date, callbackfn) {
 		$.ajax({
 			type: "post",
 			url: "/invite",
@@ -97,7 +97,11 @@ function Meal(id, ownerId, name, invitedIds, startTime, endTime) {
 				"name": name,
 				"date": date
 			},
-			success: function(data) {}
+			success: function(data) {
+				if (callbackfn !== undefined) {
+					callbackfn();
+				}
+			}
 		});
 	};
 

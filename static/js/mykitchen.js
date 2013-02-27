@@ -110,9 +110,9 @@ $("#startButton").click(function() {
 	window.location.href = "/static/home/meals/new.html?uid=" + user.id;
 });
 
-// $("#myBotlucksBttn").click(function() {
-// 	window.location.href = "/static/home.html?uid=" + user.id;
-// });
+$("#myBotlucksBttn").click(function() {
+	window.location.href = "/static/home.html?uid=" + user.id;
+});
 
 $("#mycanvas").click(function() {
 	window.location.href = "/static/home.html?uid=" + user.id;
@@ -120,10 +120,6 @@ $("#mycanvas").click(function() {
 
 $("#botluckTitle").click(function() {
 	window.location.href = "/static/home.html?uid=" + user.id;
-});
-
-$("#myKitchenBttn").click(function() {
-	window.location.href = "/static/home/mykitchen.html?uid=" + user.id;
 });
 
 $("#myFriendsBttn").click(function() {

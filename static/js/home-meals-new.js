@@ -64,12 +64,17 @@ $("#createNewMealBttn").click(function() {
 				user.updateServer();
 
 				// send invites
-				var length = invites.length;
-				for (var i=0; i < length; i++) {
-					meal.inviteUser(invites[i], user.name, date);
+				var recurseSend = function(ids) {
+					if (ids.length === 0) {
+						window.location.href = "/static/home/meal.html?uid=" + user.id + "&mid=" + meal.id;
+						return;
+					}
+					var id = parseInt(ids.splice(0, 1)[0]);
+					meal.inviteUser(id, user.name, date, function() {
+						recurseSend(ids);
+					});
 				}
-
-				window.location.href = "/static/home/meal.html?uid=" + user.id + "&mid=" + meal.id;
+				recurseSend(invites);
 			}
 		}
 	});
