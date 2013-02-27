@@ -1,0 +1,1 @@
+{"id":12,"ownerId":-1,"name":"You Better Come To Beyonce's Party","userIds":[],"contributions":{},"startTime":"2013-02-27T19:00:00.000Z","endTime":"2013-02-27T21:00:00.000Z","recipe":{"title":"n/a","ingredients":[],"url":"","thumbnail":""},"recipeChosen":false,"voteCount":{},"missingIngredients":[],"invitedIds":["4","5",6,6]}

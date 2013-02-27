@@ -1,0 +1,1 @@
+{"id":5,"userName":"joater","name":"Jack Scordato","ingredients":[{"name":"tomatoes","amount":"20","price":"4.00"},{"name":"pork","amount":"1","price":"1000000"}],"friends":[1,2],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}

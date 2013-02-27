@@ -5,7 +5,12 @@
 		<link rel="stylesheet" type="text/css" href="/static/styles/style.css">
 		<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,400,700,300' rel='stylesheet' type='text/css'>
 
-		<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>
+	<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>
+	<script type="text/javascript" src="/static/classes/Ingredient.js"></script>
+	<script type="text/javascript" src="/static/classes/Utensil.js"></script>
+	<script type="text/javascript" src="/static/classes/User.js"></script>
+	<script type="text/javascript" src="/static/classes/Recipe.js"></script>
+	<script type="text/javascript" src="/static/classes/Meal.js"></script>
 
 	</header>
 	<body>
@@ -26,20 +31,16 @@
 			<h2>These are not the botlucks you're looking for.</h2>
 			<br><br><br>
 			<div id="columnEnd">
-				<button class="navButton" type="button">go back</button>
+				<button id="home-bttn"class="navButton" type="button">go to home</button>
 			</div>
 		</div>
 		<div id="leftnav">
-			<button class="navButton" type="button">start a botluck</button>
+			<button id="startBotluckBttn" class="navButton" type="button">start a botluck</button>
 			<button id="myBotlucksBttn" class="navButton current" type="button">my botlucks</button>
 			<button id="myKitchenBttn" class="navButton" type="button">my kitchen</button>
 			<button id="myFriendsBttn" class="navButton" type="button">my friends</button>
-			
 
 			<br><br>
-			<!-- <h2>My Botluck</h2> -->
-			<!-- <div class="photo">avatar</div>
-			<div class="caption">Beyonce Knowles</div> -->
 			<div id="karmaBadge">78</div>
 			<h2>Contribute to more botlucks to earn more karma points!</h2>
 			
@@ -51,6 +52,6 @@
 	<div id="footerBar"></div>
 
 	<script type="text/javascript" src="/static/js/bot.js"></script>
-	
+	<script type="text/javascript" src="/static/js/error.js"></script>
 	</body>
 </html>
