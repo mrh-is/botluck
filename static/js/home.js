@@ -13,7 +13,9 @@ var populatePageData = function(user) {
 		showInvite(i);
 	});
 
+	$("#currentmeals").html(""); // clear template data
 	user.currentMeals.forEach(function(meal) {
+		console.log("here");
 		showMeal(meal);
 	});
 
@@ -43,37 +45,50 @@ var showInvite = function(invite) {
 };
 
 // populate current meals
-var showMeal = function(meal) {
-	var mainDiv = $("<div>").addClass("meal");
-	$("<div>").addClass("date").html(meal.date).appendTo(mainDiv);
-	$("<div>").addClass("photo").html("a meal photo").appendTo(mainDiv);
-	var wrapper = $("<div>");
-	$("<div>").addClass("caption").html(meal.name).appendTo(wrapper);
-	var menu = $("<div>").addClass("menu");
-	$("<span>").addClass("date").html("menu").appendTo(menu);
-	$("<span>").html(meal.choice).appendTo(menu);
-	menu.appendTo(wrapper);
-	$("<div>").addClass("date bringing").html("i'm bringing").appendTo(wrapper);
-	var contributionDiv = $("<div>").addClass("contributions");
-	var contributions = meal.contributions[user.id];
-	console.log(contributions);
-	contributions.forEach(function(ingredient) {
-		var div = $("<div>").addClass("contribution");
-		$("<div>").addClass("photo").html("a food photo").appendTo(div);
-		$("<div>").addClass("caption").html(ingredient.name).appendTo(div);
-		div.appendTo(contributionDiv);
+var showMeal = function(mid) {
+	console.log(mid);
+	var meal = new Meal();
+	meal.initFromServer(mid, function() {
+		var mainDiv = $("<div>").addClass("meal");
+		$("<div>").addClass("date").html(meal.date).appendTo(mainDiv);
+		$("<div>").addClass("photo").html("a meal photo").appendTo(mainDiv);
+		var wrapper = $("<div>");
+		$("<div>").addClass("caption").html(meal.name).appendTo(wrapper);
+		var menu = $("<div>").addClass("menu");
+		$("<span>").addClass("date").html("menu").appendTo(menu);
+		if (meal.recipeChosen) {
+			$("<span>").html(meal.recipe.title).appendTo(menu);
+		} else {
+			$("<span>").html("n/a").appendTo(menu);
+		}
+		menu.appendTo(wrapper);
+		$("<div>").addClass("date bringing").html("i'm bringing").appendTo(wrapper);
+		var contributionDiv = $("<div>").addClass("contributions");
+		var contributions = meal.contributions[user.id];
+		if (contributions !== undefined) {
+			$.each(contributions, function(i, ingredient) {
+				var div = $("<div>").addClass("contribution");
+				new ImageFinder(
+					ingredient.name,
+					$("<div>").addClass("photo").appendTo(div)
+				);
+				div.appendTo(contributionDiv);
+			});
+			contributionDiv.appendTo(wrapper);
+		} else {
+			$("<span>").html("n/a").appendTo(wrapper);
+		}
+		var btn = $("<button class=\"navButton\" type=\"button\">").html("view");
+		(function() {
+			var mealId = meal.id;
+			btn.click(function() {
+				window.location.href = "/static/home/meal.html?uid=" + user.id + "&mid=" + mealId;
+			});
+		})();
+		btn.appendTo($("<div>").addClass("right").appendTo(wrapper));
+		wrapper.appendTo(mainDiv);
+		mainDiv.appendTo($("#currentmeals"));
 	});
-	contributionDiv.appendTo(wrapper);
-	var btn = $("<button class=\"navButton\" type=\"button\">").html("view");
-	(function() {
-		var mealId = meal.mealId;
-		btn.click(function() {
-			window.location.href = "/home/meal.html?uid=" + user.id + "&mid=" + mealId;
-		});
-	})();
-	btn.appendTo($("<div>").addClass("right").appendTo(wrapper));
-	wrapper.appendTo(mainDiv);
-	mainDiv.appendTo($("#currentmeals"));
 };
 
 // set the nav bar buttons on the right
