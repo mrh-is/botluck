@@ -2,6 +2,24 @@ var user;
 var meal;
 var friendInfo;
 
+var checkValidIds = function() {
+	var len;
+	// check that meal is valid by checking ownerId
+	// and making sure that owner id equals user id
+	if (meal.ownerId === -1) {
+		alert("You have tried to access a deleted meal's invites!");
+		window.location.href = "/static/error.html?uid=" + user.id;
+	}
+
+	// check that user is part of meal
+	if (!meal.userIsInvited(user.id)) {
+		alert("You are not invited to this meal.");
+		window.location.href = "/static/error.html?uid=" + user.id;
+	}
+
+	populatePageData();
+};
+
 var populatePageData = function() {
 	$("#invitation-name").html("Invitation to " + meal.name);
 
@@ -28,7 +46,7 @@ var populateFriendData = function() {
 		});
 	};
 
-	var userIds = meal.userIds;
+	var userIds = meal.invitedIds;
 	userIds.push(meal.ownerId);
 
 	$.ajax({
@@ -65,7 +83,7 @@ $("#accept-invite-bttn").click(function() {
         }
     }
 
-    // add userid to meal userIds
+    // add invited ids to meal userIds
     if (meal.userIds === undefined) {
         meal.userIds = [];
         meal.userIds.push(userId);
@@ -78,31 +96,40 @@ $("#accept-invite-bttn").click(function() {
             }
         }
         if (!alreadyHas) {
-            meal.userIds.push(userId);
+            meal.userIds.push(user.id);
         }
     }
 
-    var callbackfn = function() {
-    	var callbackfn2 = function() {
+    meal.updateServer(function() {
+    	user.updateServer(function(){
     		window.location.href = "/static/home.html?uid=" + user.id;
-    	};
-    	user.updateServer(callbackfn2);
-    }
-    meal.updateServer(callbackfn);
+    	});
+    });
 });
 
 $("#dont-accept-invite-bttn").click(function() {
 	// remove invite from list
-    for (var i=0; i < user.invites.length; i++) {
+	var len = user.invites.length;
+    for (var i=0; i < len; i++) {
         if (parseInt(user.invites[i].mealId) === meal.id) {
             user.invites.splice(i,1);
             break;
         }
     }
-    var callbackfn = function() {
-    	window.location.href = "/static/home.html?uid=" + user.id;
-    };
-    user.updateServer(callbackfn);
+    // remove id from invited
+    var len = meal.invitedIds.length;
+   	for (var i = 0; i < len; i++) {
+   		if (parseInt(meal.invitedIds[i]) === user.id) {
+   			meal.invitedIds.splice(i, 1);
+   			break;
+   		}
+   	}
+
+    user.updateServer(function() {
+    	meal.updateServer(function() {
+    		window.location.href = "/static/home.html?uid=" + user.id;
+    	});
+    });
 });
 
 // set the nav bar buttons on the right
@@ -162,7 +189,7 @@ window.onload = function() {
 			}
 		});
 		meal = new Meal();
-		meal.initFromServer(mid, populatePageData);
+		meal.initFromServer(mid, checkValidIds);
 	};
 
 	user = new User();

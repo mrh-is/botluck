@@ -1,13 +1,14 @@
 var NORECIPE = new Recipe("n/a", [], "", "");
-function Meal(id, ownerId, name, userIds, startTime, endTime) {
+function Meal(id, ownerId, name, invitedIds, startTime, endTime) {
 	if (id !== undefined) this.id = id;
 	if (ownerId !== undefined) this.ownerId = ownerId;
 	if (name !== undefined) this.name = name;
-	if (userIds !== undefined) this.userIds = userIds;
 	if (startTime !== undefined) this.startTime = startTime;
 	if (endTime !== undefined) this.endTime = endTime;
+	if (invitedIds !== undefined) this.invitedIds = invitedIds;
 	this.recipe = NORECIPE;
 
+	this.userIds = [];
 	this.contributions = {};
 	this.recipeChosen = false;
 	this.voteCount = {};
@@ -33,6 +34,22 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 		for (var i = 0; i < len; i++) {
 			if (parseInt(this.userIds[i]) === uid) {
 				return true;	
+			}
+		}
+		return false;
+	};
+
+	this.userIsInvited = function(uid) {
+		if (this.ownerId === uid) {
+			return true;
+		}
+		if (this.invitedIds === undefined) {
+			return false;
+		}
+		var len = this.invitedIds.length;
+		for (var i = 0; i < len; i++) {
+			if (parseInt(this.invitedIds[i]) === uid) {
+				return true;
 			}
 		}
 		return false;
@@ -100,6 +117,7 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 		if (data.recipeChosen !== undefined) this.recipeChosen = data.recipeChosen;
 		if (data.voteCount !== undefined) this.voteCount = data.voteCount;
 		if (data.missingIngredients !== undefined) this.missingIngredients = data.missingIngredients;
+		if (data.invitedIds !== undefined) this.invitedIds = data.invitedIds;
 	};
 
 	this.toJSON = function() {
@@ -114,7 +132,8 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 			"recipe": this.recipe,
 			"recipeChosen": this.recipeChosen,
 			"voteCount": this.voteCount,
-			"missingIngredients": this.missingIngredients
+			"missingIngredients": this.missingIngredients,
+			"invitedIds": this.invitedIds
 		};
 		return JSON.stringify(data);
 	};

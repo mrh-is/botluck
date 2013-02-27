@@ -1,5 +1,11 @@
 function MealFinder() {
 	this.findUserIngredients = function(ids, callbackfn) {
+		if (ids === undefined || ids.length === 0) {
+			if (callbackfn !== undefined) {
+				callbackfn([]);
+			}
+			return;
+		}
 		$.ajax({
 			type: "get",
 			url: "/allIngredients/" + ids.join(","),
@@ -24,7 +30,6 @@ function MealFinder() {
 	    $.each(ingredients, function(i, ingredient) {
 	        names.push(ingredient.name);
 	    });
-
 	    $.ajax({
 		   type: "GET",
 		   dataType: "jsonp",

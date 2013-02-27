@@ -57,6 +57,10 @@ var populatePageData = function() {
 	var endTime = new Date(meal.endTime);
 	timeString = endTime.toUTCString();
 	$("#end-time").html(timeString);
+	$("#prev-page").hide(); // hide prev page bttn until page > 1
+	if (user.id !== meal.ownerId) {
+		$("#choose-recipe-bttn").hide();
+	}
 	populateMyData();
 };
 
@@ -119,29 +123,46 @@ var populateFriendData = function() {
 		});
 	};
 
-	var getUserInfo = function(userIngredients) {
-		$.ajax({
-			type: "get",
-			url: "/friendsInfo/" + meal.userIds.join(","),
-			success: function(data) {
-				if (data.success) {
-					populate(userIngredients, data.usersData);
+	var getUserInfo = function(userIds, userIngredients) {
+		if (userIds === undefined || userIds.length === 0) {
+			populate(userIngredients, {});
+		} else {
+			$.ajax({
+				type: "get",
+				url: "/friendsInfo/" + userIds.join(","),
+				success: function(data) {
+					if (data.success) {
+						populate(userIngredients, data.usersData);
+					}
 				}
-			}
-		});
+			});
+		}
 	};
 
+	var users = [];
+	meal.userIds.forEach(function(id) {
+		if (id !== user.id) {
+			users.push(id);
+		}
+	});
+	if (user.id !== meal.ownerId) {
+		users.push(meal.ownerId);
+	}
+
 	if (meal.recipeChosen) { // get ingredients from contributions
-		getUserInfo(meal.contributions);
+		getUserInfo(users, meal.contributions);
 	}
 	else { //display all ingredients from everyone
-		mealfinder.findUserIngredients(meal.userIds, getUserInfo);
+		mealfinder.findUserIngredients(users, function(userIngredients) {
+			getUserInfo(users, userIngredients);
+		});
 	}
 
 	populateRecipeData();
 };
 
 var populateRecipeData = function() {
+
 	var generateRecipeDiv = function(recipe) {
 		var div = $("<div>").addClass("recipe");
 		$("<img>").attr("src", recipe.thumbnail).appendTo(
@@ -164,9 +185,11 @@ var populateRecipeData = function() {
 	};
 
 	var addRecipesToList = function(list) {
+		$("#recipe-list").html("");
 		$.each(list, function(i, recipe) {
 			var item = $("<li>");
-			generateRecipeDiv(recipe).appendTo(item);
+			var recipeDiv = generateRecipeDiv(recipe);
+			recipeDiv.appendTo(item);
 			var bttn = $("<button class='navButton' type='button'>view recipe</button>");
 			var newbttn = $("<button class='navButton like' type='button'>");
 			if (meal.voteCount[recipe.title] !== undefined) {
@@ -207,9 +230,9 @@ var populateRecipeData = function() {
 					$(this).html("like (votes: " + meal.voteCount[recipeTitle].length + ")");
 				});
 			})();
-			bttn.appendTo(item);
+			bttn.appendTo(recipeDiv);
 			if (!meal.recipeChosen) {
-				newbttn.appendTo(item);
+				newbttn.appendTo(recipeDiv);
 			}
 			(function() {
 				var r = recipe;
@@ -248,7 +271,6 @@ var populateRecipeData = function() {
 				// update all users  by removing meal from currentMeals
 				// and adding meal to history
 				var updateUser = function(ids) {
-					console.log(ids);
 					if (ids.length === 0) {
 						window.location.href = "/static/home.html?uid=" + user.id;
 					} else {
@@ -289,7 +311,7 @@ var populateRecipeData = function() {
 			missing.appendTo($("#missing"));
 		});
 	} else {
-		var wrapper = $("#recipe-list").html("");
+		var wrapper = $("#recipe-list").html("LOADING");
 		$("#missing-ingredients").hide();
 		mealfinder.findMeals(allIngredients, page, addRecipesToList);
 	}
@@ -298,11 +320,17 @@ var populateRecipeData = function() {
 $("#next-page").click(function() {
 	page++;
 	populateRecipeData();
+	if (page > 1) {
+		$("#prev-page").show();
+	}
 });
 
 $("#prev-page").click(function() {
 	page--;
-	if (page < 1) page = 1;
+	if (page <= 1) {
+		page = 1;
+		$(this).hide();
+	}
 	populateRecipeData();
 });
 

@@ -8,7 +8,7 @@ var populatePageData = function(user) {
 
 	$("#currentmeals").html(""); // clear template data
 	if (user.history === undefined || user.history.length === 0) {
-		$("#currentmeals").html("No upcoming meals");
+		$("#currentmeals").html("No past meals");
 	} else {
 		user.history.forEach(function(mid) {
 			showMeal(mid);

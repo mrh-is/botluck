@@ -46,7 +46,7 @@ $("#createNewMealBttn").click(function() {
 				var invites = [];
 				$.each($("#friendList input:checked"),
 					function() {
-						invites.push(this.id);
+						invites.push(parseInt(this.id));
 					}
 				);
 
