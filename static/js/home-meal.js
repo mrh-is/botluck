@@ -163,10 +163,14 @@ var populateFriendData = function() {
 
 var populateRecipeData = function() {
 
+	var recipeThumbnails = []; // load thumbnails at end
+	var index = 0;
 	var generateRecipeDiv = function(recipe) {
 		var div = $("<div>").addClass("recipe");
-		$("<img>").attr("src", recipe.thumbnail).appendTo(
+		$("<img>").attr("index",index).appendTo(
 			$("<div>").addClass("photo").appendTo(div));
+		recipeThumbnails.push(recipe.thumbnail);
+		index++;
 		// insert break lines into every 30 characters of the title
 		var titleString = "";
 		var line = "";
@@ -187,9 +191,7 @@ var populateRecipeData = function() {
 	var addRecipesToList = function(list) {
 		$("#recipe-list").html("");
 		$.each(list, function(i, recipe) {
-			var item = $("<li>");
 			var recipeDiv = generateRecipeDiv(recipe);
-			recipeDiv.appendTo(item);
 			var bttn = $("<button class='navButton' type='button'>view recipe</button>");
 			var newbttn = $("<button class='navButton like' type='button'>");
 			if (meal.voteCount[recipe.title] !== undefined) {
@@ -236,14 +238,23 @@ var populateRecipeData = function() {
 			}
 			(function() {
 				var r = recipe;
-				item.click(function() {
+				recipeDiv.click(function() {
 					meal.chooseRecipe(r);
 					$("#current-choice").html(r.title);
 				});
 			})();
-			item.appendTo(wrapper);
+			recipeDiv.appendTo(wrapper);
+
+
 		});
+
+		// load thumbnails
+		var len = recipeThumbnails.length;
+		for (var i = 0; i < len; i++) {
+			$(".recipe .photo img[index=" + i + "]").attr("src", recipeThumbnails[i]);
+		}
 	};
+
 	if (meal.recipeChosen) { // hide some stuff
 		$("#choose-recipe-bttn").hide();
 		$("#prev-page").hide();

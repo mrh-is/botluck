@@ -1,3 +1,5 @@
+var MAXPARAMSPERQUERY = 10;
+
 function MealFinder() {
 	this.findUserIngredients = function(ids, callbackfn) {
 		if (ids === undefined || ids.length === 0) {
@@ -26,15 +28,26 @@ function MealFinder() {
 			page = 1;
 		}
 
+		// get first 10 ingredients
+		// more ingrediensts is very slow with the
+		// recipe puppy api
+		var search;
+		if (ingredients.length <= MAXPARAMSPERQUERY) {
+			search = ingredients;
+		} else {
+			search = ingredients.splice(MAXPARAMSPERQUERY-1);
+		}
+
 		var names = [];
 	    $.each(ingredients, function(i, ingredient) {
 	        names.push(ingredient.name);
 	    });
+	    console.log(names);
 	    $.ajax({
-		   type: "GET",
 		   dataType: "jsonp",
+		   jsonp: "callback",
 		   url: "http://www.recipepuppy.com/api/?i=" + names.join(",") + "&p="+page,
-		   jsonpCallback: 'callback',
+		   jsonpCallback: 'jsonpCallback',
 		   success: function(data) {
 		      if (callbackfn !== undefined && 
 		      	data.results !== undefined) {
