@@ -1,1 +1,1 @@
-{"id":3,"userName":"vibhar","password":"hello","name":"Vibha"}
+{"id":3,"userName":"vibhar","password":"hello","name":"Vibha","invites":[{"mealId":"6","userId":"3","username":"Beyonce Knowles","date":"Wed Feb 27 2013 13:52:30 GMT-0500 (Eastern Standard Time)"}]}

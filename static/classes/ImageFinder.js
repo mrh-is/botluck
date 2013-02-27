@@ -9,9 +9,9 @@ function ImageFinder(searchTerm, element) {
 			self.searcher.setRestriction(google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM);
 			self.searcher.setRestriction(google.search.Search.RESTRICT_SAFESEARCH, google.search.Search.SAFESEARCH_STRICT);
 			self.searcher.setRestriction(google.search.ImageSearch.RESTRICT_RIGHTS, google.search.ImageSearch.RIGHTS_MODIFICATION);
-			self.searcher.setResultSetSize(8);
+			self.searcher.setResultSetSize(4);
 			self.searcher.setSearchCompleteCallback(self, self.searchComplete, [self.searcher]);
-			self.searcher.execute(searchTerm);
+			self.searcher.execute(searchTerm + " food");
 		}, 100);
 	}, 1);
 

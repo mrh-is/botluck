@@ -13,38 +13,44 @@ function User(userName, password, id, name) {
 	this.currentMeals = [];
 	this.invites = [];
 
-	this.addIngredient = function(ingredient) {
-		this.ingredients.push(ingredient);
-	};
-
-	this.addUtensil = function(utensil) {
-		this.utensils.push(utensil);
-	};
-
-	this.addFriend = function(friendID) {
-		this.friends.push(friendID);
-	};
-
-	this.addInvite = function(invite) {
-		this.invites.push(invite);
-	}
-
-	this.addMeal = function(meal) {
-		this.currentMeals.push(meal);
-	}
-
 	this.removeMeal = function(mid) {
 		if (this.currentMeals === undefined) {
 			return false;
 		}
 		var len = this.currentMeals.length;
 		for (var i = 0; i < len; i++) {
-			if (parseInt(this.currentMeals[i]) === meal.id) {
+			if (parseInt(this.currentMeals[i]) === mid) {
 				this.currentMeals.splice(i,1);
 				return true;
 			}
 		}
 		return false;
+	};
+
+	this.hasFriend = function(uid) {
+		if (this.friends === undefined) {
+			return false;
+		}
+		var len = this.friends.length;
+		for (var i = 0; i < len; i++) {
+			if (parseInt(this.friends[i]) === uid) {
+				return true;
+			}
+		}
+		return false;
+	};
+
+	this.removeFriend = function(uid) {
+		if (this.friends === undefined) {
+			return;
+		}
+		var len = this.friends.length;
+		for (var i = 0; i < len; i++) {
+			if (parseInt(this.friends[i]) === uid) {
+				user.friends.splice(i, 1);
+				break;
+			}
+		}
 	};
 
 	this.isInHistory = function(mid) {

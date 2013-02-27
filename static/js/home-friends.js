@@ -1,32 +1,74 @@
 // populates page data from the user object
 var user;
-
-var getFriendNames = function(user) {
-	$.ajax({
-		type: "get",
-		url: "/friendsInfo/" + user.friends.join(","),
-		success: function(data) {
-			if (data.success) {
-				populatePageData(data.usersData);
-			}
-		}
-	});
-};
+var usersData;
 
 var populatePageData = function(friendNames) {
 	$("#karmaBadge").html(user.karma);
+	$("#welcome-message").html("Your Friends!");
+	// clear both lists
+	$("#all-users").html("");
+	$("#friends-list").html("");
 
-	for (var id in friendNames) {
-		showFriend(friendNames[id]);
+	// get all user info
+	$.ajax({
+		type: "get",
+		url: "/allUsersInfo",
+		success: function(data) {
+			if (data.success) {
+				usersData = data.usersData;
+				populateAllUsersData();
+			}
+		}
+	})
+};
+
+var populateAllUsersData = function() {
+	for (var id in usersData) {
+		id = parseInt(id);
+		if (id === user.id || user.hasFriend(id)) {
+			continue;
+		}
+		var friendDiv = $("<div>").addClass("friend").attr("uid",id).appendTo($("#all-users"));
+		$("<div>").addClass("photo").html("a profile photo").appendTo(friendDiv);
+		$("<div>").addClass("caption").html(usersData[id]).appendTo(friendDiv);
+		(function() {
+			var uid = id;
+			friendDiv.click(function() {
+				$(this).hide();
+				console.log(user.hasFriend(uid));
+				if (!user.hasFriend(uid)) {
+					user.friends.push(uid);
+					user.updateServer(function() {
+						window.location.href = ""; // reload page
+					});
+				} else {
+					window.location.href = ""; // reload page
+				}
+			});
+		})();
 	}
+	populateFriendData();
 };
 
-// populate meals
-var showFriend = function(friend) {
-	var friendDiv = $("<div>").addClass("friend").appendTo($("#mainCol"));
-	$("<div>").addClass("photo").html("a profile photo").appendTo(mealDiv);
-	$("<div>").addClass("caption").html(friend).appendTo(mealDiv);
-};
+var populateFriendData = function() {
+	var len = user.friends.length;
+	for (var i = 0; i < len; i++) {
+		var id = parseInt(user.friends[i]);
+		var friendDiv = $("<div>").addClass("friend").attr("uid",id).appendTo($("#friends-list"));
+		$("<div>").addClass("photo").html("a profile photo").appendTo(friendDiv);
+		$("<div>").addClass("caption").html(usersData[id]).appendTo(friendDiv);
+		(function() {
+			var uid = id;
+			friendDiv.click(function() {
+				$(this).hide();
+				user.removeFriend(uid);
+				user.updateServer(function() {
+					window.location.href = ""; // reload page
+				});
+			});
+		})();
+	}
+}
 
 // view meal
 var viewMeal = function(mealID) {
@@ -74,5 +116,5 @@ window.onload = function() {
 	}
 
 	user = new User();
-	user.initFromServer(id, getFriendNames);
+	user.initFromServer(id, populatePageData);
 };

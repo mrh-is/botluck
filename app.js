@@ -204,10 +204,16 @@ app.get("/friendsInfo/:ids", function(request, response) {
     getFriendInfo(intIds, {});
 });
 
-app.get("/friendsInfo", function(request, response) {
+// return all user info for friend.html to choose friends
+app.get("/allUsersInfo", function(request, response) {
+    var usersData = {};
+    for (var username in userDB) {
+        var id = userDB[username].id;
+        usersData[id] = username;
+    }
     response.send({
         "success": true,
-        "usersData": {}
+        "usersData": usersData
     });
 });
 

@@ -1,1 +1,1 @@
-{"userDB":{"michael":{"password":"asdf","id":0},"nbatliv":{"password":"asdf","id":1},"mlaliwal":{"password":"asdf","id":2},"vibhar":{"password":"hello","id":3},"omer":{"password":"password","id":4}},"userCount":5,"mealCount":6}
+{"userDB":{"michael":{"password":"asdf","id":0},"nbatliv":{"password":"asdf","id":1},"mlaliwal":{"password":"asdf","id":2},"vibhar":{"password":"hello","id":3},"omer":{"password":"password","id":4},"joater":{"password":"poppop","id":5},"beyonce":{"password":"asdf","id":6}},"userCount":7,"mealCount":7}
