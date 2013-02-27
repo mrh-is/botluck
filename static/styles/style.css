@@ -159,7 +159,7 @@ h3 {
 	background-color: #faf4c0;
 }
 
-.formBlock {
+.formBlock, .friend {
 	display: inline-block;
 	margin-left: 20px;
 	margin-bottom: 5px;
@@ -170,6 +170,7 @@ h3 {
 }
 
 .date {
+	display: inline-block;   /*this might break*/
 	font-size: 12px;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -205,9 +206,10 @@ h3 {
 	vertical-align: top;
 	margin-left: 15px;
 	width: 300px;
+	vertical-align: middle;
 }
 
-.meal {
+.meal, .friendContributions {
 	display: inline-block;
 	padding: 5px 10px;
 	margin-right: 18px;
@@ -228,6 +230,12 @@ h3 {
 .photo {
 	display: inline-block;
 	background-color: #DDD;
+	vertical-align: bottom;
+}
+
+ .photo img {
+	width: 100%;
+	height: 100%;
 }
 
 .meal .photo {
@@ -240,6 +248,13 @@ h3 {
 	height: 50px;
 }
 
+.friendRow {
+	background-color: #faf4c0;
+	padding: 5px 10px;
+	padding-top: 15px;
+	margin-bottom: 20px;
+}
+
 .ingredient,.utensil {
 	display: inline-block;
 	padding: 5px;
@@ -248,9 +263,15 @@ h3 {
 	padding-bottom: 10px;
 }
 
-.ingredient .photo,.utensil .photo {
+.mealDetail .photo {
+	width: 125px;
+	height: 100px;
+}
+
+.friend .photo, .ingredient .photo,.utensil .photo {
 	width: 75px;
 	height: 75px;
+	vertical-align: top;
 }
 
 .meal .caption {
@@ -258,6 +279,19 @@ h3 {
 	margin-bottom: 15px;
 	font-weight: 400;
 	/*height:40px;*/
+}
+
+.caption {
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-top: 15px;
+	margin-bottom: 5px;
+}
+
+.contribution .photo {
+	width: 50px;
+	height: 50px;
 }
 
 .contribution .caption {
@@ -302,9 +336,11 @@ h3 {
 }
 
 
-#columnEnd {
+#columnEnd, #columnEndInvite {
 	display: block;
 	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #pageEnd {
@@ -377,7 +413,7 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn, #add-ingredient, 
 	height: 25px;
 }
 
-#leftnav button.navButton, #columnEnd button.navButton, button.navButton.add {
+#leftnav button.navButton, #columnEnd button.navButton, button.navButton.add, .friends .navButton {
 	display: block;
 	width:200px; 
 	font-family: "Roboto";
@@ -393,12 +429,47 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn, #add-ingredient, 
 	margin-bottom: 50px;
 }
 
+#columnEnd button.navButton.longer {
+	width: 350px;
+	margin-top: 50px;
+}
+
 .columnEnd {
 	height: 50px;
 }
 
 .right {
 	text-align: right;
+}
+
+#columnEndInvite button.navButton {
+	display: inline-block;
+	font-size: 20px;
+	font-weight: 300;
+	width: 180px;
+	margin-top: 50px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+select {
+	font-family: "Roboto";
+	font-weight: 300;
+	font-size: 16px;
+}
+
+.friends .navButton {
+	font-size: 14px;
+	width: 150px;
+	margin-left: 0;
+	margin-top: 5px;
+}
+
+.mealDetail button {
+	width:100px; 
+	/*margin-left: 20px;*/
+	height: 25px;
+	margin-top: 10px;
 }
 
 button.navButton.add {
@@ -437,4 +508,47 @@ button.navButton:not(.current):hover {
 	text-transform: lowercase;
 	/*height:40px;*/
 	text-align: center;
+}
+
+.recipe {
+	display: inline-block;
+	padding: 0;
+	margin-bottom: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.recipe {
+	width: 100px;
+	overflow: hidden;
+	text-align: center;
+}
+.recipe .caption {
+	text-transform: none;
+	font-weight: 300;
+}
+
+.recipe div {
+	text-align: center;
+}
+
+.recipe .navButton {
+	margin-top: 0;
+	/*margin-bottom: 15px;*/
+}
+
+.recipe:hover {
+	background-color: #b8e4dd;
+}
+
+.center {
+	/*margin: 0 auto;*/
+}
+
+button.navButton.like {
+	color: #000000;
+	background: #F2D03A url("/static/assets/like.png") no-repeat left top;
+	padding-left: 30px;
 }
