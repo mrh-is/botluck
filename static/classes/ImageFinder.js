@@ -5,13 +5,15 @@ function ImageFinder(searchTerm, element) {
 	setTimeout(function(){
 		google.load('search', '1', {"callback":""});
 		setTimeout(function(){
-			self.searcher = new google.search.ImageSearch();
-			self.searcher.setRestriction(google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM);
-			self.searcher.setRestriction(google.search.Search.RESTRICT_SAFESEARCH, google.search.Search.SAFESEARCH_STRICT);
-			self.searcher.setRestriction(google.search.ImageSearch.RESTRICT_RIGHTS, google.search.ImageSearch.RIGHTS_MODIFICATION);
-			self.searcher.setResultSetSize(4);
-			self.searcher.setSearchCompleteCallback(self, self.searchComplete, [self.searcher]);
-			self.searcher.execute(searchTerm + " food");
+			if (google !== undefined && google.search !== undefined) {
+				self.searcher = new google.search.ImageSearch();
+				self.searcher.setRestriction(google.search.ImageSearch.RESTRICT_IMAGESIZE, google.search.ImageSearch.IMAGESIZE_MEDIUM);
+				self.searcher.setRestriction(google.search.Search.RESTRICT_SAFESEARCH, google.search.Search.SAFESEARCH_STRICT);
+				self.searcher.setRestriction(google.search.ImageSearch.RESTRICT_RIGHTS, google.search.ImageSearch.RIGHTS_MODIFICATION);
+				self.searcher.setResultSetSize(4);
+				self.searcher.setSearchCompleteCallback(self, self.searchComplete, [self.searcher]);
+				self.searcher.execute(searchTerm + " food");
+			}
 		}, 100);
 	}, 1);
 
