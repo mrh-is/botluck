@@ -105,7 +105,20 @@ var deleteUtensil = function(index) {
 };
 
 // set the nav bar buttons on the right
-$("#myBotlucksBttn").click(function() {
+
+$("#startButton").click(function() {
+	window.location.href = "/static/home/meals/new.html?uid=" + user.id;
+});
+
+// $("#myBotlucksBttn").click(function() {
+// 	window.location.href = "/static/home.html?uid=" + user.id;
+// });
+
+$("#mycanvas").click(function() {
+	window.location.href = "/static/home.html?uid=" + user.id;
+});
+
+$("#botluckTitle").click(function() {
 	window.location.href = "/static/home.html?uid=" + user.id;
 });
 

@@ -105,7 +105,7 @@ body {
 	background-image: url("/static/assets/title.png");
 	display: inline-block;
 	vertical-align: top;
-	margin-top: 90px;
+	margin-top: 40px;
 	margin-left: -20px;
 }
 
@@ -123,8 +123,8 @@ body {
 	display: inline-block;
 	margin-right: 50px;
 	width: 480px;
-	padding-right: 45px;
-	border-right: thin solid #F2D03A;
+	/*padding-right: 45px;
+	border-right: thin solid #F2D03A;*/
 	/*background-color: #faf4c0;*/
 }
 
@@ -133,6 +133,7 @@ h1 {
 	margin-top: 120px;
 	margin-bottom: 0px;
 	/*background-color: #CCC;*/
+	text-transform: capitalize;
 	font-size: 36px;
 }
 
@@ -320,6 +321,8 @@ h3 {
 	padding-top: 30px;
 	padding-bottom: 50px;
 	/*border-left: thin solid #F2D03A;*/
+	padding-left: 50px;
+	border-left: thin solid #F2D03A;
 }
 
 #leftnav .photo {
@@ -397,6 +400,10 @@ button.navButton, #loginBttn, #signUpBttn, #createNewUserBttn, #add-ingredient, 
   	border: thin solid white;
   	font-family: "Roboto";
   	margin-top: 18px;
+}
+
+.navButton.hidden {
+	visibility: hidden;
 }
 
 .login-form {
@@ -497,9 +504,16 @@ button.navButton:not(.current):hover {
 	border: thin solid #F2D03A;
 }
 
+button:hover, #mycanvas:hover, #botluckTitle:hover {
+	cursor: hand; cursor: pointer;
+}
+
 .friend {
+	width: 75px;
 	display: inline-block;
 	margin-right: 20px;
+	vertical-align: top;
+	/*background-color: red;*/
 }
 
 .friend .photo {
