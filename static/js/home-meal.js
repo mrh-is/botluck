@@ -64,7 +64,10 @@ var populateFriendData = function() {
 				}
 				$.each(ingredients, function(i, ingredient) {
 					var contribution = $("<div>").addClass("contribution");
-					$("<div>").addClass("photo").html("a food photo").appendTo(contribution);
+					new ImageFinder(
+						ingredient.name,
+						$("<div>").addClass("photo").appendTo(contribution)
+					);
 					$("<div>").addClass("caption").html(ingredient.name).appendTo(contribution);
 					contribution.appendTo(contributions);
 				});
