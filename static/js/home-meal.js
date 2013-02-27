@@ -1,6 +1,6 @@
 var user;
-var friendInfo;
-var userIngredientsMap = {};
+var friendInfo; // map of userid to username
+var userIngredientsMap = {}; // map of userids to ingredients list
 var meal;
 var mealfinder = new MealFinder();
 var isOwner = false;

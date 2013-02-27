@@ -15,7 +15,10 @@ var populatePageData = function(user) {
 // populate ingredients
 var showIngredient = function(ingredient) {
 	var ingredientDiv = $("<div>").addClass("ingredient").appendTo($("#ingredients"));
-	$("<div>").addClass("photo").html(ingredient.name).appendTo(ingredientDiv);
+	new ImageFinder(
+		ingredient.name,
+		$("<div>").addClass("photo").appendTo(ingredientDiv)
+	);
 	$("<div>").addClass("caption").html(ingredient.name).appendTo(ingredientDiv);
 	$("<button>").addClass("navButton").attr("ingredient",user.ingredients.indexOf(ingredient)).attr("type","button").html("delete").click(function(evt) {
 		deleteIngredient($(evt.currentTarget).attr("ingredient"));
@@ -25,7 +28,10 @@ var showIngredient = function(ingredient) {
 // populate utensils
 var showUtensil = function(utensil) {
 	var utensilDiv = $("<div>").addClass("utensil").appendTo($("#utensils"));
-	$("<div>").addClass("photo").html(utensil.name).appendTo(utensilDiv);
+	new ImageFinder(
+		utensil.name,
+		$("<div>").addClass("photo").appendTo(utensilDiv)
+	);
 	$("<div>").addClass("caption").html(utensil.name).appendTo(utensilDiv);
 	$("<button>").addClass("navButton").attr("utensil",user.utensils.indexOf(utensil)).attr("type","button").html("delete").click(function(evt) {
 		deleteUtensil($(evt.currentTarget).attr("utensil"));
