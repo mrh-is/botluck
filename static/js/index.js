@@ -22,11 +22,28 @@ $('#loginBttn').click(function() {
 	});
 });
 
+// allow you to click enter and sign in
+$("#password-input").keypress(function(e) {
+	if (e.which === 13) {// enter key pressed
+		$("#loginBttn").click();
+	}
+});
+
+$("#username-input").keypress(function(e) {
+	if (e.which === 13) {// enter key pressed
+		$("#loginBttn").click();
+	}
+});
+
+
+
 /* display sign up form */
 $('#signUpBttn').click(function() {
 	$('#signup-form').show();
 });
 
+// on enter, submit form
+window.
 /* create new user */
 $('#createNewUserBttn').click(function() {
 	var name = $('#new-name-input').val();
