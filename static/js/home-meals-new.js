@@ -60,6 +60,7 @@ $("#createNewMealBttn").click(function() {
 				} else {
 					user.currentMeals.push(mid);
 				}
+				user.karma += 1;
 				user.updateServer();
 
 				// send invites
