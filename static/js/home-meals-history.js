@@ -4,27 +4,55 @@ var user;
 var populatePageData = function(user) {
 	$("#karmaBadge").html(user.karma);
 
-	user.history.forEach(function(meal) {
-		showMeal(meal);
-	});
+	$("#title").html(user.name + "'s History");
+
+	$("#currentmeals").html(""); // clear template data
+	if (user.history === undefined || user.history.length === 0) {
+		$("#currentmeals").html("No upcoming meals");
+	} else {
+		user.history.forEach(function(mid) {
+			showMeal(mid);
+		});
+	}
 };
 
-// populate meals
-var showMeal = function(meal) {
-	var mealDiv = $("<div>").addClass("meal").appendTo($("#currentmeals"));
-	$("<div>").addClass("date").html(ingredient.date).appendTo(mealDiv);
-	$("<div>").addClass("photo").html("a meal photo").appendTo(mealDiv);
-	var infoDiv = $("<div>").appendTo(mealDiv);
-	$("<div>").addClass("caption").html(meal.name).appendTo(infoDiv);
-	$("<div>").addClass("menu").appendto(infoDiv).append($("<span>").addClass("date").html("menu")).append($("<span>").html(meal.choice)).append($("<br>"));
-	$("<div>").addClass("date").addClass("bringing").html("i'm bringing").appendTo(infoDiv);
-	var contributionsDiv = $("<div>").addClass("contributions").appendTo(infoDiv);
-	meal.contributions.forEach(function(contribution) {
-		$("<div>").addClass("contribution").append($("<div>").addClass("photo").html("a food photo")).append($("<div>").addClass("caption").html(contribution)).appendTo(contributionsDiv);
+// populate current meals
+var showMeal = function(mid) {
+	var meal = new Meal();
+	meal.initFromServer(mid, function() {
+		var mainDiv = $("<div>").addClass("meal");
+		$("<div>").addClass("date").html(meal.date).appendTo(mainDiv);
+		$("<div>").addClass("photo").html("a meal photo").appendTo(mainDiv);
+		var wrapper = $("<div>");
+		$("<div>").addClass("caption").html(meal.name).appendTo(wrapper);
+		var menu = $("<div>").addClass("menu");
+		$("<span>").addClass("date").html("menu").appendTo(menu);
+		if (meal.recipeChosen) {
+			$("<span>").html(meal.recipe.title).appendTo(menu);
+		} else {
+			$("<span>").html("n/a").appendTo(menu);
+		}
+		menu.appendTo(wrapper);
+		$("<div>").addClass("date bringing").html("i brought").appendTo(wrapper);
+		var contributionDiv = $("<div>").addClass("contributions");
+		var contributions = meal.contributions[user.id];
+		console.log(contributions);
+		if (contributions !== undefined && contributions.length !== 0) {
+			$.each(contributions, function(i, ingredient) {
+				var div = $("<div>").addClass("contribution");
+				new ImageFinder(
+					ingredient.name,
+					$("<div>").addClass("photo").appendTo(div)
+				);
+				div.appendTo(contributionDiv);
+			});
+			contributionDiv.appendTo(wrapper);
+		} else {
+			$("<span>").html("nothing").appendTo(wrapper);
+		}
+		wrapper.appendTo(mainDiv);
+		mainDiv.appendTo($("#currentmeals"));
 	});
-	$("<div>").addClass("right").append($("<button>").addClass("navButton").attr("mealID",meal.id).attr("type","button").html("view").click(function(evt) {
-		viewMeal($(evt.currentTarget).attr("mealID"));
-	})).appendTo(infoDiv);
 };
 
 // view meal

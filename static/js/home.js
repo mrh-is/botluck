@@ -18,11 +18,9 @@ var populatePageData = function(user) {
 		$("#currentmeals").html("No upcoming meals");
 	} else {
 		user.currentMeals.forEach(function(meal) {
-			console.log("here");
 			showMeal(meal);
 		});
 	}
-
 };
 
 var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -50,7 +48,6 @@ var showInvite = function(invite) {
 
 // populate current meals
 var showMeal = function(mid) {
-	console.log(mid);
 	var meal = new Meal();
 	meal.initFromServer(mid, function() {
 		var mainDiv = $("<div>").addClass("meal");
@@ -94,6 +91,11 @@ var showMeal = function(mid) {
 		mainDiv.appendTo($("#currentmeals"));
 	});
 };
+
+// set the view past botlucks button
+$("#meal-history-bttn").click(function() {
+	window.location.href = "/static/home/meals/history.html?uid=" + user.id;
+});
 
 // set the nav bar buttons on the right
 $("#startButton").click(function() {

@@ -6,12 +6,14 @@
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,400,700,300' rel='stylesheet' type='text/css'>
 
 	<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>
-
 	<script type="text/javascript" src="/static/classes/Ingredient.js"></script>
 	<script type="text/javascript" src="/static/classes/Utensil.js"></script>
 	<script type="text/javascript" src="/static/classes/User.js"></script>
+	<script type="text/javascript" src="/static/classes/Recipe.js"></script>
 	<script type="text/javascript" src="/static/classes/Meal.js"></script>
 	<script type="text/javascript" src="/static/classes/MealFinder.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="/static/classes/ImageFinder.js"></script>
 </header>
 <body>
 	<div id="headerBar">
@@ -24,8 +26,7 @@
 	</div>
 
 	<div class="wrapper">
-		<h1>I've been to sooo many botlucks,
-			<br>it's not even funny.</h1>
+		<h1 id="title"></h1>
 		<div id="mainCol">
 			<h2>Past Botlucks</h2>
 			<div id="currentmeals">
@@ -119,9 +120,6 @@
 			<button id="myKitchenBttn" class="navButton" type="button">my kitchen</button>
 			<button id="myFriendsBttn" class="navButton" type="button">my friends</button>
 			<br><br>
-			<!-- <h2>My Botluck</h2> -->
-			<!-- <div class="photo">avatar</div>
-			<div class="caption">Beyonce Knowles</div> -->
 			<div id="karmaBadge">0</div>
 			<h2>Contribute to more botlucks to earn more karma points!</h2>
 			
