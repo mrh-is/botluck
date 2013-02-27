@@ -1,0 +1,1 @@
+{"id":2,"ownerId":4,"name":"42","userIds":["",""],"contributions":{},"startTime":"2013-02-26T23:00:00.000Z","endTime":"2013-02-27T01:00:00.000Z","recipe":{"title":"n/a","ingredients":[],"url":"","thumbnail":""},"recipeChosen":false,"voteCount":{},"missingIngredients":[]}
