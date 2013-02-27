@@ -7,6 +7,47 @@ var isOwner = false;
 var page = 1;
 var allIngredients = [];
 
+var checkValidIds = function() {
+	var len;
+	// check that meal is valid by checking ownerId
+	if (meal.ownerId === -1) {
+		// ensure that meal is removed from users current meals
+		if (user.removeMeal(meal.id)) {
+			var callbackfn = function() {
+				alert("You are not invited to this meal.");
+				window.location.href = "/static/error.html?uid=" + user.id;
+			};
+			user.history.push(meal.id);
+			user.updateServer(callbackfn);
+		} else {
+			alert("You have tried to access a deleted meal");
+			window.location.href = "/static/error.html?uid=" + user.id;
+		}
+		return;
+	}
+
+	// check that user is part of meal
+	if (!meal.userIsInMeal(user.id)) {
+		// ensure that meal is removed from users current meals
+		if (user.removeMeal(meal.id)) {
+			var callbackfn = function() {
+				alert("You are not invited to this meal.");
+				window.location.href = "/static/error.html?uid=" + user.id;
+			};
+			if (!user.isInHistory(meal.id)) {
+				user.history.push(meal.id);
+			}
+			user.updateServer(callbackfn);
+		} else {
+			alert("You are not invited to this meal.");
+			window.location.href = "/static/error.html?uid=" + user.id;
+		}
+		return;
+	}
+
+	populatePageData();
+};
+
 var populatePageData = function() {
 	$("#meal-name").html(meal.name);
 
@@ -101,25 +142,31 @@ var populateFriendData = function() {
 };
 
 var populateRecipeData = function() {
+	var generateRecipeDiv = function(recipe) {
+		var div = $("<div>").addClass("recipe");
+		$("<img>").attr("src", recipe.thumbnail).appendTo(
+			$("<div>").addClass("photo").appendTo(div));
+		// insert break lines into every 30 characters of the title
+		var titleString = "";
+		var line = "";
+		var words = recipe.title.split(" ");
+		$.each(words, function(i, word) {
+			if (line.length + word.length > 25) {
+				titleString += line + "<br>";
+				line = word;
+			} else {
+				line += word + " ";
+			}
+		});
+		titleString += line;
+		$("<div>").addClass("caption").html(titleString).appendTo(div);
+		return div;
+	};
+
 	var addRecipesToList = function(list) {
 		$.each(list, function(i, recipe) {
-			var item = $("<li>").addClass("recipe");
-			$("<img>").attr("src", recipe.thumbnail).appendTo(
-				$("<div>").addClass("photo").appendTo(item));
-			// insert break lines into every 30 characters of the title
-			var titleString = "";
-			var line = "";
-			var words = recipe.title.split(" ");
-			$.each(words, function(i, word) {
-				if (line.length + word.length > 25) {
-					titleString += line + "<br>";
-					line = word;
-				} else {
-					line += word + " ";
-				}
-			});
-			titleString += line;
-			$("<div>").addClass("caption").html(titleString).appendTo(item);
+			var item = $("<li>");
+			generateRecipeDiv(recipe).appendTo(item);
 			var bttn = $("<button class='navButton' type='button'>view recipe</button>");
 			var newbttn = $("<button class='navButton like' type='button'>");
 			if (meal.voteCount[recipe.title] !== undefined) {
@@ -179,9 +226,62 @@ var populateRecipeData = function() {
 		$("#prev-page").hide();
 		$("#next-page").hide();
 		$("#choice-title").hide();
-		addRecipesToList([meal.recipe]);
+		$("#recipe-list").hide();
+		$("#remove-user-bttn").hide();
+		var choiceDiv = generateRecipeDiv(meal.recipe);
+		var bttn = $("<button class='navButton' type='button'>view recipe</button>");
+		(function() {
+			var url = meal.recipe.url;
+			bttn.click(function() {
+				window.location.href = url;
+			});
+		})();
+		bttn.appendTo(choiceDiv);
+		$("#current-choice").after(choiceDiv);
 		$("#ingredients-title").html("What I'm Bringing");
-		console.log(meal.missingIngredients);
+
+		// generate meal finished button if it is the owner
+		if (user.id === meal.ownerId) {
+			var finishedBttn = $("<button class='navButton' type='button'>Finished Meal!</button>");
+			finishedBttn.click(function() {
+				alert("This meal is finished and is being deleted");
+				// update all users  by removing meal from currentMeals
+				// and adding meal to history
+				var updateUser = function(ids) {
+					console.log(ids);
+					if (ids.length === 0) {
+						window.location.href = "/static/home.html?uid=" + user.id;
+					} else {
+						var id = ids.splice(0,1)[0];
+						var user2 = new User();
+						user2.initFromServer(id, function(){
+							user2.removeMeal(meal.id);
+							if (!user2.isInHistory(meal.id)) {
+								user2.history.push(meal.id);
+							}
+							user2.updateServer(function() {
+								updateUser(ids);
+							});
+						});
+					}
+				};
+
+				// set meal to deleted
+				meal.ownerId = -1;
+				var callbackfn = function() {
+					var uids = meal.userIds;
+					uids.push(user.id);
+					updateUser(uids);
+				};
+				meal.updateServer(callbackfn);
+			});
+			var msg = $("<div>").text("Click finished when you've eaten your meal!");
+			$("<br>").appendTo(msg);
+			finishedBttn.appendTo(msg);
+			choiceDiv.after(msg);
+		}
+
+		// generate missing ingredients
 		$.each(meal.missingIngredients, function(i, ingredient) {
 			var missing = $("<div>").addClass("contribution");
 			$("<div>").addClass("photo").html("a food photo").appendTo(missing);
@@ -206,6 +306,38 @@ $("#prev-page").click(function() {
 	populateRecipeData();
 });
 
+// can't make it bttn
+$("#remove-user-bttn").click(function() {
+	var len;
+	if (user.id === meal.ownerId) {
+		alert("You are the creator of this meal. This will delete the planned meal.");
+		meal.ownerId = -1; // default value for deleted meal
+	} else {
+		alert("You are being removed from this meal.");
+		len = meal.userIds.length;
+		for (var i = 0; i < len; i++) {
+			if (parseInt(meal.userIds[i]) === user.id) {
+				meal.userIds.splice(i,1);
+				break;
+			}
+		}
+	}
+	len = user.currentMeals.length;
+	for (var i = 0; i < len; i++) {
+		if (parseInt(user.currentMeals[i]) === meal.id) {
+			user.currentMeals.splice(i,1);
+			break;
+		}
+	}
+	var callbackfn = function() {
+		var goBack = function() {
+			window.location.href = "/static/home.html?uid=" + user.id;
+		}
+		user.updateServer(goBack);
+	};
+	meal.updateServer(callbackfn);
+});
+
 // this button handles the logic behind contributions
 $("#choose-recipe-bttn").click(function() {
 	if (meal.recipe === undefined || 
@@ -218,7 +350,6 @@ $("#choose-recipe-bttn").click(function() {
 	meal.missingIngredients = [];
 	$.each(ingredients, function(i, ingredient) {
 		var contributed = false;
-		console.log(ingredient);
 		$.each(userIngredientsMap, function(id, uingreds) {
 			for (var j = 0; j < uingreds.length; j++) {
 				if (uingreds[j].name === ingredient.name) {
@@ -228,7 +359,6 @@ $("#choose-recipe-bttn").click(function() {
 					} else {
 						meal.contributions[id].push(ingredient);
 					}
-					console.log(id);
 					break;
 				}
 			}
@@ -302,7 +432,7 @@ window.onload = function() {
 			}
 		});
 		meal = new Meal();
-		meal.initFromServer(mid, populatePageData);
+		meal.initFromServer(mid, checkValidIds);
 	};
 
 	user = new User();

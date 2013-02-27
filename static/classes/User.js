@@ -33,6 +33,33 @@ function User(userName, password, id, name) {
 		this.currentMeals.push(meal);
 	}
 
+	this.removeMeal = function(mid) {
+		if (this.currentMeals === undefined) {
+			return false;
+		}
+		var len = this.currentMeals.length;
+		for (var i = 0; i < len; i++) {
+			if (parseInt(this.currentMeals[i]) === meal.id) {
+				this.currentMeals.splice(i,1);
+				return true;
+			}
+		}
+		return false;
+	};
+
+	this.isInHistory = function(mid) {
+		if (this.history === undefined) {
+			return false;
+		}
+		var len = this.history.length;
+		for (var i = 0; i < len; i++) {
+			if (parseInt(this.history[i]) === meal.id) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	this.initFromServer = function(id, callbackfn) {
 		var self = this;
 		$.ajax({

@@ -22,6 +22,22 @@ function Meal(id, ownerId, name, userIds, startTime, endTime) {
 		this.recipe.parse(data);
 	};
 
+	this.userIsInMeal = function(uid) {
+		if (this.ownerId === uid) {
+			return true;
+		}
+		if (this.userIds === undefined) {
+			return false;
+		}
+		var len = this.userIds.length;
+		for (var i = 0; i < len; i++) {
+			if (parseInt(this.userIds[i]) === uid) {
+				return true;	
+			}
+		}
+		return false;
+	};
+
 	this.initFromServer = function(id, callbackfn) {
 		var self = this;
 		$.ajax({
