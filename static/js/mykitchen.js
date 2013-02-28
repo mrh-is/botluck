@@ -56,6 +56,10 @@ $("#add-ingredient").click(function() {
 		alert("Your ingredient needs a numerical price!");
 		return;
 	}
+	if ($("#ingredient-qty").val() === 0) {
+		alert("You can't have none of the ingredient");
+		return;
+	}
 	user.ingredients.push(new Ingredient($("#ingredient-name").val(), $("#ingredient-qty").val(), $("#ingredient-price").val()));
 	user.updateServer(showIngredient(user.ingredients[user.ingredients.length-1]));
 	$("#new-ingredient").parent().hide();

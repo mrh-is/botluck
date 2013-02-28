@@ -1,1 +1,1 @@
-{"id":8,"userName":"hp","name":"Harry Potter","ingredients":[],"friends":[0],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}
+{"id":8,"userName":"hp","name":"Harry Potter","ingredients":[{"name":"tomatoes","amount":"0","price":"1"},{"name":"potatoes","amount":"","price":""},{"name":"sugar","amount":"","price":""},{"name":"peaches","amount":"","price":""},{"name":"bananas","amount":"","price":""},{"name":"tomatoes","amount":"","price":""}],"friends":[0],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}
