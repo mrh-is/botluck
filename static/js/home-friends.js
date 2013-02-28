@@ -29,7 +29,9 @@ var populateAllUsersData = function() {
 			continue;
 		}
 		var friendDiv = $("<div>").addClass("friend").attr("uid",id).appendTo($("#all-users"));
-		$("<div>").addClass("photo").html("a profile photo").appendTo(friendDiv);
+		var avatar
+		$("<img src='" + UIDtoAvatarUrl(id) + "'>")
+			.appendTo($("<div>").addClass("photo")).appendTo(friendDiv);
 		$("<div>").addClass("caption").html(usersData[id]).appendTo(friendDiv);
 		(function() {
 			var uid = id;
@@ -55,7 +57,8 @@ var populateFriendData = function() {
 	for (var i = 0; i < len; i++) {
 		var id = parseInt(user.friends[i]);
 		var friendDiv = $("<div>").addClass("friend").attr("uid",id).appendTo($("#friends-list"));
-		$("<div>").addClass("photo").html("a profile photo").appendTo(friendDiv);
+		$("<img src='" + UIDtoAvatarUrl(id) + "'>")
+			.appendTo($("<div>").addClass("photo")).appendTo(friendDiv);
 		$("<div>").addClass("caption").html(usersData[id]).appendTo(friendDiv);
 		(function() {
 			var uid = id;

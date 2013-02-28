@@ -107,7 +107,8 @@ var populateFriendList = function(data) {
 		$("<br>").appendTo(wrapper);
 
 		var invitedBox = $("<div>").addClass("friend").attr("id", id);
-		$("<div>").addClass("photo").html("a profile photo").appendTo(invitedBox);
+		$("<img src='" + UIDtoAvatarUrl(id) + "'>")
+			.appendTo($("<div>").addClass("photo")).appendTo(invitedBox);
 		$("<div>").addClass("caption").html(data[id]).appendTo(invitedBox);
 		invitedBox.appendTo($("#invitedFriends"));
 		invitedBox.hide();

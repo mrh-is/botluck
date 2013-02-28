@@ -142,3 +142,7 @@ function User(userName, password, id, name) {
 		if (data.invites !== undefined) user.invites = data.invites;
 	};
 };
+
+var UIDtoAvatarUrl = function(uid) {
+	return "/static/assets/avatar" + ((uid % 5) + 1) + ".png";
+};

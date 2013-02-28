@@ -1,1 +1,1 @@
-{"id":7,"userName":"mishq","name":"mishq","ingredients":[],"friends":[6],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}
+{"id":7,"userName":"mishq","name":"mishq","ingredients":[],"friends":[6,5],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}

@@ -96,7 +96,8 @@ var populateFriendData = function() {
 					.html(usersData[id])
 					.appendTo(friendRow);
 				var friend = $("<div>").addClass("friend");
-				$("<div>").addClass("photo").html("a profile photo").appendTo(friend);
+				$("<img src='" + UIDtoAvatarUrl(id) + "'>")
+					.appendTo($("<div>").addClass("photo")).appendTo(friend);
 				friend.appendTo(friendRow);
 				if (meal.recipeChosen) { // displaying contributions
 					$("<div>").addClass("date").html("is bringing").appendTo(friendRow);

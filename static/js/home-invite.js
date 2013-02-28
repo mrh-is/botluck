@@ -39,7 +39,8 @@ var populateFriendData = function() {
 		$.each(friendInfo, function(id, name) {
 			if (parseInt(id) !== user.id) {
 				var friend = $("<div>").addClass("friend");
-				$("<div>").addClass("photo").html("a profile photo").appendTo(friend);
+				$("<img src='" + UIDtoAvatarUrl(id) + "'>")
+					.appendTo($("<div>").addClass("photo")).appendTo(friend);
 				$("<div>").addClass("caption").html(name).appendTo(friend);
 				friend.appendTo(wrapper);
 			}
