@@ -23,3 +23,6 @@ Required Elements and Proof of Existence:
 7) AJAX Client. The MealFinder.js file is a good example of the client side code used to query from the Recipe Puppy API (lines 25-60). Also, the Meal.js and User.js class objects have the functions initFromServer and updateServer, which are both client side code used to talk to the server (lines 58-90 in Meal.js and lines 69-100 in User.js).
 
 8) AJAX server. Almost all of app.js is server side ajax code. As examples, the bottom 50 lines deal with serving static files and there is an example of file reading and writing in the first 50 lines of app.js
+
+
+The design process documentation is in "design process documentation.docx".
