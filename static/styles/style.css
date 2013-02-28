@@ -573,3 +573,7 @@ button.navButton.like {
 	background: #F2D03A url("/static/assets/like.png") no-repeat left top;
 	padding-left: 30px;
 }
+
+#avatarCanvas {
+	background-color: #62C4B4;
+}

@@ -3,18 +3,18 @@ A Communal Recipe Finder
 
 Group Members:
 Neil Batlivala (nbatliva)
-Michael
-Michelle
+Michael Helmbrecht (mhelmbre)
+Michelle Lew (mlew1)
 
 Required Elements and Proof of Existence:
 
 1) Javascript. There is a classes folder that contains all the pseudo class objects we used in this project. There is also a folder called js which contains javascript files specific to particular web pages.
 
-2) Canvas.
+2) Canvas. That robot on the top of every page? All drawn in bot.js. Using canvas drawing commands. You're welcome.
 
-3) HTML
+3) HTML. There is a whole folder of HTML. Lots of cool stuff in there. Forms and layout things and no tables because tables are bad for accessibility.
 
-4) CSS
+4) CSS. One lovely CSS file under styles. Mostly fixed, but the background stretches. Line 175 has nth-child and 501 has hover.
 
 5) DOM manipulation. There is lots of DOM manipulation in the static/js/home-meal.js file. This is what calls the mealfinder, and dynamically adds divs for each new recipe (lines 165-250). This also shows the use of selectors in jquery.
 
