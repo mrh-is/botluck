@@ -97,6 +97,10 @@ $("#myKitchenBttn").click(function() {
 	window.location.href = "/static/home/mykitchen.html?uid=" + user.id;
 });
 
+$("#logoutBttn").click(function() {
+	window.location.href = "/static/index.html";
+});
+
 // on load, the user is initialized from the server
 // and populatePageData is called
 window.onload = function() {

@@ -157,6 +157,10 @@ $("#myFriendsBttn").click(function() {
 	window.location.href = "/static/home/friends.html?uid=" + user.id;
 });
 
+$("#logoutBttn").click(function() {
+	window.location.href = "/static/index.html";
+});
+
 window.onload = function() {
 	var url = window.location.href;
 	var i = url.indexOf("uid=");
