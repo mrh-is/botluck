@@ -121,8 +121,8 @@ body {
 
 #mainCol {
 	display: inline-block;
-	margin-right: 50px;
-	width: 480px;
+	margin-right: 40px;
+	width: 470px;
 	/*padding-right: 45px;
 	border-right: thin solid #F2D03A;*/
 	/*background-color: #faf4c0;*/
@@ -321,7 +321,7 @@ h3 {
 	padding-top: 30px;
 	padding-bottom: 50px;
 	/*border-left: thin solid #F2D03A;*/
-	padding-left: 50px;
+	padding-left: 40px;
 	border-left: thin solid #F2D03A;
 }
 
