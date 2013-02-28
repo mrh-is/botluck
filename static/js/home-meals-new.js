@@ -81,8 +81,7 @@ $("#createNewMealBttn").click(function() {
 });
 
 var populateFriendList = function(data) {
-	var wrapper = $("#friendList").html("");
-	$("#invitedFriends").html("");
+	var wrapper = $("#friendList");
 	for (var id in data) {
 		var checkbox = $("<input type=\"checkbox\" class=\"friend-check-box\" name=\"friends\" id=\"" + id + "\">").appendTo(wrapper);
 		checkbox.click(function() {
@@ -117,6 +116,9 @@ var populateFriendList = function(data) {
 
 var populatePageData = function() {
 	$("#karmaBadge").html(user.karma);
+
+	$("#friendList").html("");
+	$("#invitedFriends").html("");
 
 	// set start/end date to today
 	var date = new Date();

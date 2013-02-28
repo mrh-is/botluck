@@ -39,7 +39,7 @@ function MealFinder() {
 		}
 
 		var names = [];
-	    $.each(ingredients, function(i, ingredient) {
+	    $.each(search, function(i, ingredient) {
 	        names.push(ingredient.name);
 	    });
 	    console.log(names);
