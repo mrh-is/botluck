@@ -122,15 +122,25 @@ var populatePageData = function() {
 	$("#invitedFriends").html("");
 
 	// set start/end date to today
-	var date = new Date();
-	var month = date.getMonth();
-	var day = date.getDate();
-	var hour = date.getHours();
+	var startDate = new Date();
+	startDate.setHours(startDate.getHours()+1);
+	var startMonth = startDate.getMonth();
+	var startDay = startDate.getDate();
+	var startHour = startDate.getHours();
+	var endDate = new Date(startDate);
+	endDate.setHours(startDate.getHours()+1);
+	var endMonth = endDate.getMonth();
+	var endDay = endDate.getDate();
+	var endHour = endDate.getHours();
 
-	$("#startMonth,#endMonth").val(month);
-	$("#startDay,#endDay").val(day);
-	$("#startHour,#endHour").val(hour%12);
-	$("#startAMPM,#endAMPM").val((hour < 12) ? 0 : 1);
+	$("#startMonth").val(startMonth);
+	$("#startDay").val(startDay);
+	$("#startHour").val(startHour%12);
+	$("#startAMPM").val((startHour < 12) ? 0 : 1);
+	$("#endMonth").val(endMonth);
+	$("#endDay").val(endDay);
+	$("#endHour").val(endHour%12);
+	$("#endAMPM").val((endHour < 12) ? 0 : 1);
 
 	// populate friends list
 	$.ajax({

@@ -19,7 +19,7 @@ var showIngredient = function(ingredient) {
 		ingredient.name,
 		$("<div>").addClass("photo").appendTo(ingredientDiv)
 	);
-	$("<div>").addClass("caption").html(ingredient.name).appendTo(ingredientDiv);
+	$("<div>").addClass("caption").html(ingredient.amount+" "+ingredient.name).appendTo(ingredientDiv);
 	$("<button>").addClass("navButton").attr("ingredient",user.ingredients.indexOf(ingredient)).attr("type","button").html("delete").click(function(evt) {
 		deleteIngredient($(evt.currentTarget).attr("ingredient"));
 	}).appendTo(ingredientDiv);
@@ -32,7 +32,7 @@ var showUtensil = function(utensil) {
 		utensil.name,
 		$("<div>").addClass("photo").appendTo(utensilDiv)
 	);
-	$("<div>").addClass("caption").html(utensil.name).appendTo(utensilDiv);
+	$("<div>").addClass("caption").html(utensil.amount+" "+utensil.name).appendTo(utensilDiv);
 	$("<button>").addClass("navButton").attr("utensil",user.utensils.indexOf(utensil)).attr("type","button").html("delete").click(function(evt) {
 		deleteUtensil($(evt.currentTarget).attr("utensil"));
 	}).appendTo(utensilDiv);
@@ -56,8 +56,8 @@ $("#add-ingredient").click(function() {
 		alert("Your ingredient needs a numerical price!");
 		return;
 	}
-    user.ingredients.push(new Ingredient($("#ingredient-name").val(), $("#ingredient-qty").val(), $("#ingredient-price").val()));
-    user.updateServer(showIngredient(user.ingredients[user.ingredients.length-1]));
+	user.ingredients.push(new Ingredient($("#ingredient-name").val(), $("#ingredient-qty").val(), $("#ingredient-price").val()));
+	user.updateServer(showIngredient(user.ingredients[user.ingredients.length-1]));
 	$("#new-ingredient").parent().hide();
 	$("#new-ingredient")[0].reset();
 });
@@ -81,8 +81,8 @@ $("#add-utensil").click(function() {
 		alert("Your utensil needs a numerical quantity!");
 		return;
 	}
-    user.utensils.push(new Utensil($("#utensil-name").val(), $("#utensil-qty").val()));
-    user.updateServer(showUtensil(user.utensils[user.utensils.length-1]));
+	user.utensils.push(new Utensil($("#utensil-name").val(), $("#utensil-qty").val()));
+	user.updateServer(showUtensil(user.utensils[user.utensils.length-1]));
 	$("#new-utensil").parent().hide();
 	$("#new-utensil")[0].reset();
 });
