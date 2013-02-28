@@ -1,1 +1,1 @@
-{"id":7,"userName":"mishq","password":"12345","name":"mishq"}
+{"id":7,"userName":"mishq","name":"mishq","ingredients":[],"friends":[6],"utensils":[],"karma":0,"history":[],"currentMeals":[],"invites":[]}
