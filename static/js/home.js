@@ -52,7 +52,11 @@ var showMeal = function(mid) {
 	meal.initFromServer(mid, function() {
 		var mainDiv = $("<div>").addClass("meal");
 		$("<div>").addClass("date").html(meal.date).appendTo(mainDiv);
-		$("<div>").addClass("photo").html("a meal photo").appendTo(mainDiv);
+		if (meal.recipeChosen) {
+			$("<img src='" + meal.recipe.thumbnail + "'></img>").appendTo.$("<div>").addClass("photo").appendTo(mainDiv);
+		} else {
+			$("<div>").addClass("photo").html("a meal photo").appendTo(mainDiv);
+		}
 		var wrapper = $("<div>");
 		$("<div>").addClass("caption").html(meal.name).appendTo(wrapper);
 		var menu = $("<div>").addClass("menu");

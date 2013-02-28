@@ -263,7 +263,23 @@ var populateRecipeData = function() {
 		$("#choice-title").hide();
 		$("#recipe-list").hide();
 		$("#remove-user-bttn").hide();
-		var choiceDiv = generateRecipeDiv(meal.recipe);
+		var choiceDiv = $("<div>").addClass("recipe");
+		$("<img>").attr("src",meal.recipe.thumbnail).appendTo(
+			$("<div>").addClass("photo").appendTo(choiceDiv));
+		// insert break lines into every 30 characters of the title
+		var titleString = "";
+		var line = "";
+		var words = meal.recipe.title.split(" ");
+		$.each(words, function(i, word) {
+			if (line.length + word.length > 25) {
+				titleString += line + "<br>";
+				line = word;
+			} else {
+				line += word + " ";
+			}
+		});
+		titleString += line;
+		$("<div>").addClass("caption").html(titleString).appendTo(choiceDiv);
 		var bttn = $("<button class='navButton' type='button'>view recipe</button>");
 		(function() {
 			var url = meal.recipe.url;
@@ -318,7 +334,10 @@ var populateRecipeData = function() {
 		// generate missing ingredients
 		$.each(meal.missingIngredients, function(i, ingredient) {
 			var missing = $("<div>").addClass("contribution");
-			$("<div>").addClass("photo").html("a food photo").appendTo(missing);
+			new ImageFinder(
+				ingredient.name,
+				$("<div>").addClass("photo").appendTo(missing)
+			);
 			$("<div>").addClass("caption").html(ingredient.name).appendTo(missing);
 			missing.appendTo($("#missing"));
 		});

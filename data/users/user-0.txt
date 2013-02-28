@@ -1,1 +1,1 @@
-{"id":0,"userName":"michael","name":"Michael","ingredients":[{"name":"turkey","amount":"1","price":"6"}],"friends":[],"utensils":[{"name":"spoon","amount":"1"}],"karma":0,"history":[],"currentMeals":[],"invites":[]}
+{"id":0,"userName":"michael","name":"Michael","ingredients":[{"name":"turkey","amount":"1","price":"6"}],"friends":[],"utensils":[{"name":"spoon","amount":"1"}],"karma":0,"history":[],"currentMeals":[],"invites":[{"mealId":"17","userId":"0","username":"Mishq Laliwala","date":"Wed Feb 27 2013 21:35:53 GMT-0500 (Eastern Standard Time)"}]}
