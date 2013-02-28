@@ -1,0 +1,25 @@
+Botluck:
+A Communal Recipe Finder
+
+Group Members:
+Neil Batlivala (nbatliva)
+Michael
+Michelle
+
+Required Elements and Proof of Existence:
+
+1) Javascript. There is a classes folder that contains all the pseudo class objects we used in this project. There is also a folder called js which contains javascript files specific to particular web pages.
+
+2) Canvas.
+
+3) HTML
+
+4) CSS
+
+5) DOM manipulation. There is lots of DOM manipulation in the static/js/home-meal.js file. This is what calls the mealfinder, and dynamically adds divs for each new recipe (lines 165-250). This also shows the use of selectors in jquery.
+
+6) jQuery. It is found in almost every javascript file besides the app.js file.
+
+7) AJAX Client. The MealFinder.js file is a good example of the client side code used to query from the Recipe Puppy API (lines 25-60). Also, the Meal.js and User.js class objects have the functions initFromServer and updateServer, which are both client side code used to talk to the server (lines 58-90 in Meal.js and lines 69-100 in User.js).
+
+8) AJAX server. Almost all of app.js is server side ajax code. As examples, the bottom 50 lines deal with serving static files and there is an example of file reading and writing in the first 50 lines of app.js
